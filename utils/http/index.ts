@@ -1,5 +1,6 @@
 import { TOKEN } from "@/common/constants/cookies";
-import { getCookie } from "@/common/helpers/getCookie";
+import { getCookie } from "@/common/helpers/getCokkies";
+import { API_URL } from "@/config/_constant";
 
 const getRequestURL = (url: string) => {
   if (!url.startsWith("/")) {
@@ -10,7 +11,7 @@ const getRequestURL = (url: string) => {
   if (typeof window == "undefined") {
     return `${process.env.API_URL}${url}`;
   }
-  return `/api${url}`;
+  return `${API_URL}${url}`;
 };
 
 const _get = async (url: string, options: RequestInit = {}) => {

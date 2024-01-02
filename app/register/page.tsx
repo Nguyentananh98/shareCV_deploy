@@ -1,10 +1,9 @@
 import { getCookie } from "@/common/helpers/getCokkies";
-import { LoginFormHolderer } from "@/modules/auth/page";
+import { RegisterFormHolder } from "@/modules/auth/page";
 import { Box, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 
-function LoginPage() {
-  console.log(getCookie("token"))
+function RegisterPage() {
 
   if (getCookie("token")) {
     redirect("/home", RedirectType.replace);
@@ -16,18 +15,16 @@ function LoginPage() {
         display="flex"
         flexDirection="column"
         flex={1}
-        minWidth='60%'
+        minWidth='66.667%'
         height='100vh'
-        sx={{backgroundColor:"#F8F8FA"}}
       >
-        <LoginFormHolderer />
+        <RegisterFormHolder />
       </Box>
-      <Box display="flex" sx={{backgroundImage:`url(${"/login-background.png"})`}} flex={1} border={1} height='100vh'>
-        {/* <img src="/login-background.png"/> */}
+      {/* <Box display="flex" flex={1} border={1} height='100vh'>
         Banner
-      </Box>
+      </Box> */}
     </Box>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

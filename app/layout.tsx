@@ -23,7 +23,7 @@ export default function RootLayout({ children, params, ...props }: any) {
     <html lang="en">
       <StyledEngineProvider injectFirst>
         <CssBaseline />
-        <body className={classNames(montserrat.className, "bg-background")}>
+        <body className={classNames(montserrat.className)}>
           <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
         </body>
       </StyledEngineProvider>
