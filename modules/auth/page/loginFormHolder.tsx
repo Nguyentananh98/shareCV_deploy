@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Typography } from "@mui/material";
+import Image from 'next/image'
 import { useState } from "react";
 import { LoginForm } from "../components/login-form";
 import Link from "next/link";
@@ -24,9 +25,8 @@ export const LoginFormHolderer = () => {
         flexDirection="row"
         alignItems="center"
         justifyContent="right">
-        <Typography>
-            Bạn chưa có tài khoản?</Typography>
-          <Button sx={{ boxShadow: 5 }} style={{color:"white",backgroundColor:"orange",marginLeft:"5%" ,marginRight:"5%" }} variant="contained">Đăng kí</Button>
+          <Typography> Bạn chưa có tài khoản?</Typography>
+              <Button sx={{ boxShadow: 5 }} component={Link} href="./register" style={{color:"white",backgroundColor:"orange",marginLeft:"5%" ,marginRight:"5%" }} variant="contained">Đăng kí</Button>
         </Box>
       </Box>
     <Box
@@ -37,14 +37,17 @@ export const LoginFormHolderer = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <img style={{ borderRadius: "0" }} className="w-100 h-100" src={"/Logo.png"} />
-      <Box width="100%" justifyContent="center" maxWidth="600px" className="">
+      <Box width="100%" display="flex" flexDirection="column" alignItems="center" maxWidth="600px" className="">
+        <Image src="/Logo.png"
+          width={500}
+          height={400}
+          alt="Picture of the author"/>
         <Typography display="flex" justifyContent="center" className="font-bold text-orange text-2xl">
           Dành cho nhà tuyển dụng
         </Typography>
-        <div className="py-2">
+        <Box width="100%" className="py-2">
           <LoginForm redirect="/home" />
-        </div>
+        </Box>
         <Box display="flex" justifyContent="center" marginTop={2}>
           <Typography>Chưa có tài khoản?</Typography>
 {/*           

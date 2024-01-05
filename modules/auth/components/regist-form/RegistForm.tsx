@@ -116,6 +116,11 @@ export const RegistForm = ({
             </Box>
           )}
         />
+        <Box
+        display="flex"
+        flexDirection="column"
+        className="grid grid-cols-2 gap-9"
+        >
         <Controller
           control={control}
           name="email"
@@ -125,7 +130,7 @@ export const RegistForm = ({
               <OutlinedInput
                 id="email"
                 {...field}
-                fullWidth
+                sx={{width:"100%" }}
                 error={errors.email ? true : false}
                 startAdornment={
                   <InputAdornment position="start">
@@ -148,6 +153,7 @@ export const RegistForm = ({
               <OutlinedInput
                 id="phone"
                 {...field}
+                sx={{width:"100%" }}
                 fullWidth
                 error={errors.email ? true : false}
                 startAdornment={
@@ -162,6 +168,7 @@ export const RegistForm = ({
             </Box>
           )}
         />
+        </Box>
         <Controller
           control={control}
           name="taxCode"

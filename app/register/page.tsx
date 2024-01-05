@@ -1,4 +1,5 @@
 import { getCookie } from "@/common/helpers/getCokkies";
+import VideoPlayer from "@/modules/auth/components/video-player/VideoPlayer";
 import { RegisterFormHolder } from "@/modules/auth/page";
 import { Box, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
@@ -11,11 +12,18 @@ function RegisterPage() {
   
   return (
     <Box className="flex w-full">
+      <Box display="flex" sx={{backgroundImage:`url(${"/login-background.png"})`,backgroundSize: 'cover'}} justifyContent="center"
+      alignItems="center" flex={1} border={0} height='100vh'>
+        {/* <img src="/login-background.png"/> */}
+        {/* Banner */}
+        <VideoPlayer/>
+        {/* <ReturnButton/> */}
+      </Box>
       <Box
         display="flex"
         flexDirection="column"
         flex={1}
-        minWidth='66.667%'
+        minWidth='60%'
         height='100vh'
       >
         <RegisterFormHolder />

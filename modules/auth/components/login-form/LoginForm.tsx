@@ -39,7 +39,7 @@ export const LoginForm = ({
     control,
     handleSubmit,
     setError,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty=false , isValid=true  },
   } = useForm<IUserLogin>({
     resolver,
   });

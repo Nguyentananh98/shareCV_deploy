@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { RegistForm } from "../components/regist-form";
 import Link from "next/link";
+import Image from "next/image"
 
 export const RegisterFormHolder = () => {
   return (
@@ -15,7 +16,14 @@ export const RegisterFormHolder = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Box width="100%" maxWidth="600px" className="">
+      <Box width="100%" display="flex" flexDirection="column" alignItems="center" maxWidth="600px" className="">
+        <Image src="/Logo.png"
+          width={500}
+          height={400}
+          alt="Picture of the author"/>
+        <Typography display="flex" justifyContent="center" className="font-bold text-orange text-2xl">
+          Dành cho nhà tuyển dụng
+        </Typography>
         <Typography className="font-bold text-primary text-2xl">
           Đăng ký tài khoản
         </Typography>
