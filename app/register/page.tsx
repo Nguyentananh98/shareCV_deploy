@@ -11,9 +11,9 @@ function RegisterPage() {
   }
   
   return (
-    <Box className="flex w-full">
+    <Box className="flex w-full" height="100vh">
       <Box display="flex" sx={{backgroundImage:`url(${"/login-background.png"})`,backgroundSize: 'cover'}} justifyContent="center"
-      alignItems="center" flex={1} border={0} height='100vh'>
+      alignItems="center" flex={1} border={0} height="100%">
         {/* <img src="/login-background.png"/> */}
         {/* Banner */}
         <VideoPlayer/>
@@ -24,7 +24,8 @@ function RegisterPage() {
         flexDirection="column"
         flex={1}
         minWidth='60%'
-        height='100vh'
+        height="100%"
+        sx={{overflow:"auto"}}
       >
         <RegisterFormHolder />
       </Box>

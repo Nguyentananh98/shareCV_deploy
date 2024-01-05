@@ -12,19 +12,19 @@ function LoginPage() {
   }
   
   return (
-    <Box className="flex w-full">
+    <Box className="flex w-full" height='100vh'>
       <Box
         display="flex"
         flexDirection="column"
         flex={1}
         minWidth='60%'
-        height='100vh'
-        sx={{backgroundColor:"#F8F8FA"}}
+        height='100%'
+        sx={{backgroundColor:"#F8F8FA", overflow:"auto"}}
       >
         <LoginFormHolderer />
       </Box>
       <Box display="flex" sx={{backgroundImage:`url(${"/login-background.png"})`,backgroundSize: 'cover'}} justifyContent="center"
-      alignItems="center" flex={1} border={0} height='100vh'>
+      alignItems="center" flex={1} border={0} height='100%'>
         {/* <img src="/login-background.png"/> */}
         {/* Banner */}
         <VideoPlayer/>
