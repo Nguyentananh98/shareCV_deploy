@@ -15,6 +15,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
 
 const pages = ['Thêm vị trí', 'Danh sách công việc', 'Danh sách ứng viên', 'Tìm CV', 'Mua điểm', 'Blog', 'Về chúng tôi', 'Liên hệ'];
+const routes = [
+  { path: '/', label: 'Thêm vị trí' },
+  { path: '/list-job', label: 'Danh sách công việc' },
+  { path: '/list-can', label: 'Danh sách ứng viên' },
+  { path: '/find-cv', label: 'Tìm CV' },
+  { path: '/score', label: 'Mua điểm' },
+  { path: '/blog', label: 'Blog' },
+  { path: '/about', label: 'Về chúng tôi' },
+  { path: '/contact', label: 'Liên hệ' },
+];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -28,8 +38,8 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseNavMenu = (link: string) => {
+    // Link(link);
   };
 
   const handleCloseUserMenu = () => {
@@ -91,9 +101,9 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {routes.map((page) => (
+                <MenuItem key={page.label} component={Link} href={page.path}>
+                  <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -120,13 +130,14 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {routes.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.label}
+                // onClick={handleCloseNavMenu(page.path)}
+                component={Link} href={page.path}
                 sx={{ my: 2, color: 'black', display: 'block' }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
