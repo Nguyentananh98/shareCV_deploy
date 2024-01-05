@@ -14,10 +14,7 @@ function RegisterPage() {
     <Box className="flex w-full" height="100vh">
       <Box display="flex" sx={{backgroundImage:`url(${"/login-background.png"})`,backgroundSize: 'cover'}} justifyContent="center"
       alignItems="center" flex={1} border={0} height="100%">
-        {/* <img src="/login-background.png"/> */}
-        {/* Banner */}
         <VideoPlayer/>
-        {/* <ReturnButton/> */}
       </Box>
       <Box
         display="flex"

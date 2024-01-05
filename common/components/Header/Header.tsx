@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
 import Link from 'next/link';
+import Image from 'next/image'
 
 const pages = ['Thêm vị trí', 'Danh sách công việc', 'Danh sách ứng viên', 'Tìm CV', 'Mua điểm', 'Blog', 'Về chúng tôi', 'Liên hệ'];
 const routes = [
@@ -47,18 +48,18 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar sx={{boxShadow: 0, backgroundColor : "white" }} position="static" >
-      <Container maxWidth="xl">
+    <AppBar sx={{boxShadow: 0, backgroundColor : "white" ,width:"100%"}} position="static" >
+      <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-            <img src="./Logo.png" style={{height:"100px"}} />
+            <Image src="/Logo.png" height={100} width={100} alt="" />
           </Box>
           {/* <Link href="/home"> */}
           <Typography
             variant="h6"
             noWrap
             component={Link}
-            href="/login"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -109,7 +110,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
-            <img src="./Logo.png" style={{height:"50px"}} />
+          <Image src="/Logo.png" height={50} width={50} alt="" />
           </Box>
           <Typography
             variant="h5"
@@ -120,14 +121,14 @@ function ResponsiveAppBar() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
+              // fontFamily: 'monospace',
+              // fontWeight: 700,
+              // letterSpacing: '.1rem',
+              color: 'black',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Trang chủ
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {routes.map((page) => (
