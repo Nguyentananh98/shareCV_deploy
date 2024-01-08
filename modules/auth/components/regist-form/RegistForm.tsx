@@ -61,13 +61,13 @@ export const RegistForm = ({
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await register(
-      data.name,
-      data.email,
-      data.phone,
-      data.password,
-      data.confirmPassword,
-      data.taxCode,
+    const res = await register(data
+      // data.name,
+      // data.email,
+      // data.phone,
+      // data.password,
+      // data.confirmPassword,
+      // data.taxCode,
     );
 
     if (res.status !== 200) {

@@ -26,7 +26,7 @@ export const LoginFormHolderer = () => {
         alignItems="center"
         justifyContent="right">
           <Typography> Bạn chưa có tài khoản?</Typography>
-              <Button sx={{ boxShadow: 5 }} component={Link} href="./register" style={{color:"white",backgroundColor:"orange",marginLeft:"5%" ,marginRight:"5%" }} variant="contained">Đăng kí</Button>
+              <Button sx={{ boxShadow: 5 }} component={Link} href="./register" style={{color:"white",marginLeft:"5%" ,marginRight:"5%" }} variant="contained">Đăng kí</Button>
         </Box>
       </Box>
     <Box

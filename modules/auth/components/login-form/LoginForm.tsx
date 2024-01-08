@@ -53,7 +53,7 @@ export const LoginForm = ({
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await login(data.email, data.password);
+    const res = await login(data);
 
     if (res.status !== 200) {
       console.log(res)

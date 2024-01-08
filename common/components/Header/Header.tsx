@@ -1,3 +1,4 @@
+"use client";
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,10 +15,11 @@ import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
 import Link from 'next/link';
 import Image from 'next/image'
+import { usePathname } from 'next/navigation';
 
 const pages = ['Thêm vị trí', 'Danh sách công việc', 'Danh sách ứng viên', 'Tìm CV', 'Mua điểm', 'Blog', 'Về chúng tôi', 'Liên hệ'];
 const routes = [
-  { path: '/', label: 'Thêm vị trí' },
+  { path: '/posting-job/company-info', label: 'Thêm vị trí' },
   { path: '/list-job', label: 'Danh sách công việc' },
   { path: '/list-can', label: 'Danh sách ứng viên' },
   { path: '/find-cv', label: 'Tìm CV' },
@@ -39,8 +41,10 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (link: string) => {
-    // Link(link);
+  const pathname = usePathname();
+  console.log(pathname)
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -80,7 +84,7 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              sx={{color:"black"}}
             >
               <MenuIcon />
             </IconButton>
@@ -104,7 +108,7 @@ function ResponsiveAppBar() {
             >
               {routes.map((page) => (
                 <MenuItem key={page.label} component={Link} href={page.path}>
-                  <Typography textAlign="center">{page.label}</Typography>
+                  <Typography style={{ color: page.path === pathname ? "primary" : "black" }} textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -134,9 +138,11 @@ function ResponsiveAppBar() {
             {routes.map((page) => (
               <Button
                 key={page.label}
+                // sx={{ color: page.path === pathname ? "text-primary" : "black" }}
                 // onClick={handleCloseNavMenu(page.path)}
                 component={Link} href={page.path}
-                sx={{ my: 2, color: 'black', display: 'block' }}
+                sx={{ my: 2, display: 'block' }}
+                style={{color: page.path === pathname ? "primary" : "black"}}
               >
                 {page.label}
               </Button>

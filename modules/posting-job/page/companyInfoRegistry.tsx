@@ -5,7 +5,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header"
 import Title from "../component/title/Title";
-function CompanyInfo() {
+function CompanyInfoRegistry() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
@@ -21,4 +21,4 @@ function CompanyInfo() {
   );
 }
 
-export default CompanyInfo;
+export default CompanyInfoRegistry;

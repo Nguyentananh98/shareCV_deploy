@@ -6,10 +6,11 @@ import { stringify } from "querystring";
 import { API_URL } from "@/config/_constant";
 
 import { formatParams } from "./func";
+import { getAccessCookies } from "@/common/helpers/setCookies";
 
 //#endregion
 
-export const http = axios.create({
+export const axiosClient = axios.create({
   baseURL: API_URL,
   // timeout: 0,
   paramsSerializer: {
@@ -25,7 +26,10 @@ export const http = axios.create({
   }),
 });
 
-http.interceptors.request.use((config) => {
+axiosClient.interceptors.request.use((config) => {
+  if(getAccessCookies()){
+    config.headers["Authorization"] = "Bearer " + getAccessCookies();
+  }
   if (config.method === "post") {
     // if (config.data instanceof FormData) {
     //   return config;
@@ -48,3 +52,4 @@ http.interceptors.request.use((config) => {
 });
 
 export const isCancel = axios.isCancel;
+

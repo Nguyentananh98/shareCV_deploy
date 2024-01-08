@@ -10,6 +10,10 @@ const theme = createTheme({
     typography: {
         fontFamily: 'inherit',
         // fontSize: 'inherit',
+    },
+    palette:{
+      primary:{main:"#FFC436", contrastText:"#fff",light:"#FFD556",dark:"#E1A22D"},
+      secondary:{main:"#063776", contrastText:"#FFFFFF"}
     }
 });
 

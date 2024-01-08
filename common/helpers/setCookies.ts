@@ -6,6 +6,10 @@ export function setAccessCookies(res: IAuthResponse) {
     Cookies.set(TOKEN, res.access_token, { secure: true });
 }
 
+export function getAccessCookies() {
+    return Cookies.get(TOKEN);
+}
+
 export function removeAccessCookies() {
     Cookies.remove(TOKEN)
 }

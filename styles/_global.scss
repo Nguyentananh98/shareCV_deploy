@@ -3,7 +3,8 @@
 @use "node_modules/tailwindcss/tailwind.css" as *;
 // @use "node_modules/react-multi-carousel-18/lib/styles.css" as *;
 // @use "node_modules/react-dropdown/style.css" as *;
-
+@use "node_modules/slick-carousel/slick/slick.css" as *;
+@use "node_modules/slick-carousel/slick/slick-theme.css" as *;
 @use "./util";
 @use "./common";
 @use "./modules";
