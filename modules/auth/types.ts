@@ -1,14 +1,14 @@
 export interface IUserLogin {
-    email: string;
+    username: string;
     password: string
 }
 
 export interface IUserRegister {
-    name: string;
+    fullname: string;
     email: string;
     phone: string;
     password: string;
-    confirmPassword: string;
-    taxCode: string;
+    password_again: string;
+    role: string;
     // role: string;
 }

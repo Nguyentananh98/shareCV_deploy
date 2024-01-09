@@ -6,7 +6,8 @@ import classNames from "classnames";
 import "@/styles/_global.scss";
 import { CssBaseline, StyledEngineProvider, createTheme } from "@mui/material";
 import ThemeRegistry from "./ThemeRegistry";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
+import Header from "@/common/components/Header/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,7 +26,7 @@ export default function RootLayout({ children, params, ...props }: any) {
       <StyledEngineProvider injectFirst>
         <CssBaseline />
         <body className={classNames(montserrat.className)}>
-        <NextTopLoader />
+          <NextTopLoader />]
           <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
         </body>
       </StyledEngineProvider>

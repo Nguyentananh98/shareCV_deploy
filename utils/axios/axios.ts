@@ -12,6 +12,9 @@ import { getAccessCookies } from "@/common/helpers/setCookies";
 
 export const axiosClient = axios.create({
   baseURL: API_URL,
+  headers: {
+    "Content-Type":"application/x-www-form-urlencoded"
+  },
   // timeout: 0,
   paramsSerializer: {
     serialize: (params) => stringify(params),

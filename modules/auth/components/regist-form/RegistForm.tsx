@@ -70,7 +70,7 @@ export const RegistForm = ({
       // data.taxCode,
     );
 
-    if (res.status !== 200) {
+    if (res.status !== 200 && res.status != 201) {
       console.log(res);
       setError("root", { message: "Đăng ký thất bại" });
       return;
@@ -95,7 +95,7 @@ export const RegistForm = ({
       >
         <Controller
           control={control}
-          name="name"
+          name="fullname"
           render={({ field }) => (
             <Box>
               <Typography className="font-bold">Họ và tên</Typography>
@@ -111,7 +111,7 @@ export const RegistForm = ({
                 }
               />
               <Typography variant="inherit" color={"error"}>
-                {errors.name?.message}
+                {errors.fullname?.message}
               </Typography>
             </Box>
           )}
@@ -171,12 +171,12 @@ export const RegistForm = ({
         </Box>
         <Controller
           control={control}
-          name="taxCode"
+          name="role"
           render={({ field }) => (
             <Box>
               <Typography className="font-bold">Mã số thuế</Typography>
               <OutlinedInput
-                id="taxCode"
+                id="role"
                 {...field}
                 fullWidth
                 error={errors.email ? true : false}
@@ -187,7 +187,7 @@ export const RegistForm = ({
                 }
               />
               <Typography variant="inherit" color={"error"}>
-                {errors.taxCode?.message}
+                {errors.role?.message}
               </Typography>
             </Box>
           )}
@@ -230,16 +230,16 @@ export const RegistForm = ({
         />
         <Controller
           control={control}
-          name="confirmPassword"
+          name="password_again"
           render={({ field }) => (
             <Box>
               <Typography className="font-bold">Xác nhận mật khẩu</Typography>
               <OutlinedInput
-                id="confirmPassword"
+                id="password_again"
                 type={showPassword ? "text" : "password"}
                 {...field}
                 fullWidth
-                error={errors.confirmPassword ? true : false}
+                error={errors.password_again ? true : false}
                 startAdornment={
                   <InputAdornment position="start">
                     <LockOutlined />

@@ -11,7 +11,7 @@ export const login = (
   data: IUserLogin
 ): Promise<IAuthResponse> => {
   
-  return axiosClient.post("/auth/sign-in", data)
+  return axiosClient.post("/auth/login", data)
 };
 
 export const register = (

@@ -85,7 +85,7 @@ export const LoginForm = ({
       >
         <Controller
           control={control}
-          name="email"
+          name="username"
           render={({ field }) => (
             <Box>
               <Typography className="font-bold">Email</Typography>
@@ -93,7 +93,7 @@ export const LoginForm = ({
                 id="email"
                 {...field}
                 fullWidth
-                error={errors.email ? true : false}
+                error={errors.username ? true : false}
                 startAdornment={
                   <InputAdornment position="start">
                     <EmailOutlined />
@@ -101,7 +101,7 @@ export const LoginForm = ({
                 }
               />
               <Typography variant="inherit" color={"error"}>
-                {errors.email?.message}
+                {errors.username?.message}
               </Typography>
             </Box>
           )}

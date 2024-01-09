@@ -16,8 +16,8 @@ export const CardCarouselItem = ({
 }: { img: string, title: string, description: string, location: string, participant: string, carouselCenter: boolean }) => {
   return (
     <Box
-      width="100%"
-      height="100%"
+      // width="100%"
+      // height="100%"
       display="flex"
       justifyContent="center"
       alignItems="center"
