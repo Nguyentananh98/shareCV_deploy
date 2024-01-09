@@ -1,14 +1,7 @@
 "use client";
-import { getCookie } from "@/common/helpers/getCokkies";
-import { removeAccessCookies } from "@/common/helpers/setCookies";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
-import Header from "@common/components/Header/Header";
 import RegistryForm from "../component/registry-form/RegistryForm";
-import Image from "next/image";
-import Link from "next/link";
-import UploadFile from "../component/UploadFile/UploadFile";
-import UpFile from "../component/UploadFile/UpFile";
 import { useState } from "react";
 import { ExtFile } from "@files-ui/react";
 import { Controller, useForm } from "react-hook-form";
@@ -21,7 +14,6 @@ import {
     convertToImageListType,
   } from "../component/ImageUpload/imageUpload";
 import { ITitleImageItem } from "../types";
-import { RegistForm } from "@/modules/auth/components/regist-form";
 function CompanyInfoRegistry() {
   if (!true) {
     redirect("/login", RedirectType.replace);
