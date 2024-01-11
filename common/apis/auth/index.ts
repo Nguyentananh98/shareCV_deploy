@@ -6,11 +6,11 @@ import {
 } from "@/common/interfaces";
 import qs from "qs";
 import { IUserLogin, IUserRegister } from "@/modules/auth/types";
+import { AxiosResponse } from "axios";
 
 export const login = (
   data: IUserLogin
-): Promise<IAuthResponse> => {
-  
+): Promise<AxiosResponse<IAuthResponse>> => {
   return axiosClient.post("/auth/login", data)
 };
 

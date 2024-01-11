@@ -26,7 +26,7 @@ export default function RootLayout({ children, params, ...props }: any) {
       <StyledEngineProvider injectFirst>
         <CssBaseline />
         <body className={classNames(montserrat.className)}>
-          <NextTopLoader />]
+          <NextTopLoader />
           <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
         </body>
       </StyledEngineProvider>

@@ -1,19 +1,28 @@
 // import { ITitleImageItem } from "./component/ImageUpload/types";
 
 export interface ICompanyInfo {
-    logo: File;
-    coverImage: File;
-    name: string;
-    email: string;
-    phone: string;
-    password: string;
-    confirmPassword: string;
-    taxCode: string;
-    file: ITitleImageItem[];
-    // role: string;
+  company_name: string;
+  industry: string;
+  description: string;
+  tax_code: string;
+  phone: string;
+  email: string;
+  founded_year: number;
+  company_size: number;
+  address: string;
+  city: string;
+  country: string;
+  logo: File|null;
+  cover_image: File|null;
+  company_images: File[]|null;
+  company_video: File|null;
+  linkedin: string | null;
+  website: string | null;
+  facebook: string | null;
+  instagram: string | null;
 }
 
 export interface ITitleImageItem {
-    url: string;
-    file: File | null
+  url: string;
+  file: File | null;
 }

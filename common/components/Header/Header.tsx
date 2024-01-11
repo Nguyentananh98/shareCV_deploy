@@ -42,7 +42,7 @@ function ResponsiveAppBar() {
   };
 
   const pathname = usePathname();
-  console.log(pathname)
+  // console.log(pathname)
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -52,7 +52,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar sx={{boxShadow: 0, backgroundColor : "white" ,width:"100%"}} position="static" >
+    <AppBar sx={{boxShadow: 0, backgroundColor : "white" ,width:"100%",paddingLeft:"120px",paddingRight:"120px"}} position="static" >
       <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
@@ -152,7 +152,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="/robot.png" />
               </IconButton>
             </Tooltip>
             <Menu

@@ -5,11 +5,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { CardCarousel } from "../component/Carousel/CardCarousel";
 import ReactPlayer from "react-player";
+import { getCompanyInfo } from "@/common/apis/posting-job";
+import { useEffect, useState } from "react";
+import { ICompanyInfo } from "@/common/interfaces";
+import { getAccessCookies } from "@/common/helpers/setCookies";
 function CompanyInfo() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-
+  const [data,setData] = useState<ICompanyInfo>();
+  // useEffect(() => {
+  //   try {
+  //     getCompanyInfo().then(res => {setData(res);
+  //       console.log(res);
+  //     })
+  //   } catch(e){
+  //     console.log(e)
+  //   }
+  // }, [])
   return (
     <Box
       sx={{ mt: 10 }}

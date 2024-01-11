@@ -21,15 +21,15 @@ function CompanyInfoRegistry() {
   const [formImageList, setFormImageList] = useState<ITitleImageItem[]>([]);
   const [formData, setFormData] = useState(new FormData());
   const [file, setFile] = useState<ExtFile[]>([]);
-  const handleFileChange = (
-    imageList: ImageListType 
-  ) => {
-    // setFile(imageList)
-    console.log(imageList)
-    // setFormData({file: {uploadedFile});
-    setValue("file",convertToReduceImageList(imageList))
-    setFormImageList((prev) => convertToReduceImageList(imageList));
-  };
+  // const handleFileChange = (
+  //   imageList: ImageListType 
+  // ) => {
+  //   // setFile(imageList)
+  //   console.log(imageList)
+  //   // setFormData({file: {uploadedFile});
+  //   setValue("company_image",convertToReduceImageList(imageList))
+  //   setFormImageList((prev) => convertToReduceImageList(imageList));
+  // };
   const {
     control,
     handleSubmit,

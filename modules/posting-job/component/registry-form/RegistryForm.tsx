@@ -14,6 +14,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ICompanyInfo } from "../../types";
 import { addCompany } from "@/common/apis/posting-job";
 import { ImageUpload } from "../ImageUpload";
+import VideoUpload from "../VideoUpload";
 import { ImageListType } from "react-images-uploading";
 import {
   convertToReduceImageList,
@@ -25,14 +26,54 @@ function RegistryForm() {
     redirect("/login", RedirectType.replace);
   }
   const [formImageList, setFormImageList] = useState<ITitleImageItem[]>([]);
+  const [logo, setLogo] = useState<File[] | null>(null);
+  const [coverImage, setCoverImage] = useState<File[] | null>(null);
+  const [listImage, setListImage] = useState<File[] | null>(null);
+  const [video, setVideo] = useState<File[] | null>(null);
   const [formData, setFormData] = useState(new FormData());
-  const [logo, setLogo] = useState<File>();
   const handleFileChange = (imageList: ImageListType) => {
-    // setFile(imageList)
     console.log(imageList);
-    // setFormData({file: {uploadedFile});
-    setValue("file", convertToReduceImageList(imageList));
     setFormImageList((prev) => convertToReduceImageList(imageList));
+  };
+  const handleLogoChange = (value: File[] | null) => {
+    // setFile(imageList)
+    console.log(value);
+    if (value != null) {
+      setValue("logo", value[0]);
+      setLogo(value);
+    } else {
+      setLogo(null);
+    }
+  };
+  const handleCoverImageChange = (value: File[] | null) => {
+    // setFile(imageList)
+    console.log(value);
+    if (value != null) {
+      setValue("cover_image", value[0]);
+      setCoverImage(value);
+    } else {
+      setCoverImage(null);
+    }
+  };
+  const handleListImageChange = (value: File[] | null) => {
+    // setFile(imageList)
+    console.log(value);
+    if (value != null) {
+      // setValue("cover_image", value[0]);
+      setListImage(value);
+    } else {
+      setListImage(null);
+    }
+  };
+  const handleVideoChange = (value: File[] | null) => {
+    // setFile(imageList)
+    console.log(value);
+    if (value != null) {
+      setValue("company_video", value[0]);
+      setVideo(value);
+    } else {
+      setVideo(null);
+    }
   };
   const {
     control,
@@ -89,19 +130,14 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <Controller
-            control={control}
-            name="logo"
-            render={({ field }) => (
-              <ImageUpload
-                title="Logo công ty"
-                decription="tối đa"
-                onChange={handleFileChange}
-                noEdit={false}
-                isMultiple={true}
-                imageList={convertToImageListType(formImageList)}
-              />
-            )}
+          <VideoUpload
+            fileId="logo"
+            type={"image"}
+            file={logo}
+            isMultiple={false}
+            title="Logo công ty"
+            decription="tối đa"
+            onChange={handleLogoChange}
           />
         </Box>
         <Box
@@ -112,19 +148,14 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <Controller
-            control={control}
-            name="coverImage"
-            render={({ field }) => (
-              <ImageUpload
-                title="Ảnh bìa"
-                decription="tối đa"
-                onChange={handleFileChange}
-                noEdit={false}
-                isMultiple={true}
-                imageList={convertToImageListType(formImageList)}
-              />
-            )}
+          <VideoUpload
+            fileId={"cover_image"}
+            title="Ảnh bìa"
+            file={coverImage}
+            decription="tối đa"
+            onChange={handleCoverImageChange}
+            isMultiple={false}
+            type={"image"}
           />
         </Box>
         <Box
@@ -137,7 +168,7 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="name"
+            name="company_name"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
@@ -145,15 +176,10 @@ function RegistryForm() {
                 </Typography>
                 <TextField
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="company_name"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
-                  // startAdornment={
-                  //   <InputAdornment position="start">
-                  //     <EmailOutlined />
-                  //   </InputAdornment>
-                  // }
                 />
                 <Typography variant="inherit" color={"error"}>
                   {errors.email?.message}
@@ -164,23 +190,22 @@ function RegistryForm() {
         </Box>
         <Box
           className="col-span-5"
-          height="100px"
+          // height="100px"
           display="flex"
           flexDirection="row"
-          //   alignItems={"center"}
           justifyContent={"right"}
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="industry"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Ngành nghề
                 </Typography>
                 <TextField
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="industry"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -207,11 +232,11 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="description"
             render={({ field }) => (
               <Box width="100%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Mô tả công ty
                 </Typography>
                 <TextField
                   multiline
@@ -221,9 +246,9 @@ function RegistryForm() {
                     backgroundColor: "white",
                     // height: "90%",
                     width: "100%",
-                    mt:2
+                    mt: 2,
                   }}
-                  id="email"
+                  id="description"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -245,7 +270,7 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="name"
+            name="email"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
@@ -280,15 +305,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="phone"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Số điện thoại
                 </Typography>
                 <TextField
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="phone"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -310,15 +335,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="name"
+            name="founded_year"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Năm thành lập
                 </Typography>
                 <TextField
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="founded_year"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -339,16 +364,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="company_size"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Quy mô
                 </Typography>
                 <TextField
-                  
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="company_size"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -369,16 +393,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="tax_code"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Mã số thuế
                 </Typography>
                 <TextField
-                  
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="tax_code"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -399,16 +422,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="address"
             render={({ field }) => (
               <Box width="100%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Địa chỉ
                 </Typography>
                 <TextField
-                  
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="address"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -429,16 +451,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="city"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Tỉnh/Thành phố
                 </Typography>
                 <TextField
-                  
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="city"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -459,16 +480,15 @@ function RegistryForm() {
         >
           <Controller
             control={control}
-            name="coverImage"
+            name="country"
             render={({ field }) => (
               <Box width="90%">
                 <Typography className="font-bold text-secondary">
-                  Email
+                  Quốc gia
                 </Typography>
                 <TextField
-                  
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
+                  id="country"
                   {...field}
                   fullWidth
                   error={errors.email ? true : false}
@@ -488,19 +508,14 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <Controller
-            control={control}
-            name="logo"
-            render={({ field }) => (
-              <ImageUpload
-                title="Logo công ty"
-                decription="tối đa"
-                onChange={handleFileChange}
-                noEdit={false}
-                isMultiple={true}
-                imageList={convertToImageListType(formImageList)}
-              />
-            )}
+          <VideoUpload
+            fileId={"list_image"}
+            title="Hình ảnh giới thiệu công ty"
+            file={listImage}
+            decription="tối đa"
+            onChange={handleListImageChange}
+            isMultiple={true}
+            type={"image"}
           />
         </Box>
         <Box
@@ -511,19 +526,14 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <Controller
-            control={control}
-            name="logo"
-            render={({ field }) => (
-              <ImageUpload
-                title="Logo công ty"
-                decription="tối đa"
-                onChange={handleFileChange}
-                noEdit={false}
-                isMultiple={true}
-                imageList={convertToImageListType(formImageList)}
-              />
-            )}
+          <VideoUpload
+            fileId={"video"}
+            file={video}
+            title={"Video giới thiệu công ty"}
+            decription={""}
+            onChange={handleVideoChange}
+            type={"video"}
+            isMultiple={false}
           />
         </Box>
       </Box>

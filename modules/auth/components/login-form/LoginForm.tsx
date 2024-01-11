@@ -61,7 +61,7 @@ export const LoginForm = ({
       return;
     }
 
-    setAccessCookies(res);
+    setAccessCookies(res.data);
 
     console.log(res)
 

@@ -28,7 +28,7 @@ export function ImageUpload({
   maxImage,
   dataURLKey,
 }: UploadImageProps) {
-  const [images, setImages] = React.useState<ImageListType>([]);
+  // const [images, setImages] = React.useState<ImageListType>([]);
 
   const defaulMaxImage = 69;
   const defaultDataURLKey = "dataURL";

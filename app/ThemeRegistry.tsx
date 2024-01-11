@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 const theme = createTheme({
     typography: {
-        fontFamily: 'inherit',
+        // fontFamily: 'inherit',
         // fontSize: 'inherit',
     },
     palette:{

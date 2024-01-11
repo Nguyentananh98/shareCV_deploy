@@ -10,7 +10,10 @@ import {
   Checkbox,
   IconButton,
   InputAdornment,
+  InputLabel,
+  MenuItem,
   OutlinedInput,
+  Select,
   Typography,
 } from "@mui/material";
 import {
@@ -61,7 +64,8 @@ export const RegistForm = ({
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await register(data
+    const res = await register(
+      data
       // data.name,
       // data.email,
       // data.phone,
@@ -117,75 +121,74 @@ export const RegistForm = ({
           )}
         />
         <Box
-        display="flex"
-        flexDirection="column"
-        className="grid grid-cols-2 gap-9"
+          display="flex"
+          flexDirection="column"
+          className="grid grid-cols-2 gap-9"
         >
-        <Controller
-          control={control}
-          name="email"
-          render={({ field }) => (
-            <Box>
-              <Typography className="font-bold">Email</Typography>
-              <OutlinedInput
-                id="email"
-                {...field}
-                sx={{width:"100%" }}
-                error={errors.email ? true : false}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <EmailOutlined />
-                  </InputAdornment>
-                }
-              />
-              <Typography variant="inherit" color={"error"}>
-                {errors.email?.message}
-              </Typography>
-            </Box>
-          )}
-        />
-        <Controller
-          control={control}
-          name="phone"
-          render={({ field }) => (
-            <Box>
-              <Typography className="font-bold">Điện thoại</Typography>
-              <OutlinedInput
-                id="phone"
-                {...field}
-                sx={{width:"100%" }}
-                fullWidth
-                error={errors.email ? true : false}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <LocalPhoneOutlined />
-                  </InputAdornment>
-                }
-              />
-              <Typography variant="inherit" color={"error"}>
-                {errors.phone?.message}
-              </Typography>
-            </Box>
-          )}
-        />
+          <Controller
+            control={control}
+            name="email"
+            render={({ field }) => (
+              <Box>
+                <Typography className="font-bold">Email</Typography>
+                <OutlinedInput
+                  id="email"
+                  {...field}
+                  sx={{ width: "100%" }}
+                  error={errors.email ? true : false}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <EmailOutlined />
+                    </InputAdornment>
+                  }
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.email?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+          <Controller
+            control={control}
+            name="phone"
+            render={({ field }) => (
+              <Box>
+                <Typography className="font-bold">Điện thoại</Typography>
+                <OutlinedInput
+                  id="phone"
+                  {...field}
+                  sx={{ width: "100%" }}
+                  fullWidth
+                  error={errors.email ? true : false}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <LocalPhoneOutlined />
+                    </InputAdornment>
+                  }
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.phone?.message}
+                </Typography>
+              </Box>
+            )}
+          />
         </Box>
         <Controller
           control={control}
           name="role"
           render={({ field }) => (
-            <Box>
-              <Typography className="font-bold">Mã số thuế</Typography>
-              <OutlinedInput
+            <Box >
+              <Typography className="font-bold">Vai trò</Typography>
+              <Select
+                labelId="demo-simple-select-label"
+                // value={age}
+                sx={{ width: "100%" }}
                 id="role"
-                {...field}
-                fullWidth
-                error={errors.email ? true : false}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SubtitlesOutlined />
-                  </InputAdornment>
-                }
-              />
+                label="Vai trò"
+              >
+                <MenuItem value={"admin"}>Admin</MenuItem>
+                <MenuItem value={"recruiter"}>Người tuyển dụng</MenuItem>
+              </Select>
               <Typography variant="inherit" color={"error"}>
                 {errors.role?.message}
               </Typography>

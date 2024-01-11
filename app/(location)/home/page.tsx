@@ -4,7 +4,9 @@ import { removeAccessCookies } from "@/common/helpers/setCookies";
 import { Box, Button, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header"
-function Homepage() {
+import CompanyInfo from "@/modules/posting-job/page/CompanyInfo";
+import HomePage from "@/modules/home/page/HomePage";
+function Home() {
   // if (!getCookie("token")) {
   if (!true) {
     redirect("/login", RedirectType.replace);
@@ -15,22 +17,13 @@ function Homepage() {
       display="flex"
       width="100%"
       flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
+      // alignItems="center"
+      // justifyContent="center"
+      sx={{overflow:"auto"}}
     >
-      <Header/>
-      <Typography variant="h2">THIS IS THE HOMEPAGE</Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          removeAccessCookies();
-          window.location.reload();
-        }}
-      >
-        Đăng xuất
-      </Button>
+      <HomePage/>
     </Box>
   );
 }
 
-export default Homepage;
+export default Home;
