@@ -37,8 +37,6 @@ function CompanyInfopage() {
         mt={5}
         display="flex"
         width="80%"
-        px={5}
-        sx={{borderRadius:"5px",backgroundColor: "rgba(217, 217, 217, 0.2)", }}
         // justifyContent="center"
         // alignItems="center"
         flex={1}

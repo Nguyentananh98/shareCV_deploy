@@ -52,7 +52,7 @@ function CompanyInfoRegistry() {
     window.location.reload();
   });
   return (
-    <Box width="100%">
+    <Box width="100%" p={0}>
       <RegistryForm></RegistryForm>
     </Box>
   );

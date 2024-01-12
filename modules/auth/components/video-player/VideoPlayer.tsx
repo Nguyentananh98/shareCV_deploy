@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { FaRegPlayCircle } from "react-icons/fa"
+import { FaRegPlayCircle } from "react-icons/fa";
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import Image from "next/image"
+import Image from "next/image";
 export default function VideoPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -53,7 +53,7 @@ export default function VideoPlayer() {
               left: "0",
               bottom: "0",
               transform: " translate(-50%, -150%)",
-              "&:hover":{ backgroundColor:"gba(217, 217, 217, 0.9)"}
+              "&:hover": { backgroundColor: "gba(217, 217, 217, 0.9)" },
             }}
             onClick={handlePlayClick}
           >
@@ -67,8 +67,19 @@ export default function VideoPlayer() {
               }}
             />
           </IconButton>
-          <Box  sx={{p:0,height:300,width:300,position:"absolute",right:"0",bottom:"0",transform:" translate(0%, 0%)"}} onClick={handlePlayClick}>
-            <Image src="/robot.png" height={300} width={300} alt=""/>
+          <Box
+            sx={{
+              p: 0,
+              height: 300,
+              width: 300,
+              position: "absolute",
+              right: "0",
+              bottom: "0",
+              transform: " translate(0%, 0%)",
+            }}
+            onClick={handlePlayClick}
+          >
+            <Image src="/robot.png" height={300} width={300} alt="" />
           </Box>
         </Box>
       )}
@@ -76,13 +87,14 @@ export default function VideoPlayer() {
       {isPlaying && (
         <Box
           sx={{
+            borderRadius: "20px",
             "& .player-wrapper": {
               width: "auto",
               // Reset width
               height: "auto",
             },
             "& .react-player": {
-              width: "500px",
+              width: "400px",
               paddingTop: "0", // Percentage ratio for 16:9
               position: "relative", // Set to relative}
             },
@@ -92,7 +104,8 @@ export default function VideoPlayer() {
           }}
         >
           <ReactPlayer
-            width="500px"
+            sx={{ borderRadius: "20px" }}
+            width="400px"
             height={"500px"}
             controls
             file="mp4"

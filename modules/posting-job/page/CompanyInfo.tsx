@@ -9,20 +9,42 @@ import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState } from "react";
 import { ICompanyInfo } from "@/common/interfaces";
 import { getAccessCookies } from "@/common/helpers/setCookies";
+const initialForm: ICompanyInfo = {
+  company_name: "",
+  industry: "",
+  description: "",
+  tax_code: "",
+  phone: "",
+  email: "",
+  founded_year: 0,
+  company_size: 0,
+  address: "",
+  city: "",
+  country: "",
+  logo: null,
+  cover_image: null,
+  company_images: null,
+  company_video: null,
+  linkedin: null,
+  website: null,
+  facebook: null,
+  instagram: null,
+};
 function CompanyInfo() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [data,setData] = useState<ICompanyInfo>();
-  // useEffect(() => {
-  //   try {
-  //     getCompanyInfo().then(res => {setData(res);
-  //       console.log(res);
-  //     })
-  //   } catch(e){
-  //     console.log(e)
-  //   }
-  // }, [])
+  const [data,setData] = useState<ICompanyInfo>(initialForm);
+  useEffect(() => {
+    try {
+      getCompanyInfo().then(res => {
+        setData(res.data);
+        console.log(res);
+      })
+    } catch(e){
+      console.log(e)
+    }
+  }, [])
   return (
     <Box
       sx={{ mt: 10 }}
@@ -56,8 +78,8 @@ function CompanyInfo() {
         >
           <Image src="/Logo.png" height={100} width={100} alt="" />
           <Box display="flex" flexDirection="column">
-            <Typography>Name</Typography>
-            <Typography>link</Typography>
+            <Typography>{data.company_name}</Typography>
+            <Typography>{data.website}</Typography>
           </Box>
         </Grid>
         <Grid
@@ -79,7 +101,7 @@ function CompanyInfo() {
           >
             <Button
               component={Link}
-              href="/register"
+              href="/posting-job/company-info-registry"
               sx={{ boxShadow: 5 }}
               style={{
                 color: "white",
@@ -121,28 +143,7 @@ function CompanyInfo() {
               Mô tả công ty
             </Typography>
             <Typography sx={{ mt: 2 }}>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-              penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-              Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
-              sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
-              vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
-              imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede
-              mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum
-              semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-              porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem
-              ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus
-              viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
-              imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
-              ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus,
-              tellus eget condimentum rhoncus, sem quam semper libero, sit amet
-              adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus
-              pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt
-              tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
-              quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis
-              leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis
-              magna. Sed consequat, leo eget bibendum sodales, augue velit
-              cursus nunc,
+              {data.description}
             </Typography>
           </Box>
 
@@ -264,7 +265,7 @@ function CompanyInfo() {
                     textDecoration: "none",
                   }}
                 >
-                  Ngành nghề
+                  Ngành Nghề
                 </Typography>
                 <Typography
                   className="text-primary"
@@ -276,7 +277,7 @@ function CompanyInfo() {
                     textDecoration: "none",
                   }}
                 >
-                  Công nghệ thông tin
+                  {data.industry}
                 </Typography>
               </Box>
               <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
@@ -289,7 +290,7 @@ function CompanyInfo() {
                     textDecoration: "none",
                   }}
                 >
-                  Ngành nghề
+                  Số điện thoại
                 </Typography>
                 <Typography
                   className="text-primary"
@@ -301,7 +302,7 @@ function CompanyInfo() {
                     textDecoration: "none",
                   }}
                 >
-                  Công nghệ thông tin
+                  {data.phone}
                 </Typography>
               </Box>
               <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
@@ -314,7 +315,7 @@ function CompanyInfo() {
                     textDecoration: "none",
                   }}
                 >
-                  Ngành nghề
+                  Email công ty
                 </Typography>
                 <Typography
                   className="text-primary"
@@ -326,7 +327,157 @@ function CompanyInfo() {
                     textDecoration: "none",
                   }}
                 >
-                  Công nghệ thông tin
+                  {data.email}
+                </Typography>
+              </Box>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Typography
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  Quy mô
+                </Typography>
+                <Typography
+                  className="text-primary"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  {data.company_size}
+                </Typography>
+              </Box>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Typography
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  Năm thành lập
+                </Typography>
+                <Typography
+                  className="text-primary"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  {data.founded_year}
+                </Typography>
+              </Box>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Typography
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  Mã số thuế
+                </Typography>
+                <Typography
+                  className="text-primary"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  {data.tax_code}
+                </Typography>
+              </Box>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Typography
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    color: "black",
+                    textDecoration: "none",
+                  }}
+                >
+                  Quốc gia
+                </Typography>
+                <Typography
+                  className="text-primary"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  {data.country}
+                </Typography>
+              </Box>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Typography
+                className={"text-secondary"}
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  Tình/ Thành phố
+                </Typography>
+                <Typography
+                  className="text-primary"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  {data.city}
+                </Typography>
+              </Box>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Typography
+                className={"text-secondary"}
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  Địa chỉ
+                </Typography>
+                <Typography
+                  className="text-primary"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 400,
+                    fontSize: 15,
+                    textDecoration: "none",
+                  }}
+                >
+                  {data.address}
                 </Typography>
               </Box>
             </Box>
@@ -345,34 +496,19 @@ function CompanyInfo() {
               height="200px"
               width="100%"
             >
-              {/* <Image
-              src={"/map.png"}
-              alt="Event image"
-              fill
-              style={{
-                borderRadius: "20px",
-                objectFit: "cover",
-                maxHeight: "100%",
-                alignItems:"center"
-              }}
-            > */}
               <Button
-                // component={Link}
-                // prefetch={true}
                 href="/register"
                 sx={{
                   textTransform: "none",
                   boxShadow: 5,
                   color: "white",
                   borderRadius: 3,
-                  // marginRight: "5%",
                 }}
                 variant="contained"
                 color="primary"
               >
                 View map
               </Button>
-              {/* </Image> */}
             </Box>
           </Box>
         </Grid>

@@ -18,4 +18,5 @@ export interface ICompanyInfo {
     website: string | null;
     facebook: string | null;
     instagram: string | null;
+    [key: string]: any;
   }

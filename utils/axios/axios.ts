@@ -13,6 +13,24 @@ import { getAccessCookies } from "@/common/helpers/setCookies";
 export const axiosClient = axios.create({
   baseURL: API_URL,
   headers: {
+    "Content-Type":"multipart/form-data"
+  },
+  // timeout: 0,
+  paramsSerializer: {
+    serialize: (params) => stringify(params),
+  },
+  validateStatus: (status) => {
+    const strStatus = status.toString();
+
+    return strStatus.startsWith("2") || strStatus === "404";
+  },
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: false,
+  }),
+});
+export const subaxiosClient = axios.create({
+  baseURL: API_URL,
+  headers: {
     "Content-Type":"application/x-www-form-urlencoded"
   },
   // timeout: 0,
@@ -33,24 +51,24 @@ axiosClient.interceptors.request.use((config) => {
   if(getAccessCookies()){
     config.headers["Authorization"] = "Bearer " + getAccessCookies();
   }
-  if (config.method === "post") {
-    // if (config.data instanceof FormData) {
-    //   return config;
-    // }
+  // if (config.method === "post") {
+  //   // if (config.data instanceof FormData) {
+  //   //   return config;
+  //   // }
 
-    let dataPayload = config?.data;
+  //   // let dataPayload = config?.data;
 
-    if (typeof dataPayload === "string") {
-      dataPayload = JSON.parse(dataPayload);
-    }
+  //   // if (typeof dataPayload === "string") {
+  //   //   dataPayload = JSON.parse(dataPayload);
+  //   // }
 
-    if (dataPayload) {
-      const params = formatParams(dataPayload);
+  //   // if (dataPayload) {
+  //   //   const params = formatParams(dataPayload);
 
-      return { ...config, data: params };
-    }
-    return config;
-  }
+  //   //   return { ...config, data: params };
+  //   // }
+  //   return config;
+  // }
   return config;
 });
 

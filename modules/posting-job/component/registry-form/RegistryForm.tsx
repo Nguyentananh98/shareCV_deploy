@@ -1,19 +1,15 @@
 "use client";
 import {
   Box,
-  Button,
-  Grid,
   Typography,
-  InputAdornment,
   TextField,
+  Button,
 } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import { useState } from "react";
-import { ExtFile } from "@files-ui/react";
 import { Controller, useForm } from "react-hook-form";
 import { ICompanyInfo } from "../../types";
 import { addCompany } from "@/common/apis/posting-job";
-import { ImageUpload } from "../ImageUpload";
 import VideoUpload from "../VideoUpload";
 import { ImageListType } from "react-images-uploading";
 import {
@@ -41,6 +37,7 @@ function RegistryForm() {
     if (value != null) {
       setValue("logo", value[0]);
       setLogo(value);
+      console.log("logo",value[0])
     } else {
       setLogo(null);
     }
@@ -85,6 +82,7 @@ function RegistryForm() {
     // resolver,
   });
   const onSubmit = handleSubmit(async (data) => {
+    console.log("data",data)
     const res = await addCompany(data);
 
     if (res.status !== 200) {
@@ -97,18 +95,14 @@ function RegistryForm() {
     window.location.reload();
   });
   return (
-    <form onSubmit={onSubmit}>
+    <form style={{width:"100%"}} onSubmit={onSubmit}>
       <Box
         width="100%"
+        px={5}
         className="grid grid-cols-10 gap-10"
         alignItems={"center"}
         justifyContent={"center"}
-        sx={
-          {
-            // backgroundSize: "contain"
-            //   border: 1,
-          }
-        }
+        sx={{borderRadius:"5px",backgroundColor: "rgba(217, 217, 217, 0.2)", }}
       >
         <Box
           className="col-span-10"
@@ -160,10 +154,8 @@ function RegistryForm() {
         </Box>
         <Box
           className="col-span-5"
-          // height="100px"
           display="flex"
           flexDirection="row"
-          //   alignItems={"center"}
           justifyContent={"left"}
         >
           <Controller
@@ -536,6 +528,142 @@ function RegistryForm() {
             isMultiple={false}
           />
         </Box>
+      </Box>
+      <Box
+        mt={5}
+        width="100%"
+        px={5}
+        py={5}
+        className="grid grid-cols-10 gap-10"
+        alignItems={"center"}
+        justifyContent={"center"}
+        sx={{borderRadius:"5px",backgroundColor: "rgba(217, 217, 217, 0.2)", }}
+      >
+        <Box
+          className="col-span-10"
+          height="100px"
+          display="flex"
+          flexDirection="row"
+          alignItems={"center"}
+          justifyContent={"left"}
+        >
+          <Typography variant="h4" className="text-secondary font-bold">
+            Các nền tảng truyền thông
+          </Typography>
+        </Box>
+        <Box
+          className="col-span-5"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="linkedin"
+            render={({ field }) => (
+              <Box width="90%">
+                <Typography className="font-bold text-secondary">
+                  Linkedin
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="linkedin"
+                  {...field}
+                  fullWidth
+                  error={errors.email ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.email?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-5"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"right"}
+        >
+          <Controller
+            control={control}
+            name="website"
+            render={({ field }) => (
+              <Box width="90%">
+                <Typography className="font-bold text-secondary">
+                  Website
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="website"
+                  {...field}
+                  fullWidth
+                  error={errors.email ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.email?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-5"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="facebook"
+            render={({ field }) => (
+              <Box width="90%">
+                <Typography className="font-bold text-secondary">
+                  Facebook
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="facebook"
+                  {...field}
+                  fullWidth
+                  error={errors.email ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.email?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-5"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"right"}
+        >
+          <Controller
+            control={control}
+            name="instagram"
+            render={({ field }) => (
+              <Box width="90%">
+                <Typography className="font-bold text-secondary">
+                  Instagram
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="instagram"
+                  {...field}
+                  fullWidth
+                  error={errors.email ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.email?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Button type="submit"> Submit</Button>
       </Box>
     </form>
   );
