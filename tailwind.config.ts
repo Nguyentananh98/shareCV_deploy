@@ -16,8 +16,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#FFC436",
-        secondary: "#063776",
+        primary: "rgba(6, 55, 118, 1)",
+        secondary: "rgba(228, 241, 248, 1)",
+        tertiary: "rgba(9, 134, 202, 0.2)",
         background: "#FFF6F6",
         light: "#F9F9F9",
         dark: "#2D2827",

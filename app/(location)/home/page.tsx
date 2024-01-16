@@ -6,6 +6,9 @@ import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header"
 import CompanyInfo from "@/modules/posting-job/page/CompanyInfo";
 import HomePage from "@/modules/home/page/HomePage";
+import Introduce from "@/modules/home/section/introduce/Introduce";
+import Service from "@/modules/home/section/service/Service";
+import WhyUs from "@/modules/home/section/why-us/WhyUs";
 function Home() {
   // if (!getCookie("token")) {
   if (!true) {
@@ -21,7 +24,9 @@ function Home() {
       // justifyContent="center"
       sx={{overflow:"auto"}}
     >
-      <HomePage/>
+      <Introduce/>
+      <Service/>
+      <WhyUs/>
     </Box>
   );
 }

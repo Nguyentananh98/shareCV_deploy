@@ -136,7 +136,7 @@ function SearchCV() {
       <Box width={"19%"} p={2}>
         <Button
           type="submit"
-          className={"bg-secondary"}
+          className={"bg-primary"}
           sx={{ p: "10px", color: "white", borderRadius: "10px" }}
           aria-label="search"
           startIcon={<SearchIcon />}

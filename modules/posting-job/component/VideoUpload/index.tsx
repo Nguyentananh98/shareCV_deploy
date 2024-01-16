@@ -121,7 +121,7 @@ const VideoUpload = ({
             <label htmlFor={fileId}>
               <Button
                 variant="contained"
-                color="primary"
+                className="bg-primary"
                 startIcon={<FileUploadOutlinedIcon />}
                 component="span"
                 // disabled={noEdit}

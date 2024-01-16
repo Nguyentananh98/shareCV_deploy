@@ -2,7 +2,11 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
+import ServiceItem from "./component/ServiceIItem";
 function Service() {
+  const number = 500000;
+  const formattedNumber = number.toLocaleString("vi-VN"); // Định dạng số theo quy tắc tiếng Việt
+
   const [isPlaying, setIsPlaying] = React.useState(false);
 
   const handlePlayClick = () => {
@@ -28,88 +32,46 @@ function Service() {
       >
         <Typography
           py={5}
-          sx={{ fontSize: 30 }}
-          className="font-medium text-secondary"
+          sx={{ fontSize: 42 }}
+          className="font-semibold text-primary"
         >
-          Tại sao nên chọn ShareCV?
+          Dịch vụ của chúng tôi
         </Typography>
         <Box
           display="flex"
           width="100%"
           flexDirection="row"
-          alignItems="top"
-          justifyContent="left"
-          p={3}
+          alignItems="center"
+          justifyContent="space-between"
+          py={5}
         >
-          {/* <Box
-            display="flex"
-            width="100%"
-            flexDirection="column"
-            alignItems="top"
-            justifyContent="left"
-          > */}
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              width="100%"
-              alignItems="top"
-              justifyContent="left"
-              p={3}
-            >
-              <div style={{ display: "flex", flexDirection: "row",padding:5 }}>
-                <Image src={"/ai.png"} width={100} height={100} alt={""} />
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Typography>AI Lọc CV theo JD</Typography>
-                  <Typography>desciption of AI lọc theo JD</Typography>
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row",padding:5  }}>
-                <Image src={"/ai.png"} width={100} height={100} alt={""} />
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Typography>AI Lọc CV theo JD</Typography>
-                  <Typography>desciption of AI lọc theo JD</Typography>
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row",padding:5  }}>
-                <Image src={"/ai.png"} width={100} height={100} alt={""} />
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Typography>AI Lọc CV theo JD</Typography>
-                  <Typography>desciption of AI lọc theo JD</Typography>
-                </div>
-              </div>
-            </Box>
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              width="100%"
-              alignItems="top"
-              justifyContent="center"
-              p={3}
-            >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Typography>AI Lọc CV theo JD</Typography>
-                  <Typography>desciption of AI lọc theo JD</Typography>
-                </div>
-            </Box>
-          {/* </Box> */}
+          <Box width={"30%"}>
+            <ServiceItem
+              title={"Đăng tin tuyển dụng"}
+              description={"description"}
+              image={"/robot.png"}
+              link={""}
+            />
+          </Box>
+          <Box width={"30%"}>
+            <ServiceItem
+              title={"Đăng tin tuyển dụng"}
+              description={"đăng tin tuyển dụng lên bất cứ lúc nào, ai cũng có thể xem rồi tải về hoặc không tải về"}
+              image={"/robot.png"}
+              link={""}
+            />
+          </Box>
+          <Box width={"30%"}>
+            <ServiceItem
+              title={"Đăng tin tuyển dụng"}
+              description={"description"}
+              image={"/robot.png"}
+              link={""}
+            />
+          </Box>
         </Box>
       </Box>
-      <Box
-        display="flex"
-        width="100%"
-        flexDirection="column"
-        alignItems="top"
-        justifyContent="left"
-        py={5}
-      >
-        <Typography
-          py={5}
-          sx={{ fontSize: 30 }}
-          className="font-medium text-secondary"
-        >
-          Tìm Kiếm Hồ Sơ
-        </Typography>
-      </Box>
+      
     </Box>
   );
 }
