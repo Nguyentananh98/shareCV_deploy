@@ -11,14 +11,21 @@ import { AxiosResponse } from "axios";
 export const login = (
   data: IUserLogin
 ): Promise<AxiosResponse<IAuthResponse>> => {
-  return axiosClient.post("/auth/login", data)
+  const formData = new FormData();
+  formData.append("username", data.username);
+  formData.append("password", data.password);
+  return axiosClient.post("/auth/login", formData,{headers: {
+    "Content-Type": "application/x-www-urlencoded",
+  }})
 };
 
 export const register = (
   data: IUserRegister
 ): Promise<IRegisterResponse> => {
   const role = "recruiter"
-  return axiosClient.post("/auth/sign-up",data);
+  return axiosClient.post("/auth/sign-up",data,{headers: {
+    "Content-Type": "application/json",
+  }});
 };
 
 export const forgetPassword = (email: string) => {

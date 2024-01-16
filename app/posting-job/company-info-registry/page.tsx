@@ -20,16 +20,16 @@ function CompanyInfopage() {
     >
       <Header />
       <Box
+      className="bg-tertiary"
         display="flex"
         width="100%"
         height="200px"
         py={3}
-        sx={{ backgroundColor: "#FFF5C7" }}
         justifyContent="center"
         alignItems="center"
         flex={1}
       >
-        <Typography variant="h4">Thêm vị trí</Typography>
+        <Typography className="font-semibold text-primary" variant="h4">Điền thông tin công ty</Typography>
       </Box>
 
       <Box

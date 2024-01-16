@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ICompanyInfo } from "../../types";
 import { addCompany } from "@/common/apis/posting-job";
-import VideoUpload from "../VideoUpload";
+import FileUpload from "../FileUpload";
 import { ImageListType } from "react-images-uploading";
 import {
   convertToReduceImageList,
@@ -112,7 +112,7 @@ function RegistryForm() {
           alignItems={"center"}
           justifyContent={"left"}
         >
-          <Typography variant="h4" className="text-secondary font-bold">
+          <Typography variant="h4" className="text-primary font-bold">
             Thông tin công ty*
           </Typography>
         </Box>
@@ -124,7 +124,7 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <VideoUpload
+          <FileUpload
             fileId="logo"
             type={"image"}
             file={logo}
@@ -142,7 +142,7 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <VideoUpload
+          <FileUpload
             fileId={"cover_image"}
             title="Ảnh bìa"
             file={coverImage}
@@ -163,7 +163,7 @@ function RegistryForm() {
             name="company_name"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Tên công ty
                 </Typography>
                 <TextField
@@ -192,7 +192,7 @@ function RegistryForm() {
             name="industry"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Ngành nghề
                 </Typography>
                 <TextField
@@ -227,7 +227,7 @@ function RegistryForm() {
             name="description"
             render={({ field }) => (
               <Box width="100%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Mô tả công ty
                 </Typography>
                 <TextField
@@ -265,7 +265,7 @@ function RegistryForm() {
             name="email"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Email
                 </Typography>
                 <TextField
@@ -300,7 +300,7 @@ function RegistryForm() {
             name="phone"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Số điện thoại
                 </Typography>
                 <TextField
@@ -330,7 +330,7 @@ function RegistryForm() {
             name="founded_year"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Năm thành lập
                 </Typography>
                 <TextField
@@ -359,7 +359,7 @@ function RegistryForm() {
             name="company_size"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Quy mô
                 </Typography>
                 <TextField
@@ -388,7 +388,7 @@ function RegistryForm() {
             name="tax_code"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Mã số thuế
                 </Typography>
                 <TextField
@@ -417,7 +417,7 @@ function RegistryForm() {
             name="address"
             render={({ field }) => (
               <Box width="100%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Địa chỉ
                 </Typography>
                 <TextField
@@ -446,7 +446,7 @@ function RegistryForm() {
             name="city"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Tỉnh/Thành phố
                 </Typography>
                 <TextField
@@ -475,7 +475,7 @@ function RegistryForm() {
             name="country"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Quốc gia
                 </Typography>
                 <TextField
@@ -500,7 +500,7 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <VideoUpload
+          <FileUpload
             fileId={"list_image"}
             title="Hình ảnh giới thiệu công ty"
             file={listImage}
@@ -518,7 +518,7 @@ function RegistryForm() {
           //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <VideoUpload
+          <FileUpload
             fileId={"video"}
             file={video}
             title={"Video giới thiệu công ty"}
@@ -547,7 +547,7 @@ function RegistryForm() {
           alignItems={"center"}
           justifyContent={"left"}
         >
-          <Typography variant="h4" className="text-secondary font-bold">
+          <Typography variant="h4" className="text-primary font-bold">
             Các nền tảng truyền thông
           </Typography>
         </Box>
@@ -562,7 +562,7 @@ function RegistryForm() {
             name="linkedin"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Linkedin
                 </Typography>
                 <TextField
@@ -590,7 +590,7 @@ function RegistryForm() {
             name="website"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Website
                 </Typography>
                 <TextField
@@ -618,7 +618,7 @@ function RegistryForm() {
             name="facebook"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Facebook
                 </Typography>
                 <TextField
@@ -646,7 +646,7 @@ function RegistryForm() {
             name="instagram"
             render={({ field }) => (
               <Box width="90%">
-                <Typography className="font-bold text-secondary">
+                <Typography className="font-bold text-primary">
                   Instagram
                 </Typography>
                 <TextField
@@ -663,7 +663,9 @@ function RegistryForm() {
             )}
           />
         </Box>
-        <Button type="submit"> Submit</Button>
+      </Box>
+      <Box width="100%" display="flex" justifyContent={"end"} py={5}>
+        <Button variant="outlined" sx={{width:"200px", height:"50px", borderRadius:"20px"}} className="bg-primary border-primary text-white hover:border-primary hover:bg-white hover:text-primary" type="submit"> Lưu </Button>
       </Box>
     </form>
   );

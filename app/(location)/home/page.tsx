@@ -9,6 +9,8 @@ import HomePage from "@/modules/home/page/HomePage";
 import Introduce from "@/modules/home/section/introduce/Introduce";
 import Service from "@/modules/home/section/service/Service";
 import WhyUs from "@/modules/home/section/why-us/WhyUs";
+import Benefit from "@/modules/home/section/benefit/Benefit";
+import Review from "@/modules/home/section/review/Review";
 function Home() {
   // if (!getCookie("token")) {
   if (!true) {
@@ -27,6 +29,8 @@ function Home() {
       <Introduce/>
       <Service/>
       <WhyUs/>
+      <Benefit/>
+      <Review/>
     </Box>
   );
 }

@@ -3,13 +3,13 @@ import React, { ChangeEvent, useEffect, useRef } from "react";
 import { MuiFileInput } from "mui-file-input";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import VideoItem from "./VideoItem";
+import FileItem from "./FileItem";
 import { Clear } from "@mui/icons-material";
 interface FileType {
   video: "video";
   image: "image";
 }
-export interface UploadImageProps {
+export interface UploadFileProps {
   fileId: string;
   title: string;
   file: File[] | null;
@@ -20,7 +20,7 @@ export interface UploadImageProps {
   dataURLKey?: string;
   isMultiple: Boolean;
 }
-const VideoUpload = ({
+const FileUpload = ({
   fileId,
   file,
   title,
@@ -30,7 +30,7 @@ const VideoUpload = ({
   isMultiple,
   maxImage,
   dataURLKey,
-}: UploadImageProps) => {
+}: UploadFileProps) => {
   // const [file, setFile] = React.useState<File | null>(null);
 
   // const handleChange = (value: File | null) => {
@@ -81,7 +81,7 @@ const VideoUpload = ({
   }
   return (
     <Box alignContent={"center"} height="100%" style={{ width: "100%" }}>
-      <Typography variant="h6" className="text-secondary font-medium">
+      <Typography variant="h6" className="text-primary font-medium">
         {title}
       </Typography>
       <Box
@@ -182,4 +182,4 @@ const VideoUpload = ({
     </Box>
   );
 };
-export default VideoUpload;
+export default FileUpload;

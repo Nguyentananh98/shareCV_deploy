@@ -133,7 +133,7 @@ function WhyUs() {
             display="flex"
             // flexDirection={"row"}
             width="100%"
-            H-full
+            height="100%"
             alignItems="center"
             justifyContent="center"
             p={3}

@@ -182,6 +182,7 @@ export const RegistForm = ({
               <Select
                 labelId="demo-simple-select-label"
                 // value={age}
+                {...field}
                 sx={{ width: "100%" }}
                 id="role"
                 label="Vai trò"
@@ -305,7 +306,7 @@ export const RegistForm = ({
 
         <Button
           type="submit"
-          disabled={(isDirty && !isValid) || !checked}
+          // disabled={(isDirty && !isValid) || !checked}
           variant="contained"
           sx={{ textTransform: "none", py: 1 }}
         >

@@ -5,7 +5,7 @@ import { Box, Button, Chip, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ChangeEvent, useState } from "react";
 
-export interface VideoItemProps {
+export interface FileItemProps {
   file: File;
   onUpdate: (e: ChangeEvent<HTMLInputElement>) => void;
   onDelete: (e: ChangeEvent<HTMLInputElement>|null) => void;
@@ -14,11 +14,11 @@ const ListItem = styled("div")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-const VideoItem = ({
+const FileItem = ({
   file,
   onDelete,
   onUpdate,
-}: VideoItemProps) => {
+}: FileItemProps) => {
   return (
     <ListItem>
       {/* <Chip label={name} icon={<UploadFileIcon />} variant="outlined" sx={{ maxWidth: 200 }} onDelete={onDelete} /> */}
@@ -48,4 +48,4 @@ const VideoItem = ({
   );
 };
 
-export default VideoItem;
+export default FileItem;
