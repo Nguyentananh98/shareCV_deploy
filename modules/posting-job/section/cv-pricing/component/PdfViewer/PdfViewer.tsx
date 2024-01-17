@@ -1,12 +1,12 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useResizeObserver } from '@wojtekmaj/react-hooks';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-import './Sample.css';
+import './PdfViewer.css';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 
@@ -26,8 +26,17 @@ const maxWidth = 800;
 
 type PDFFile = string | File | null;
 
-export default function Sample() {
-  const [file, setFile] = useState<PDFFile>('./sample.pdf');
+interface PdfViewerProps {
+    url:string
+  }
+export default function PdfViewer({url}:PdfViewerProps) {
+  const [file, setFile] = useState<PDFFile>('/Resume-KieuKhanhQuan.pdf');
+  useEffect(() => {
+    if(url!=null){
+        setFile(url);
+    }
+  }, [url])
+
   const [numPages, setNumPages] = useState<number>();
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
@@ -42,28 +51,13 @@ export default function Sample() {
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
-  function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const { files } = event.target;
-
-    if (files && files[0]) {
-      setFile(files[0] || null);
-    }
-  }
-
   function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
     setNumPages(nextNumPages);
   }
 
   return (
-    <div className="Example">
-      <header>
-        <h1>react-pdf sample page</h1>
-      </header>
+    <div className="Example" style={{width:"100%"}}>
       <div className="Example__container">
-        <div className="Example__container__load">
-          <label htmlFor="file">Load from file:</label>{' '}
-          <input onChange={onFileChange} type="file" />
-        </div>
         <div className="Example__container__document" ref={setContainerRef}>
           <Document file={file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
             {Array.from(new Array(numPages), (el, index) => (

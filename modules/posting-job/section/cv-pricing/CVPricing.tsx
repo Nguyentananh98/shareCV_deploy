@@ -8,30 +8,8 @@ import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState, useCallback } from "react";
 import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
 import { getAccessCookies } from "@/common/helpers/setCookies";
-import { pdfjs, Document, Page } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
+import PdfViewer from "./component/PdfViewer/PdfViewer";
 
-
-import type { PDFDocumentProxy } from 'pdfjs-dist';
-
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.js',
-//   import.meta.url,
-// ).toString();
-
-pdfjs.GlobalWorkerOptions.workerSrc = require("pdfjs-dist/build/pdf.worker.min.js")
-
-const options = {
-  cMapUrl: '/cmaps/',
-  standardFontDataUrl: '/standard_fonts/',
-};
-
-const resizeObserverOptions = {};
-
-const maxWidth = 800;
-
-type PDFFile = string | File | null;
 const initialForm: ICompanyInfoResponse = {
   company_name: "",
   industry: "",
@@ -57,20 +35,10 @@ function CVPricing() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [file, setFile] = useState<PDFFile>("./Resume-KieuKhanhQuan.pdf");
+  const [file, setFile] = useState<string>("/Resume-KieuKhanhQuan.pdf");
   const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
   const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
-  function onFileChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    const { files } = event.target;
-
-    if (files && files[0]) {
-      setFile(files[0] || null);
-    }
-  }
-  function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
-    setNumPages(nextNumPages);
-  }
   // useEffect(() => {
   //   try {
   //     getCompanyInfo().then((res) => {
@@ -85,17 +53,17 @@ function CVPricing() {
     <Box
       width="100%"
       px={5}
-      className="grid grid-cols-10 gap-10  bg-secondary"
+      py={5}
+      className="grid grid-cols-10 gap-5  bg-white"
       alignItems={"center"}
       justifyContent={"center"}
-      sx={{ borderRadius: "5px", backgroundColor: "rgba(217, 217, 217, 0.2)" }}
     >
       <Box
         className="col-span-5"
-        height="300px"
+        // height="200px"
         display="flex"
         flexDirection="row"
-        alignItems={"center"}
+        alignItems={"top"}
         justifyContent={"left"}
       >
         <Typography
@@ -113,10 +81,10 @@ function CVPricing() {
       </Box>
       <Box
         className="col-span-5"
-        height="300px"
+        // height="200px"
         display="flex"
         flexDirection="row"
-        alignItems={"center"}
+        alignItems={"top"}
         justifyContent={"right"}
       >
         <Button
@@ -137,26 +105,79 @@ function CVPricing() {
         </Button>
       </Box>
       <Box
-        className="col-span-5"
+        className="col-span-7"
         display="flex"
+        height="100%"
+        // height="700px"
         flexDirection="row"
-        alignItems={"center"}
+        alignItems={"top"}
         justifyContent={"left"}
+        sx={{ overflow: "auto" }}
       >
-        <Document file={file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
-            {Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                width={500}
-                renderAnnotationLayer={false}
-              renderTextLayer={false}
-              />
-            ))}
-          </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p>
+        <PdfViewer url="/Resume-KieuKhanhQuan.pdf" />
+      </Box>
+      <Box
+        className="col-span-3"
+        display="flex"
+        height="100%"
+        flexDirection="column"
+        alignItems={"top"}
+        justifyContent={"left"}
+        sx={{ overflow: "auto" }}
+      >
+        <Box
+          display="flex"
+          width="100%"
+          flexDirection={"column"}
+          alignItems={"top"}
+          justifyContent={"right"}
+          className="border-primary bg-secondary"
+          sx={{
+            color: "black",
+            border: 1,
+            // borderColor: "primary",
+            borderRadius: "20px",
+            p: 3,
+          }}
+        >
+          <Typography
+            variant="h6"
+            className="text-primary"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontWeight: 700,
+              extDecoration: "none",
+            }}
+          >
+            Thông tin công ty
+          </Typography>
+          <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+            <Typography
+              sx={{
+                display: { xs: "none", md: "flex" },
+                fontWeight: 400,
+                fontSize: 15,
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              Ngành Nghề
+            </Typography>
+            <Typography
+              className="text-primary"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontWeight: 400,
+                fontSize: 15,
+                textDecoration: "none",
+              }}
+            >
+              {data.industry}
+            </Typography>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

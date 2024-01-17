@@ -28,7 +28,7 @@ export const CardCarouselItem = ({
     >
       <Paper
         sx={{
-          height: carouselCenter ? "auto" : "300px",
+          height: carouselCenter ? "auto" : "200px",
           width: "270px",
           m: 3,
           transition: "height 0.3s ease 0s",
@@ -39,8 +39,8 @@ export const CardCarouselItem = ({
         <Box
           display="flex"
           flex={1}
-          height="300px"
-          width="270px"
+          height="200px"
+          width="200px"
           position="relative"
           zIndex={2}
         >
