@@ -32,6 +32,28 @@ export interface IAuthResponse {
 
   detail?: string;
 }
+export interface ICompanyInfoResponse {
+  company_name: string;
+    industry: string;
+    description: string;
+    tax_code: string;
+    phone: string;
+    email: string;
+    founded_year: number;
+    company_size: number;
+    address: string;
+    city: string;
+    country: string;
+    logo: string;
+    cover_image: string|null;
+    company_images: string[]|null;
+    company_video: string|null;
+    linkedin: string | null;
+    website: string | null;
+    facebook: string | null;
+    instagram: string | null;
+    [key: string]: any;
+}
 
 export interface IRegisterResponse {
   detail: string;

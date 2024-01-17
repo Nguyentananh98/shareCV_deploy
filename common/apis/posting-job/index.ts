@@ -20,6 +20,12 @@ export const addCompany = (data: ICompanyInfo): Promise<IAuthResponse> => {
       else if (key === "cover_image" && data.cover_image) {
         formData.append(key, data.cover_image);
       }
+      else if (key === "company_images" && data.company_images) {
+        const size=data.company_images.length
+        for(let i =0 ;i<size;i++){
+          formData.append(key, data.company_images[i]);
+        }
+      }
       else if (key === "company_video" && data.company_video) {
         formData.append(key, data.company_video);
       }

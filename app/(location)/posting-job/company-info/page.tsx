@@ -4,7 +4,7 @@ import { removeAccessCookies } from "@/common/helpers/setCookies";
 import { Box, Button, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header"
-import CompanyInfo from "@/modules/posting-job/page/CompanyInfo";
+import CompanyInfo from "@/modules/posting-job/section/company-info/CompanyInfo";
 function CompanyInfoPage() {
   // if (!getCookie("token")) {
   if (!true) {
@@ -20,7 +20,6 @@ function CompanyInfoPage() {
       justifyContent="center"
       sx={{overflow:"auto"}}
     >
-      <Header/>
       <Box display="flex" width="100%" minHeight="400px" maxHeight="500px" sx={{backgroundImage:`url(${"/background-posting-job.png"})`}} justifyContent="center"
       alignItems="center" flex={1}>
        <Typography variant="h3">Thêm vị trí</Typography>

@@ -6,9 +6,14 @@ import { PrevSliderArrow, NextSliderArrow } from "./CardCarouselArrow";
 import { useState } from "react";
 import { CardCarouselItem } from "./CardCarouselItem";
 
-export function CardCarousel() {
+interface CardCarouselProps {
+  listImage: string[] ;
+}
+export function CardCarousel({
+  listImage
+}: CardCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const listImage=[{img: "/Logo.png"},{img: "/Logo.png"},{img: "/Logo.png"},{img: "/Logo.png"},{img: "/Logo.png"}]
+  // const listImage=[{img: "/Logo.png"},{img: "/Logo.png"},{img: "/Logo.png"},{img: "/Logo.png"},{img: "/Logo.png"}]
   const sliderSetting: Settings = {
     className: "center",
     // dots: true,
@@ -58,7 +63,7 @@ export function CardCarousel() {
         {listImage.map((data, index) => {
           // const eventProps = convertEventDataToCardProps(data);
           return (
-            <CardCarouselItem key={index} img={data.img} title={""} description={""} location={""} participant={""} carouselCenter={false}              
+            <CardCarouselItem key={index} img={data} title={""} description={""} location={""} participant={""} carouselCenter={false}              
             />
           );
         })} 

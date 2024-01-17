@@ -8,15 +8,10 @@ import {
 import { redirect, RedirectType } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { ICompanyInfo } from "../../types";
+import { ICompanyInfo } from "../../../../types";
 import { addCompany } from "@/common/apis/posting-job";
 import FileUpload from "../FileUpload";
-import { ImageListType } from "react-images-uploading";
-import {
-  convertToReduceImageList,
-  convertToImageListType,
-} from "../ImageUpload/imageUpload";
-import { ITitleImageItem } from "../../types";
+import { ITitleImageItem } from "../../../../types";
 function RegistryForm() {
   if (!true) {
     redirect("/login", RedirectType.replace);
@@ -27,10 +22,6 @@ function RegistryForm() {
   const [listImage, setListImage] = useState<File[] | null>(null);
   const [video, setVideo] = useState<File[] | null>(null);
   const [formData, setFormData] = useState(new FormData());
-  const handleFileChange = (imageList: ImageListType) => {
-    console.log(imageList);
-    setFormImageList((prev) => convertToReduceImageList(imageList));
-  };
   const handleLogoChange = (value: File[] | null) => {
     // setFile(imageList)
     console.log(value);
@@ -56,7 +47,7 @@ function RegistryForm() {
     // setFile(imageList)
     console.log(value);
     if (value != null) {
-      // setValue("cover_image", value[0]);
+      setValue("company_images", value);
       setListImage(value);
     } else {
       setListImage(null);

@@ -3,13 +3,13 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { CardCarousel } from "../component/Carousel/CardCarousel";
+import { CardCarousel } from "./component/Carousel/CardCarousel";
 import ReactPlayer from "react-player";
 import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState } from "react";
-import { ICompanyInfo } from "@/common/interfaces";
+import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
 import { getAccessCookies } from "@/common/helpers/setCookies";
-const initialForm: ICompanyInfo = {
+const initialForm: ICompanyInfoResponse = {
   company_name: "",
   industry: "",
   description: "",
@@ -21,7 +21,7 @@ const initialForm: ICompanyInfo = {
   address: "",
   city: "",
   country: "",
-  logo: null,
+  logo: "/Logo.png",
   cover_image: null,
   company_images: null,
   company_video: null,
@@ -34,11 +34,11 @@ function CompanyInfo() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [data,setData] = useState<ICompanyInfo>(initialForm);
+  const [data,setData] = useState<ICompanyInfoResponse>(initialForm);
   useEffect(() => {
     try {
       getCompanyInfo().then(res => {
-        setData(res.data);
+        setData(res.data.data);
         console.log(res);
       })
     } catch(e){
@@ -59,12 +59,12 @@ function CompanyInfo() {
         container
         spacing={5}
         py={5}
-        px={5}
+        // px={5}
         className="flex w-full"
         // height="700px"
         sx={{
           backgroundSize: "cover",
-          backgroundColor: "rgba(217, 217, 217, 0.1)",
+          // backgroundColor: "rgba(217, 217, 217, 0.1)",
         }}
       >
         <Grid
@@ -73,13 +73,13 @@ function CompanyInfo() {
           height="100px"
           display="flex"
           flexDirection="row"
-          alignItems={"center"}
+          alignItems={"top"}
           justifyContent={"left"}
         >
-          <Image src="/Logo.png" height={100} width={100} alt="" />
-          <Box display="flex" flexDirection="column">
-            <Typography>{data.company_name}</Typography>
-            <Typography>{data.website}</Typography>
+          <Image src={data.logo? data.logo:"/Logo.png"} height={100} width={100} alt="" />
+          <Box display="flex" flexDirection="column" py={3} alignContent={"top"}>
+            <Typography className="font-bold text-primary">{data.company_name}</Typography>
+            <Typography className="font-bold text-tertiary">{data.website}</Typography>
           </Box>
         </Grid>
         <Grid
@@ -127,12 +127,12 @@ function CompanyInfo() {
             py={5}
             className={"border-primary"}
             sx={{
-              borderTop: 1,
-              borderBottom: 1,
+              // borderTop: 1,
+              // borderBottom: 1,
             }}
           >
             <Typography
-              className="text-secondary"
+              className="text-primary"
               variant="h6"
               sx={{
                 display: { xs: "none", md: "flex" },
@@ -146,7 +146,7 @@ function CompanyInfo() {
               {data.description}
             </Typography>
           </Box>
-
+          {data.company_images!== null? 
           <Box
             display="flex"
             flexDirection={"column"}
@@ -154,10 +154,10 @@ function CompanyInfo() {
             sx={{ pt: 3 }}
           >
             <Typography
-              className="text-secondary"
+              className="text-primary"
               variant="h6"
               sx={{
-                mr: 2,
+                // mr: 2,
                 display: { xs: "none", md: "flex" },
                 fontWeight: 700,
                 textDecoration: "none",
@@ -165,8 +165,9 @@ function CompanyInfo() {
             >
               Hình ảnh
             </Typography>
-            <CardCarousel />
+            <CardCarousel listImage={data.company_images} />
           </Box>
+          : <></>}
           <Box
             display="flex"
             flexDirection={"column"}
@@ -174,7 +175,7 @@ function CompanyInfo() {
             sx={{ pt: 3 }}
           >
             <Typography
-              className="text-secondary"
+              className="text-primary"
               variant="h6"
               sx={{
                 mr: 2,
@@ -234,10 +235,10 @@ function CompanyInfo() {
               display="flex"
               flexDirection={"column"}
               justifyContent={"right"}
-              className="border-primary"
+              className="border-primary bg-secondary"
               sx={{
                 color: "black",
-                border: 1,
+                // border: 1,
                 // borderColor: "primary",
                 borderRadius: "20px",
                 p: 3,
@@ -245,7 +246,7 @@ function CompanyInfo() {
             >
               <Typography
                 variant="h6"
-                className="text-secondary"
+                className="text-primary"
                 sx={{
                   mr: 2,
                   display: { xs: "none", md: "flex" },
@@ -432,7 +433,7 @@ function CompanyInfo() {
               </Box>
               <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
                 <Typography
-                className={"text-secondary"}
+                className={"text-primary"}
                   sx={{
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
@@ -457,7 +458,7 @@ function CompanyInfo() {
               </Box>
               <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
                 <Typography
-                className={"text-secondary"}
+                className={"text-primary"}
                   sx={{
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,

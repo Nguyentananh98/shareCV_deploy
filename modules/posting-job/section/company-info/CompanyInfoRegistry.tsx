@@ -1,19 +1,18 @@
 "use client";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
-import RegistryForm from "../component/registry-form/RegistryForm";
+import RegistryForm from "./component/registry-form/RegistryForm";
 import { useState } from "react";
 import { ExtFile } from "@files-ui/react";
 import { Controller, useForm } from "react-hook-form";
-import { ICompanyInfo } from "../types";
+import { ICompanyInfo } from "../../types";
 import { addCompany } from "@/common/apis/posting-job";
-import { ImageUpload } from "../component/ImageUpload";
-import { ImageListType } from "react-images-uploading";
-import {
-    convertToReduceImageList,
-    convertToImageListType,
-  } from "../component/ImageUpload/imageUpload";
-import { ITitleImageItem } from "../types";
+// import { ImageListType } from "react-images-uploading";
+// import {
+//     convertToReduceImageList,
+//     convertToImageListType,
+//   } from "./component/ImageUpload/imageUpload";
+import { ITitleImageItem } from "../../types";
 function CompanyInfoRegistry() {
   if (!true) {
     redirect("/login", RedirectType.replace);
