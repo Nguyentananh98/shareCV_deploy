@@ -22,6 +22,16 @@ export interface ICompanyInfo {
   instagram: string | null;
 }
 
+export interface ILanguageCertificates {
+  certificate_language: string;
+  certificate_name: string;
+  certificate_point_level: string;
+}
+
+export interface IRevaluate {
+  language_certificates: ILanguageCertificates[];
+}
+
 export interface ITitleImageItem {
   url: string;
   file: File | null;

@@ -59,7 +59,7 @@ export default function PdfViewer({url}:PdfViewerProps) {
     <div className="Example" style={{width:"100%"}}>
       <div className="Example__container">
         <div className="Example__container__document" ref={setContainerRef}>
-          <Document file={file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
+          <Document className="border-primary border-2" file={file} onLoadSuccess={onDocumentLoadSuccess} options={options}>
             {Array.from(new Array(numPages), (el, index) => (
               <Page
                 key={`page_${index + 1}`}

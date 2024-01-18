@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,8 @@ import { useEffect, useState, useCallback } from "react";
 import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
 import { getAccessCookies } from "@/common/helpers/setCookies";
 import PdfViewer from "./component/PdfViewer/PdfViewer";
+import { Controller, useForm } from "react-hook-form";
+import RevaluateForm from "./component/RevaluateForm/RevaluateForm";
 
 const initialForm: ICompanyInfoResponse = {
   company_name: "",
@@ -35,10 +37,34 @@ function CVPricing() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [file, setFile] = useState<string>("/Resume-KieuKhanhQuan.pdf");
   const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
-  const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [inputList, setInputList] = useState<string[]>([""]); // Danh sách các ô nhập thông tin
+  const [isEdit, setIsEdit] = useState<Boolean>(true);
+  // Hàm xử lý khi bấm nút "Thêm"
+  const handleAddInput = () => {
+    setInputList([...inputList, ""]);
+  };
+
+  // Hàm xử lý khi thay đổi giá trị của ô nhập thông tin
+  const handleInputChange = (index: number, value: string) => {
+    const newList = [...inputList];
+    newList[index] = value;
+    setInputList(newList);
+  };
+  const handleRemoveInput = (index: number) => {
+    const newList = [...inputList];
+    newList.splice(index, 1);
+    setInputList(newList);
+  };
+  const {
+    control,
+    handleSubmit,
+    setError,
+    setValue,
+    formState: { errors, isDirty = false, isValid = true },
+  } = useForm<ICompanyInfo>({
+    // resolver,
+  });
   // useEffect(() => {
   //   try {
   //     getCompanyInfo().then((res) => {
@@ -118,6 +144,7 @@ function CVPricing() {
       </Box>
       <Box
         className="col-span-3"
+        py={"1em"}
         display="flex"
         height="100%"
         flexDirection="column"
@@ -131,7 +158,7 @@ function CVPricing() {
           flexDirection={"column"}
           alignItems={"top"}
           justifyContent={"right"}
-          className="border-primary bg-secondary"
+          className="border-primary bg-white"
           sx={{
             color: "black",
             border: 1,
@@ -140,43 +167,7 @@ function CVPricing() {
             p: 3,
           }}
         >
-          <Typography
-            variant="h6"
-            className="text-primary"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontWeight: 700,
-              extDecoration: "none",
-            }}
-          >
-            Thông tin công ty
-          </Typography>
-          <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
-            <Typography
-              sx={{
-                display: { xs: "none", md: "flex" },
-                fontWeight: 400,
-                fontSize: 15,
-                color: "black",
-                textDecoration: "none",
-              }}
-            >
-              Ngành Nghề
-            </Typography>
-            <Typography
-              className="text-primary"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontWeight: 400,
-                fontSize: 15,
-                textDecoration: "none",
-              }}
-            >
-              {data.industry}
-            </Typography>
-          </Box>
+          <RevaluateForm />
         </Box>
       </Box>
     </Box>

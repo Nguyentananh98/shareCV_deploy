@@ -12,7 +12,7 @@ const theme = createTheme({
         // fontSize: 'inherit',
     },
     palette:{
-      primary:{main:"#FFC436", contrastText:"#fff",light:"#FFD556",dark:"#E1A22D"},
+      primary:{main:"#063776", contrastText:"#fff",light:"#FFFFFF",dark:"#FFFFFF"},
       secondary:{main:"#063776", contrastText:"#FFFFFF"}
     }
 });
