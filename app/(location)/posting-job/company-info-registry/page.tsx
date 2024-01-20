@@ -2,7 +2,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header";
-import CompanyInfoRegistry from "@/modules/posting-job/section/company-info/CompanyInfoRegistry";
+import CompanyInfoRegistry from "@/modules/posting-job/page/company-info/CompanyInfoRegistry";
 function CompanyInfopage() {
   // if (!getCookie("token")) {
   if (!true) {

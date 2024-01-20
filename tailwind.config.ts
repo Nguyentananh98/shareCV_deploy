@@ -19,7 +19,7 @@ const config: Config = {
         primary: "rgba(6, 55, 118, 1)",
         secondary: "rgba(228, 241, 248, 1)",
         tertiary: "rgba(9, 134, 202, 0.2)",
-        background: "#FFF6F6",
+        background: "rgba(248, 251, 253, 1)",
         light: "#F9F9F9",
         dark: "#2D2827",
         "dark-400": "#373737",

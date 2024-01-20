@@ -30,6 +30,7 @@ export interface ILanguageCertificates {
 
 export interface IRevaluate {
   language_certificates: ILanguageCertificates[];
+  degree: string[];
 }
 
 export interface ITitleImageItem {

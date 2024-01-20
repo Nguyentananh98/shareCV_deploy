@@ -13,6 +13,7 @@ import { getAccessCookies } from "@/common/helpers/setCookies";
 export const axiosClient = axios.create({
   baseURL: API_URL,
   headers: {
+    "ngrok-skip-browser-warning": "69420",
     "Content-Type":"multipart/form-data"
   },
   // timeout: 0,

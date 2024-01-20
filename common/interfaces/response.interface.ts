@@ -1,3 +1,4 @@
+import { ILanguageCertificates } from "@/modules/posting-job/types";
 import { ICart, ICartItems } from "./cart.interface";
 
 export interface IMetadata {
@@ -53,6 +54,40 @@ export interface ICompanyInfoResponse {
     facebook: string | null;
     instagram: string | null;
     [key: string]: any;
+}
+export interface IJobDetailResponse {
+  company_logo: string,
+    company_name: string,
+    company_cover_image: string,
+    status: string,
+    job_title: string|null,
+    industry: string|null,
+    gender: string|null,
+    job_type: string|null,
+    skills: string|null,
+    received_job_time: string|null,
+    working_time: string|null,
+    description: string|null,
+    requirement: string|null,
+    benefits: string|null,
+    levels: string|null,
+    roles: string|null,
+    yoe: string|null,
+    num_recruit: string|null,
+    education: string[]|null,
+    language_certificate: ILanguageCertificates[]| null,
+    "other_certificate": [
+      {
+        "certificate_name": "string",
+        "certificate_level": "string"
+      }
+    ],
+    "min_salary": null,
+    "max_salary": null,
+    "address": null,
+    "city": null,
+    "country": null,
+    "admin_decline_reason": null
 }
 
 export interface IRegisterResponse {

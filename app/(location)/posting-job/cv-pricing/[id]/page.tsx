@@ -4,8 +4,8 @@ import { removeAccessCookies } from "@/common/helpers/setCookies";
 import { Box, Button, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header";
-import CVPricing from "@/modules/posting-job/section/cv-pricing/CVPricing";
-import Sample from "@/modules/posting-job/section/cv-pricing/component/PdfViewer/PdfViewer";
+import CVPricing from "@/modules/posting-job/page/cv-pricing/CVPricing";
+import Sample from "@/modules/posting-job/page/cv-pricing/component/PdfViewer/PdfViewer";
 function CVPricingPage() {
   // if (!getCookie("token")) {
   if (!true) {

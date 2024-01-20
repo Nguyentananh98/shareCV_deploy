@@ -3,7 +3,6 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import ReactPlayer from "react-player";
 import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState, useCallback } from "react";
 import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
@@ -11,6 +10,8 @@ import { getAccessCookies } from "@/common/helpers/setCookies";
 import PdfViewer from "./component/PdfViewer/PdfViewer";
 import { Controller, useForm } from "react-hook-form";
 import RevaluateForm from "./component/RevaluateForm/RevaluateForm";
+import Valuation from "./component/Valuation/Valuation";
+import { IRevaluate } from "../../types";
 
 const initialForm: ICompanyInfoResponse = {
   company_name: "",
@@ -40,29 +41,13 @@ function CVPricing() {
   const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
   const [inputList, setInputList] = useState<string[]>([""]); // Danh sách các ô nhập thông tin
   const [isEdit, setIsEdit] = useState<Boolean>(true);
-  // Hàm xử lý khi bấm nút "Thêm"
-  const handleAddInput = () => {
-    setInputList([...inputList, ""]);
-  };
-
-  // Hàm xử lý khi thay đổi giá trị của ô nhập thông tin
-  const handleInputChange = (index: number, value: string) => {
-    const newList = [...inputList];
-    newList[index] = value;
-    setInputList(newList);
-  };
-  const handleRemoveInput = (index: number) => {
-    const newList = [...inputList];
-    newList.splice(index, 1);
-    setInputList(newList);
-  };
   const {
     control,
     handleSubmit,
     setError,
     setValue,
     formState: { errors, isDirty = false, isValid = true },
-  } = useForm<ICompanyInfo>({
+  } = useForm<IRevaluate>({
     // resolver,
   });
   // useEffect(() => {
@@ -80,12 +65,12 @@ function CVPricing() {
       width="100%"
       px={5}
       py={5}
-      className="grid grid-cols-10 gap-5  bg-white"
+      className="grid grid-cols-12 gap-5  bg-white"
       alignItems={"center"}
       justifyContent={"center"}
     >
       <Box
-        className="col-span-5"
+        className="col-span-6"
         // height="200px"
         display="flex"
         flexDirection="row"
@@ -106,7 +91,7 @@ function CVPricing() {
         </Typography>
       </Box>
       <Box
-        className="col-span-5"
+        className="col-span-6"
         // height="200px"
         display="flex"
         flexDirection="row"
@@ -133,8 +118,8 @@ function CVPricing() {
       <Box
         className="col-span-7"
         display="flex"
-        height="100%"
-        // height="700px"
+        // height="100%"
+        height="900px"
         flexDirection="row"
         alignItems={"top"}
         justifyContent={"left"}
@@ -143,7 +128,7 @@ function CVPricing() {
         <PdfViewer url="/Resume-KieuKhanhQuan.pdf" />
       </Box>
       <Box
-        className="col-span-3"
+        className="col-span-5"
         py={"1em"}
         display="flex"
         height="100%"
@@ -155,6 +140,7 @@ function CVPricing() {
         <Box
           display="flex"
           width="100%"
+          height="900px"
           flexDirection={"column"}
           alignItems={"top"}
           justifyContent={"right"}
@@ -164,10 +150,13 @@ function CVPricing() {
             border: 1,
             // borderColor: "primary",
             borderRadius: "20px",
-            p: 3,
+            p: 5,
+            overflow: "auto"
           }}
         >
-          <RevaluateForm />
+          {isEdit?<RevaluateForm />:  <Valuation/>}
+          {/* <Valuation/>
+          <RevaluateForm /> */}
         </Box>
       </Box>
     </Box>
