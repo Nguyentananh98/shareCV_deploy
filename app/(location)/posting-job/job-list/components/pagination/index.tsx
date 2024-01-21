@@ -1,0 +1,68 @@
+import { Box, Button, PaginationItem, Typography } from "@mui/material"
+import Pagination from '@mui/material/Pagination';
+import { paginationTextStyles } from "../../styles";
+
+export interface PaginationProps {
+    numsPerPage: number,
+    totalPage: number,
+    currentPage: number,
+    onChangePage: (pageNumber: number) => void
+}
+
+export const CustomPagination = ({
+    numsPerPage,
+    totalPage,
+    currentPage,
+    onChangePage,
+}: PaginationProps) => {
+
+    return (
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <Box>
+                <Typography sx={paginationTextStyles()}>
+                    Kết quả {numsPerPage * currentPage} - {numsPerPage * (currentPage + 1)} của {totalPage}
+                </Typography>
+            </Box>
+            <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" gap="10px">
+                <Button
+                    sx={{
+                        textTransform: "none",
+                        
+                    }}
+                >
+                    <Typography sx={{...paginationTextStyles()}}>Trước</Typography>
+                </Button>
+                <Pagination
+                    count={totalPage}
+                    variant="outlined"
+                    shape="rounded"
+                    color="secondary"
+                    onChange={(event: any, page: any) => onChangePage(page)}
+                    defaultPage={1}
+                    hideNextButton
+                    hidePrevButton
+                    siblingCount={1}
+                    size="large"
+                    renderItem={(item) => <PaginationItem {...item} sx={{
+                        border: "1px solid blue",
+                        width: "50px",
+                        height: "50px",
+                        ...paginationTextStyles()
+                    }} />}
+                    sx={{
+                        // ".mui-zy3q8l-MuiButtonBase-root-MuiPaginationItem-root > .Mui-selected": {
+                        //     backgroundColor: "!#fff",
+                        // }
+                    }}
+                />
+                <Button
+                    sx={{
+                        textTransform: "none",
+                    }}
+                >
+                    <Typography sx={{...paginationTextStyles()}}>Cuối</Typography>
+                </Button>
+            </Box>
+        </Box>
+    )
+}
