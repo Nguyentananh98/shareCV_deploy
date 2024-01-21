@@ -1,7 +1,7 @@
 "use client";
  
 import Header from "@/common/components/Header/Header";
-// import { AppFooter } from "@/common/components/AppFooter";
+import { Footer } from "@/common/components/Footer";
 // import AppHeader from "@/common/components/AppHeader";
 // import { hasAuthCookies } from "@/common/helpers/authCookies";
 // import dayjs from "dayjs";
@@ -24,7 +24,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
     < div  >
       <Header />
       <div className="flex justify-center">{children}</div>
-      {/* <AppFooter /> */}
+      <Footer />
     </div >
   );
 }
