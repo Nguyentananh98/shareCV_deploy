@@ -5,6 +5,8 @@ import { detailPointTextStyles, header1Styles, headerStyles, percentageDetailTex
 import { PieChart } from '@mui/x-charts/PieChart';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { relative } from 'path';
+import { useRouter } from 'next/router'
+import { use, useEffect, useLayoutEffect } from 'react';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme: any }) => ({
     height: 33,
@@ -36,19 +38,27 @@ const LinearProgressWithLabel = ({ value }: { value: number }) => {
 
 function AIResultPage() {
 
-    
+    const router = useRouter();
+    const cv_id = router.query.slug;
+
+    useLayoutEffect(() => {
+        if (cv_id) {
+            // query for cv_matching detail
+        }
+    }, [cv_id]);
+
 
     return (
         <Box padding={2}
             sx={{
-            
+
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
             }}>
             <Box sx={{
-            
+
                 display: "flex",
                 justifyContent: "center",
             }}>
@@ -60,16 +70,16 @@ function AIResultPage() {
                 width: "1200px",
                 background: "rgba(183, 218, 237, 0.10)",
             }}>
-                <Box sx={{ }}>
+                <Box sx={{}}>
                     <Button sx={returnButtonStyles()}>Quay lại</Button>
                 </Box>
-                <Box sx={{ }}>
+                <Box sx={{}}>
                     <Grid container spacing={3}>
                         {/* First Column */}
                         <Grid item xs={6}>
                             <Paper style={{ padding: 16 }}>
                                 <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }} >
-                                    <Box sx={{ }} paddingLeft="50%">
+                                    <Box sx={{}} paddingLeft="50%">
                                         <Typography sx={percentageTextStyles()}>75%</Typography>
                                     </Box>
                                     <PieChart
@@ -92,7 +102,7 @@ function AIResultPage() {
                                         width={320}
                                         height={320}
                                         sx={{
-                                        
+
                                         }}
                                     />
                                 </Box>
@@ -195,7 +205,7 @@ function AIResultPage() {
                                     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="20px" mt="20px">
                                         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                                             <Box>
-                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{color: "#868686"}}>Vị trí công việc</Typography>
+                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{ color: "#868686" }}>Vị trí công việc</Typography>
                                             </Box>
                                             <Box>
                                                 <Typography className="text-gray-700 text-justify font-montserrat text-base font-normal">
@@ -207,7 +217,7 @@ function AIResultPage() {
                                         </Box>
                                         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                                             <Box>
-                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{color: "#868686"}}>Kinh nghiệm</Typography>
+                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{ color: "#868686" }}>Kinh nghiệm</Typography>
                                             </Box>
                                             <Box>
                                                 <Typography className="text-gray-700 text-justify font-montserrat text-base font-normal">
@@ -219,7 +229,7 @@ function AIResultPage() {
                                         </Box>
                                         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                                             <Box>
-                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{color: "#868686"}}>Kỹ năng</Typography>
+                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{ color: "#868686" }}>Kỹ năng</Typography>
                                             </Box>
                                             <Box>
                                                 <Typography className="text-gray-700 text-justify font-montserrat text-base font-normal">
@@ -231,7 +241,7 @@ function AIResultPage() {
                                         </Box>
                                         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                                             <Box>
-                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{color: "#868686"}}>Học vấn</Typography>
+                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{ color: "#868686" }}>Học vấn</Typography>
                                             </Box>
                                             <Box>
                                                 <Typography className="text-gray-700 text-justify font-montserrat text-base font-normal">
@@ -243,7 +253,7 @@ function AIResultPage() {
                                         </Box>
                                         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
                                             <Box>
-                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{color: "#868686"}}>Định hướng</Typography>
+                                                <Typography className="text-gray-600 font-montserrat text-xl font-semibold" sx={{ color: "#868686" }}>Định hướng</Typography>
                                             </Box>
                                             <Box>
                                                 <Typography className="text-gray-700 text-justify font-montserrat text-base font-normal">
