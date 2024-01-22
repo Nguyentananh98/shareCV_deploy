@@ -40,7 +40,7 @@ function CVPricing() {
   }
   const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
   const [inputList, setInputList] = useState<string[]>([""]); // Danh sách các ô nhập thông tin
-  const [isEdit, setIsEdit] = useState<Boolean>(true);
+  const [isEdit, setIsEdit] = useState<Boolean>(false);
   const {
     control,
     handleSubmit,
@@ -50,6 +50,7 @@ function CVPricing() {
   } = useForm<IRevaluate>({
     // resolver,
   });
+  
   // useEffect(() => {
   //   try {
   //     getCompanyInfo().then((res) => {
@@ -98,19 +99,12 @@ function CVPricing() {
         alignItems={"top"}
         justifyContent={"right"}
       >
+        
         <Button
           variant="outlined"
-          sx={{ width: "200px", height: "50px", borderRadius: "20px" }}
+          sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3}}
           className="bg-primary border-primary text-white hover:border-primary hover:bg-white hover:text-primary"
-          type="submit"
-        >
-          Xem Kết Quả AI
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3 }}
-          className="bg-primary border-primary text-white hover:border-primary hover:bg-white hover:text-primary"
-          type="submit"
+          onClick={()=>setIsEdit(true)}
         >
           Định giá lại
         </Button>
@@ -118,8 +112,8 @@ function CVPricing() {
       <Box
         className="col-span-7"
         display="flex"
-        // height="100%"
-        height="900px"
+        height="100%"
+        // height="900px"
         flexDirection="row"
         alignItems={"top"}
         justifyContent={"left"}
@@ -137,28 +131,10 @@ function CVPricing() {
         justifyContent={"left"}
         sx={{ overflow: "auto" }}
       >
-        <Box
-          display="flex"
-          width="100%"
-          height="900px"
-          flexDirection={"column"}
-          alignItems={"top"}
-          justifyContent={"right"}
-          className="border-primary bg-white"
-          sx={{
-            color: "black",
-            border: 1,
-            // borderColor: "primary",
-            borderRadius: "20px",
-            p: 5,
-            overflow: "auto"
-          }}
-        >
           {isEdit?<RevaluateForm />:  <Valuation/>}
           {/* <Valuation/>
           <RevaluateForm /> */}
         </Box>
-      </Box>
     </Box>
   );
 }

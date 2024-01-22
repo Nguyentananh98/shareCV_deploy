@@ -3,11 +3,8 @@ import {
   IAuthResponse,
   ICompanyInfo,
   IRevaluate,
-  IRegisterResponse,
-  IResetPasswordRequest,
+  IJobDetailResponse
 } from "@/common/interfaces";
-import qs from "qs";
-import { IUserLogin, IUserRegister } from "@/modules/auth/types";
 
 export const addCompany = (data: ICompanyInfo): Promise<IAuthResponse> => {
   console.log("data api", data);
@@ -50,6 +47,6 @@ export const addCompany = (data: ICompanyInfo): Promise<IAuthResponse> => {
 export const revaluate = (data: IRevaluate): Promise<IAuthResponse> => {
   return axiosClient.put("/postjob/collaborator/update-resume-valuate", data);
 };
-export const getCompanyInfo = (): Promise<ICompanyInfo> => {
-  return axiosClient.get("/postjob/recruiter/get-company-info");
+export const getJobDetail = (id: string): Promise<IJobDetailResponse> => {
+  return axiosClient.get(`/postjob/recruiter/get-detailed-job/${id}`);
 };

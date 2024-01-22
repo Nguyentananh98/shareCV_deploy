@@ -29,7 +29,7 @@ export const CardCarouselItem = ({
       <Paper
         sx={{
           height: carouselCenter ? "auto" : "200px",
-          width: "270px",
+          width: "200px",
           m: 3,
           transition: "height 0.3s ease 0s",
           translateY: carouselCenter ? 0 : "-100%",

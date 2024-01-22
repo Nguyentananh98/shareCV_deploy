@@ -1,14 +1,16 @@
 "use client";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
-import Header from "@common/components/Header/Header";
-import CompanyInfoRegistry from "@/modules/posting-job/page/company-info/CompanyInfoRegistry";
-function CompanyInfopage() {
+import UploadJD from "@/modules/posting-job/page/upload-jd/UploadJD";
+import { useEffect, useState } from "react";
+import { IJobDetailResponse } from "@/common/interfaces";
+
+function UploadJDPage({params}:{params:any}) {
   // if (!getCookie("token")) {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-
+  
   return (
     <Box
       display="flex"
@@ -36,16 +38,15 @@ function CompanyInfopage() {
         mt={5}
         display="flex"
         width="100%"
-        px={"120px"}
         // justifyContent="center"
         // alignItems="center"
         flex={1}
         // py={10}
       >
-        <CompanyInfoRegistry/>
+        <UploadJD/>
       </Box>
     </Box>
   );
 }
 
-export default CompanyInfopage;
+export default UploadJDPage;

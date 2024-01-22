@@ -116,11 +116,16 @@ function Valuation() {
     // <Box width="100%" alignItems={"center"} justifyContent={"center"}>
     <Box
       display="flex"
-      className="gap-2"
+      className="gap-2 border-primary bg-white"
       width="100%"
       flexDirection={"column"}
       alignItems={"top"}
       justifyContent={"right"}
+      sx={{border: 1,
+        // borderColor: "primary",
+        borderRadius: "20px",
+        p: 5,
+        overflow: "auto",}}
     >
       <Box width="100%" display="flex" justifyContent={"center"}>
         <Typography sx={{ fontSize: 30 }} className="font-semibold text-primary">
