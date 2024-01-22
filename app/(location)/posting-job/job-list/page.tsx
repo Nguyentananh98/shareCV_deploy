@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
@@ -13,12 +13,13 @@ import { CreateJobTable } from './sections/CreatedJobTable';
 import { IJobListCreate, IJobListDraft } from '@/common/interfaces/job-list';
 import { CustomPagination } from './components/pagination';
 import { DraftJobTable } from './sections/DraftJobTable';
+import { getCreatedJobList } from '@/common/apis/job_list';
 
 export const jobListCreatedData: IJobListCreate[] = [
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
+        industry: 'Job Major',
         recruited_time: '10-10-2021',
         job_service: 'Job Service',
         num_cvs: 10,
@@ -27,7 +28,7 @@ export const jobListCreatedData: IJobListCreate[] = [
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
+        industry: 'Job Major',
         recruited_time: '10-10-2021',
         job_service: 'Job Service',
         num_cvs: 10,
@@ -36,7 +37,7 @@ export const jobListCreatedData: IJobListCreate[] = [
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
+        industry: 'Job Major',
         recruited_time: '10-10-2021',
         job_service: 'Job Service',
         num_cvs: 10,
@@ -45,16 +46,7 @@ export const jobListCreatedData: IJobListCreate[] = [
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        job_major: 'Job Major',
+        industry: 'Job Major',
         recruited_time: '10-10-2021',
         job_service: 'Job Service',
         num_cvs: 10,
@@ -66,43 +58,69 @@ export const IJobListDraftData: IJobListDraft[] = [
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
-        recruited_time: '10-10-2021',
+        industry: 'Job Major',
+        created_time: '10-10-2021',
         job_service: 'Job Service',
     },
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
-        recruited_time: '10-10-2021',
+        industry: 'Job Major',
+        created_time: '10-10-2021',
         job_service: 'Job Service',
     },
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
-        recruited_time: '10-10-2021',
+        industry: 'Job Major',
+        created_time: '10-10-2021',
         job_service: 'Job Service',
     },
     {
         job_id: 123,
         job_title: 'Job Title',
-        job_major: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        job_major: 'Job Major',
-        recruited_time: '10-10-2021',
+        industry: 'Job Major',
+        created_time: '10-10-2021',
         job_service: 'Job Service',
     }
 ]
 
 function JobListPage() {
+    const [isDraftPage, setIsDraftPage] = useState<boolean>(false);
+    const [pagination, setPagination] = useState({
+        page_index: 1,
+        limit: 10,
+        total_pages: 10,
+        total_items: 0
+    });
 
-    const [currentPage, setCurrentPage] = useState<number>(0);
+    useEffect(() => {
+        try{
+            let payload: any = {
+                page_index: pagination.page_index,
+                limit: pagination.limit,
+            }
+            getCreatedJobList(payload).then((res) => {
+                console.log(res);
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }, [pagination]);
+
+    const handleChangeNumPerPage = (value: any) => {
+        setPagination({
+            ...pagination,
+            limit: value,
+        })
+    }
+
+    const handleChangePageNumber = (page: number) => {
+        setPagination({
+            ...pagination,
+            page_index: page,
+        })
+    }
 
     return (
         <Box sx={{
@@ -123,12 +141,12 @@ function JobListPage() {
             <Box mt="25px">
                 <Box display="flex" flexDirection="row" gap="30px">
                     {/* tab */}
-                    <Button sx={TabButtonStyle()} onClick={() => setCurrentPage(0)}>
-                        <Typography sx={TabTextStyle(currentPage === 0)}>Công việc đã tạo</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setIsDraftPage(false)}>
+                        <Typography sx={TabTextStyle(isDraftPage === false)}>Công việc đã tạo</Typography>
                     </Button>
                     <Divider orientation="vertical" flexItem />
-                    <Button sx={TabButtonStyle()} onClick={() => setCurrentPage(1)}>
-                        <Typography sx={TabTextStyle(currentPage === 1)}>Bản nháp</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setIsDraftPage(true)}>
+                        <Typography sx={TabTextStyle(isDraftPage === true)}>Bản nháp</Typography>
                     </Button>
                 </Box>
             </Box>
@@ -148,8 +166,10 @@ function JobListPage() {
                         <Autocomplete
                             disablePortal
                             id="combo-box-demo"
-                            options={[{ label: '10' }, { label: '20' }, { label: '30' }, { label: '40' }, { label: '50' }]}
+                            value={pagination.limit}
+                            options={[10, 20, 30, 40, 50]}
                             renderInput={(params) => <TextField {...params} label="" />}
+                            onChange={(event, value) => handleChangeNumPerPage(value)}
                             sx={{
                                 height: "40px",
                                 width: "100px",
@@ -175,7 +195,7 @@ function JobListPage() {
             <Box sx={{
                 marginTop: '50px',
             }}>
-                {currentPage === 0 ?
+                {!isDraftPage ?
                     <CreateJobTable data={jobListCreatedData} /> : <DraftJobTable data={IJobListDraftData} />
                 }
                 <Box
@@ -184,10 +204,10 @@ function JobListPage() {
                     }}
                 >
                     <CustomPagination
-                        onChangePage={() => { }}
-                        numsPerPage={10}
-                        totalPage={10}
-                        currentPage={1}
+                        onChangePage={(page: number) => handleChangePageNumber(page)}
+                        numsPerPage={pagination.limit}
+                        totalPage={pagination.total_pages}
+                        currentPage={pagination.page_index}
                     />
                 </Box>
             </Box>

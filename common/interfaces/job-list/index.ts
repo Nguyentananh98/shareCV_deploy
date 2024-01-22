@@ -1,7 +1,7 @@
 export interface IJobListCreate {
     job_id: number;
     job_title: string;
-    job_major: string;
+    industry: string;
     recruited_time: string; // mm-dd-yyyy
     job_service: string;
     num_cvs: number;
@@ -11,9 +11,29 @@ export interface IJobListCreate {
 export interface IJobListDraft {
     job_id: number;
     job_title: string;
-    job_major: string;
-    recruited_time: string; // mm-dd-yyyy
+    industry: string;
+    created_time: string; // mm-dd-yyyy
     job_service: string;
 }
+
+export interface ITablePagination {
+    page: number;
+    limit: number;
+}
+
+export interface IJobListCreateResponse {
+    total_pages: number,
+    total_items: number,
+    item_lst: IJobListCreate[]
+}
+
+export interface IJobListDraftResponse {
+    total_pages: number,
+    total_items: number,
+    item_lst: IJobListDraft[]
+}
+
+
+
 
 

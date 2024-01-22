@@ -25,12 +25,13 @@ export const CustomPagination = ({
             </Box>
             <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" gap="10px">
                 <Button
+                    onClick={() => onChangePage(1)}
                     sx={{
                         textTransform: "none",
-                        
+
                     }}
                 >
-                    <Typography sx={{...paginationTextStyles()}}>Trước</Typography>
+                    <Typography sx={{ ...paginationTextStyles() }}>Trước</Typography>
                 </Button>
                 <Pagination
                     count={totalPage}
@@ -38,7 +39,7 @@ export const CustomPagination = ({
                     shape="rounded"
                     color="secondary"
                     onChange={(event: any, page: any) => onChangePage(page)}
-                    defaultPage={1}
+                    page={currentPage}
                     hideNextButton
                     hidePrevButton
                     siblingCount={1}
@@ -56,11 +57,12 @@ export const CustomPagination = ({
                     }}
                 />
                 <Button
+                    onClick={() => onChangePage(totalPage)}
                     sx={{
                         textTransform: "none",
                     }}
                 >
-                    <Typography sx={{...paginationTextStyles()}}>Cuối</Typography>
+                    <Typography sx={{ ...paginationTextStyles() }}>Cuối</Typography>
                 </Button>
             </Box>
         </Box>
