@@ -52,7 +52,7 @@ export const DraftJobTable = ({
                 )
             },
             {
-                accessorKey: 'job_major',
+                accessorKey: 'industry',
                 header: 'Ngành nghề',
                 Header: ({ column }) => (
                     <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
@@ -62,7 +62,7 @@ export const DraftJobTable = ({
                 )
             },
             {
-                accessorKey: 'recruited_time',
+                accessorKey: 'created_time',
                 header: 'Ngày tạo',
                 Header: ({ column }) => (
                     <Box

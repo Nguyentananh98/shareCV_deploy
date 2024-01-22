@@ -9,83 +9,60 @@ import {
 import { Autocomplete, Box, Button, Divider, Tab, TextField, Typography } from '@mui/material';
 import { TabButtonStyle, TabTextStyle } from './styles';
 import { TableSearchBar } from './components/searchbar';
-import { CreateJobTable } from './sections/UVListTable';
-import { IJobListCreate, IJobListDraft } from '@/common/interfaces/job-list';
 import { CustomPagination } from './components/pagination';
 import { getCreatedJobList } from '@/common/apis/job_list';
+import { UVListTable } from './sections/UVListTable';
+import { IJobListCreate } from '@/common/interfaces/job-list';
+import { IUVList } from '@/common/interfaces/uv-list';
 
-export const jobListCreatedData: IJobListCreate[] = [
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-]
 
-export const IJobListDraftData: IJobListDraft[] = [
+export const UVListCreatedData: IUVList[] = [
     {
         job_id: 123,
+        name: "Nguyen Van A",
         job_title: 'Job Title',
         industry: 'Job Major',
-        created_time: '10-10-2021',
+        introduced_time: '10-10-2021',
         job_service: 'Job Service',
+        status: 'Created',
     },
     {
         job_id: 123,
+        name: "Nguyen Van A",
         job_title: 'Job Title',
         industry: 'Job Major',
-        created_time: '10-10-2021',
+        introduced_time: '10-10-2021',
         job_service: 'Job Service',
-    },
-    {
+        status: 'Created',
+    },{
         job_id: 123,
+        name: "Nguyen Van A",
         job_title: 'Job Title',
         industry: 'Job Major',
-        created_time: '10-10-2021',
+        introduced_time: '10-10-2021',
         job_service: 'Job Service',
-    },
-    {
+        status: 'Created',
+    },{
         job_id: 123,
+        name: "Nguyen Van A",
         job_title: 'Job Title',
         industry: 'Job Major',
-        created_time: '10-10-2021',
+        introduced_time: '10-10-2021',
         job_service: 'Job Service',
-    }
+        status: 'Created',
+    },{
+        job_id: 123,
+        name: "Nguyen Van A",
+        job_title: 'Job Title',
+        industry: 'Job Major',
+        introduced_time: '10-10-2021',
+        job_service: 'Job Service',
+        status: 'Created',
+    },
 ]
 
 function UVListPage() {
-    const [isDraftPage, setIsDraftPage] = useState<boolean>(false);
+    const [currentTab, setCurrentTab] = useState<1 | 2 | 3 | 4>(1);
     const [pagination, setPagination] = useState({
         page_index: 1,
         limit: 10,
@@ -140,12 +117,20 @@ function UVListPage() {
             <Box mt="25px">
                 <Box display="flex" flexDirection="row" gap="30px">
                     {/* tab */}
-                    <Button sx={TabButtonStyle()} onClick={() => setIsDraftPage(false)}>
-                        <Typography sx={TabTextStyle(isDraftPage === false)}>Công việc đã tạo</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentTab(1)}>
+                        <Typography sx={TabTextStyle(currentTab === 1)}>tất cả</Typography>
                     </Button>
                     <Divider orientation="vertical" flexItem />
-                    <Button sx={TabButtonStyle()} onClick={() => setIsDraftPage(true)}>
-                        <Typography sx={TabTextStyle(isDraftPage === true)}>Bản nháp</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentTab(2)}>
+                        <Typography sx={TabTextStyle(currentTab === 2)}>ứng viên mới</Typography>
+                    </Button>
+                    <Divider orientation="vertical" flexItem />
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentTab(3)}>
+                        <Typography sx={TabTextStyle(currentTab === 3)}>ứng viên đã chọn</Typography>
+                    </Button>
+                    <Divider orientation="vertical" flexItem />
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentTab(4)}>
+                        <Typography sx={TabTextStyle(currentTab === 4)}>ứng viên chưa phù hợp</Typography>
                     </Button>
                 </Box>
             </Box>
@@ -194,7 +179,7 @@ function UVListPage() {
             <Box sx={{
                 marginTop: '50px',
             }}>
-                <UVListPage />
+                <UVListTable data={UVListCreatedData} />
                 <Box
                     sx={{
                         marginTop: '25px',
@@ -214,4 +199,4 @@ function UVListPage() {
     )
 }
 
-export default JobListPage;
+export default UVListPage;

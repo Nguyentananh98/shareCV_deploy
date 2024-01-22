@@ -5,23 +5,23 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { IJobList } from "@/common/interfaces/job-list"
 import { Box, Button, Menu, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CustomMenuItem } from '../../components/MenuItem';
 import { CustomMenu } from '../../components/CustomMenu';
+import { IUVList } from '@/common/interfaces/uv-list';
 
 export interface UVListTableProps {
-    data: IJobList[];
+    data: IUVList[];
 }
 
 export const UVListTable = ({
     data,
 }: UVListTableProps) => {
     
-    const columns = useMemo<MRT_ColumnDef<IJobList>[]>(
+    const columns = useMemo<MRT_ColumnDef<IUVList>[]>(
         () => [
             {
                 accessorKey: 'job_id',
@@ -42,6 +42,16 @@ export const UVListTable = ({
                 )
             },
             {
+                accessorKey: 'name',
+                header: 'Họ và tên',
+                Header: ({ column }) => (
+                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                        <p>{column.columnDef.header}</p>
+                        <KeyboardArrowDownIcon />
+                    </Box>
+                )
+            },
+            {
                 accessorKey: 'job_title',
                 header: 'Tên công việc',
                 Header: ({ column }) => (
@@ -52,7 +62,7 @@ export const UVListTable = ({
                 )
             },
             {
-                accessorKey: 'job_major',
+                accessorKey: 'industry',
                 header: 'Ngành nghề',
                 Header: ({ column }) => (
                     <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
@@ -62,8 +72,18 @@ export const UVListTable = ({
                 )
             },
             {
-                accessorKey: 'recruited_time',
-                header: 'Ngày đăng tuyển',
+                accessorKey: 'job_service',
+                header: 'Tên dịch vụ',
+                Header: ({ column }) => (
+                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                        <p>{column.columnDef.header}</p>
+                        <KeyboardArrowDownIcon />
+                    </Box>
+                )
+            },
+            {
+                accessorKey: 'introduced_time',
+                header: 'Ngày giới thiệu',
                 Header: ({ column }) => (
                     <Box
                         // onClick={(event: any) => handleOpenMenu(event, "CreateDay")}
@@ -82,28 +102,8 @@ export const UVListTable = ({
                 )
             },
             {
-                accessorKey: 'job_service',
-                header: 'Tên dịch vụ',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
                 accessorKey: 'status',
                 header: 'Trạng thái',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'num_cvs',
-                header: 'Số CV ',
                 Header: ({ column }) => (
                     <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
                         <p>{column.columnDef.header}</p>

@@ -5,7 +5,7 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { IJobList } from "@/common/interfaces/job-list"
+import { IJobListCreate } from "@/common/interfaces/job-list"
 import { Box, Button, Menu, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -14,41 +14,14 @@ import { CustomMenuItem } from '../../components/MenuItem';
 import { CustomMenu } from '../../components/CustomMenu';
 
 export interface JobListTableProps {
-    data: IJobList[];
+    data: IJobListCreate[];
 }
 
 export const CreateJobTable = ({
     data,
 }: JobListTableProps) => {
-    // const [openMenu, setOpenMenu] = useState<string>("");
-    // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    // const handleCloseMenu = () => {
-    //     setOpenMenu("")
-    //     setAnchorEl(null);
-    // };
-
-    // const handleOpenMenu = (event: any, type: string) => {
-    //     if (type === "ID") {
-    //         console.log("ID");
-    //         setOpenMenu("ID");
-    //         setAnchorEl(event.currentTarget);
-    //     }
-    // };
-
-    // const renderCreateDayMenu = () => {
-    //     return (
-    //         <CustomMenu
-    //             options={["Moi Nhat", "Cu Nhat"]}
-    //             anchorEl={anchorEl}
-    //             openMenu={openMenu === "CreateDay"}
-    //             handleCloseMenu={handleCloseMenu}
-    //             onChange={(data) => console.log(data)}
-    //         />
-    //     )
-    // }
-
-    const columns = useMemo<MRT_ColumnDef<IJobList>[]>(
+    const columns = useMemo<MRT_ColumnDef<IJobListCreate>[]>(
         () => [
             {
                 accessorKey: 'job_id',
@@ -79,7 +52,7 @@ export const CreateJobTable = ({
                 )
             },
             {
-                accessorKey: 'job_major',
+                accessorKey: 'industry',
                 header: 'Ngành nghề',
                 Header: ({ column }) => (
                     <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
