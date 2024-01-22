@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
     MRT_Table,
     useMaterialReactTable,
@@ -6,17 +6,47 @@ import {
 } from 'material-react-table';
 
 import { IJobList } from "@/common/interfaces/job-list"
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Menu, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { CustomMenuItem } from '../../components/MenuItem';
+import { CustomMenu } from '../../components/CustomMenu';
 
 export interface JobListTableProps {
     data: IJobList[];
 }
 
-export const JobListTable = ({
+export const CreateJobTable = ({
     data,
 }: JobListTableProps) => {
+    // const [openMenu, setOpenMenu] = useState<string>("");
+    // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    // const handleCloseMenu = () => {
+    //     setOpenMenu("")
+    //     setAnchorEl(null);
+    // };
+
+    // const handleOpenMenu = (event: any, type: string) => {
+    //     if (type === "ID") {
+    //         console.log("ID");
+    //         setOpenMenu("ID");
+    //         setAnchorEl(event.currentTarget);
+    //     }
+    // };
+
+    // const renderCreateDayMenu = () => {
+    //     return (
+    //         <CustomMenu
+    //             options={["Moi Nhat", "Cu Nhat"]}
+    //             anchorEl={anchorEl}
+    //             openMenu={openMenu === "CreateDay"}
+    //             handleCloseMenu={handleCloseMenu}
+    //             onChange={(data) => console.log(data)}
+    //         />
+    //     )
+    // }
 
     const columns = useMemo<MRT_ColumnDef<IJobList>[]>(
         () => [
@@ -24,9 +54,17 @@ export const JobListTable = ({
                 accessorKey: 'job_id',
                 header: 'ID',
                 Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: "10px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textTransform: "none",
+                            color: "inherit",
+                        }}>
                         <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
                     </Box>
                 )
             },
@@ -54,7 +92,17 @@ export const JobListTable = ({
                 accessorKey: 'recruited_time',
                 header: 'Ngày đăng tuyển',
                 Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <Box
+                        // onClick={(event: any) => handleOpenMenu(event, "CreateDay")}
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: "10px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textTransform: "none",
+                            color: "inherit",
+                        }}>
                         <p>{column.columnDef.header}</p>
                         <KeyboardArrowDownIcon />
                     </Box>
@@ -96,11 +144,11 @@ export const JobListTable = ({
         columns,
         data,
         enablePagination: false,
-        enableColumnFilterModes: false,
-        enableColumnActions: false,
-        enableColumnFilters: false,
-        enableSorting: false,
-        
+        enableColumnFilterModes: true,
+        enableColumnActions: true,
+        enableColumnFilters: true,
+        enableSorting: true,
+
         mrtTheme: (theme) => ({
             baseBackgroundColor: theme.palette.background.default, //change default background color
             fontFamily: 'Montserrat',

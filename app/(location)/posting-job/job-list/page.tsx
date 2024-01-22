@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
@@ -9,11 +9,12 @@ import {
 import { Autocomplete, Box, Button, Divider, Tab, TextField, Typography } from '@mui/material';
 import { TabButtonStyle, TabTextStyle } from './styles';
 import { TableSearchBar } from './components/searchbar';
-import { JobListTable } from './components/jobListTable';
-import { IJobList } from '@/common/interfaces/job-list';
+import { CreateJobTable } from './sections/CreatedJobTable';
+import { IJobListCreate, IJobListDraft } from '@/common/interfaces/job-list';
 import { CustomPagination } from './components/pagination';
+import { DraftJobTable } from './sections/DraftJobTable';
 
-export const jobListCreatedData: IJobList[] = [
+export const jobListCreatedData: IJobListCreate[] = [
     {
         job_id: 123,
         job_title: 'Job Title',
@@ -61,8 +62,48 @@ export const jobListCreatedData: IJobList[] = [
     },
 ]
 
+export const IJobListDraftData: IJobListDraft[] = [
+    {
+        job_id: 123,
+        job_title: 'Job Title',
+        job_major: 'Job Major',
+        recruited_time: '10-10-2021',
+        job_service: 'Job Service',
+    },
+    {
+        job_id: 123,
+        job_title: 'Job Title',
+        job_major: 'Job Major',
+        recruited_time: '10-10-2021',
+        job_service: 'Job Service',
+    },
+    {
+        job_id: 123,
+        job_title: 'Job Title',
+        job_major: 'Job Major',
+        recruited_time: '10-10-2021',
+        job_service: 'Job Service',
+    },
+    {
+        job_id: 123,
+        job_title: 'Job Title',
+        job_major: 'Job Major',
+        recruited_time: '10-10-2021',
+        job_service: 'Job Service',
+    },
+    {
+        job_id: 123,
+        job_title: 'Job Title',
+        job_major: 'Job Major',
+        recruited_time: '10-10-2021',
+        job_service: 'Job Service',
+    }
+]
 
 function JobListPage() {
+
+    const [currentPage, setCurrentPage] = useState<number>(0);
+
     return (
         <Box sx={{
             width: '1440px',
@@ -82,12 +123,12 @@ function JobListPage() {
             <Box mt="25px">
                 <Box display="flex" flexDirection="row" gap="30px">
                     {/* tab */}
-                    <Button sx={TabButtonStyle()}>
-                        <Typography sx={TabTextStyle(true)}>Công việc đã tạo</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentPage(0)}>
+                        <Typography sx={TabTextStyle(currentPage === 0)}>Công việc đã tạo</Typography>
                     </Button>
                     <Divider orientation="vertical" flexItem />
-                    <Button sx={TabButtonStyle()}>
-                        <Typography sx={TabTextStyle(false)}>Bản nháp</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentPage(1)}>
+                        <Typography sx={TabTextStyle(currentPage === 1)}>Bản nháp</Typography>
                     </Button>
                 </Box>
             </Box>
@@ -121,7 +162,7 @@ function JobListPage() {
                                 "& .input": {
                                     height: "20px",
                                 },
-                                
+
                             }}
                         />
                     </Box>
@@ -134,17 +175,19 @@ function JobListPage() {
             <Box sx={{
                 marginTop: '50px',
             }}>
-                <JobListTable data={jobListCreatedData}/>
+                {currentPage === 0 ?
+                    <CreateJobTable data={jobListCreatedData} /> : <DraftJobTable data={IJobListDraftData} />
+                }
                 <Box
-                sx={{
-                    marginTop: '25px',
-                }}
+                    sx={{
+                        marginTop: '25px',
+                    }}
                 >
-                    <CustomPagination 
-                    onChangePage={() => {}}
-                    numsPerPage={10}
-                    totalPage={10}
-                    currentPage={1}
+                    <CustomPagination
+                        onChangePage={() => { }}
+                        numsPerPage={10}
+                        totalPage={10}
+                        currentPage={1}
                     />
                 </Box>
             </Box>
