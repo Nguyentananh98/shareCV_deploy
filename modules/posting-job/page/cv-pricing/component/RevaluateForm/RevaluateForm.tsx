@@ -16,7 +16,7 @@ import { redirect, RedirectType } from "next/navigation";
 import Link from "next/link";
 import { getCompanyInfo, revaluate } from "@/common/apis/posting-job";
 import { useEffect, useState, useCallback } from "react";
-import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
+import { ICompanyInfo, ICompanyInfoResponse, ValuateCV } from "@/common/interfaces";
 import { Controller, useForm } from "react-hook-form";
 import { ILanguageCertificates, IRevaluate } from "@/common/interfaces";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
@@ -48,43 +48,43 @@ const initialForm: ICompanyInfoResponse = {
   facebook: null,
   instagram: null,
 };
-function RevaluateForm() {
+function RevaluateForm({ data }: { data: ValuateCV }) {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
   const [certificatesList, setCertificatesList] = useState<
     ILanguageCertificates[]
-  >([initialCertificates]);
+  >(data.certificates);
   // const [certificatesList, setCertificatesList] =  useState<string[]>([""]);
-  const [degreeList, setDegreeList] = useState<string[]>([""]);
-  const [level, setLevel] = useState<string>("");
-  const [currentSalary, setCurrentSalary] = useState<number>(0);
-  const [disableSala,setDisableSala] = useState<boolean>(false);
-  const [disableLevel,setDisableLevel] = useState<boolean>(false);
+  const [degreeList, setDegreeList] = useState<string[]>(data.degrees);
+  const [level, setLevel] = useState<string>(data.hard_item.level? data.hard_item.level:"");
+  const [currentSalary, setCurrentSalary] = useState<number>(data.hard_item.salary? Number(data.hard_item.salary):0);
+  const [disableSala, setDisableSala] = useState<boolean>(false);
+  const [disableLevel, setDisableLevel] = useState<boolean>(false);
 
   const handleLevelChange = (event: any) => {
-    setLevel(event.target.value)
+    setLevel(event.target.value);
     setValue("level", level);
-    if(event.target.value===""|| event.target.value===null){
-      setDisableSala(false)
-    }
-    else {
-      setDisableSala(true)
+    if (event.target.value === "" || event.target.value === null) {
+      setDisableSala(false);
+    } else {
+      setDisableSala(true);
     }
   };
   const handleSalaryChange = (event: any) => {
-    if(event.target.value===0|| event.target.value===null|| event.target.value===""){
-      setCurrentSalary(0)
+    if (
+      event.target.value === 0 ||
+      event.target.value === null ||
+      event.target.value === ""
+    ) {
+      setCurrentSalary(0);
       setValue("current_salary", currentSalary);
-      setDisableLevel(false)
-    }
-    else{
-      setCurrentSalary(event.target.value)
+      setDisableLevel(false);
+    } else {
+      setCurrentSalary(event.target.value);
       setValue("current_salary", currentSalary);
-      setDisableLevel(true)
+      setDisableLevel(true);
     }
-
   };
   const handleAddCerti = () => {
     const newValue: ILanguageCertificates = {
@@ -140,6 +140,13 @@ function RevaluateForm() {
     formState: { errors, isDirty = false, isValid = true },
   } = useForm<IRevaluate>({
     // resolver,
+    defaultValues:{
+      cv_id: data.cv_id,
+      level: data.hard_item.level?data.hard_item.level:undefined,
+      current_salary: data.hard_item.salary?Number(data.hard_item.salary):undefined,
+      degree: data.degrees,
+      language_certificates: data.certificates
+    }
   });
   const onSubmit = handleSubmit(async (data) => {
     console.log("data", data);
@@ -243,7 +250,7 @@ function RevaluateForm() {
             className="gap-3 col-span-10"
             justifyContent={"space-between"}
             // sx={{ border: 1, borderRadius: "20px" }}
-          mb={2}
+            mb={2}
           >
             <Box pr={3} display="flex" flexDirection="row" width="100%">
               <OutlinedInput
@@ -315,14 +322,15 @@ function RevaluateForm() {
                 >
                   <Select
                     className="bg-white"
-                    defaultValue={"admin"}
+                    defaultValue={""}
                     value={degreeList[index]}
                     labelId="demo-simple-select-label"
                     onChange={(event) => handleDegreeChange(index, event)}
                     sx={{ width: "100%" }}
                   >
-                    <MenuItem value={"admin"}>Tiếng Anh</MenuItem>
-                    <MenuItem value={"recruiter"}>Tiếng Trung</MenuItem>
+                    <MenuItem value={"Bachelor"}>Cử nhân</MenuItem>
+                    <MenuItem value={"Master"}>Thạc sĩ</MenuItem>
+                    <MenuItem value={"Ph.D"}>Tiến sĩ</MenuItem>
                   </Select>
                 </Box>
                 <Box width="55px">
@@ -394,14 +402,16 @@ function RevaluateForm() {
                       <Select
                         label="Choose Language"
                         className="bg-white"
-                        defaultValue="admin"
+                        defaultValue=""
                         value={certificatesList[index].certificate_language}
                         labelId="demo-simple-select-label"
                         onChange={(event) => handleCerLanChange(index, event)}
                         sx={{ width: "100%" }}
                       >
-                        <MenuItem value={"admin"}>Tiếng Anh</MenuItem>
-                        <MenuItem value={"recruiter"}>Tiếng Trung</MenuItem>
+                        <MenuItem value={"English"}>Tiếng Anh</MenuItem>
+                        <MenuItem value={"Japanese"}>Tiếng Nhật</MenuItem>
+                        <MenuItem value={"Chinese"}>Tiếng Trung</MenuItem>
+                        <MenuItem value={"Korean"}>Tiếng Hàn</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
@@ -410,19 +420,51 @@ function RevaluateForm() {
                       <InputLabel id="demo-simple-select-label">
                         Choose Cert
                       </InputLabel>
-                      <Select
-                        defaultValue={"admin"}
-                        label="Choose Cert"
-                        labelId="demo-simple-select-label"
-                        value={certificatesList[index].certificate_name}
-                        onChange={(event) => handleCerNameChange(index, event)}
-                        sx={{ width: "100%" }}
-                      >
-                        <MenuItem value={"admin"}>Toeic</MenuItem>
-                        <MenuItem value={"recruiter"}>
-                          Người tuyển dụng
-                        </MenuItem>
-                      </Select>
+                      {certificatesList[index].certificate_language ===
+                      "English" ? (
+                        <Select
+                          defaultValue={""}
+                          label="Choose Cert"
+                          labelId="demo-simple-select-label"
+                          value={certificatesList[index].certificate_name}
+                          onChange={(event) =>
+                            handleCerNameChange(index, event)
+                          }
+                          sx={{ width: "100%" }}
+                        >
+                          <MenuItem value={"TOEIC"}>TOEIC</MenuItem>
+                          <MenuItem value={"IELTS"}>IELTS</MenuItem>
+                        </Select>
+                      ) : certificatesList[index].certificate_language ===
+                        "Korean" ? (
+                        <Select
+                          defaultValue={""}
+                          label="Choose Cert"
+                          labelId="demo-simple-select-label"
+                          value={certificatesList[index].certificate_name}
+                          onChange={(event) =>
+                            handleCerNameChange(index, event)
+                          }
+                          sx={{ width: "100%" }}
+                        >
+                          <MenuItem value={"Topik_I"}>Topik_I</MenuItem>
+                          <MenuItem value={"Topik_II"}>Topik_II</MenuItem>
+                        </Select>
+                      ) : (
+                        <Select
+                          disabled
+                          defaultValue={""}
+                          label="Choose Cert"
+                          labelId="demo-simple-select-label"
+                          value={certificatesList[index].certificate_name}
+                          onChange={(event) =>
+                            handleCerNameChange(index, event)
+                          }
+                          sx={{ width: "100%",color:"white" }}
+                        >
+                          <MenuItem value={""}>Choose Language First</MenuItem>
+                        </Select>
+                      )}
                     </FormControl>
                   </Box>
                   <Box width="100%">
@@ -433,7 +475,7 @@ function RevaluateForm() {
                       <OutlinedInput
                         label="Enter your point"
                         value={certificatesList[index].certificate_point_level}
-                        onChange={(event)=>handleCerPointChange(index,event)}
+                        onChange={(event) => handleCerPointChange(index, event)}
                         color="primary"
                         className="border-primary"
                         sx={{ width: "100%" }}
@@ -462,14 +504,14 @@ function RevaluateForm() {
           </Box>
         </Box>
         <Box width="100%" display="flex" my={2} justifyContent={"end"}>
-        <Button
-          variant="outlined"
-          sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3 }}
-          className="bg-primary border-primary font-bold text-white hover:border-primary hover:bg-white hover:text-primary"
-          type="submit"
-        >
-          Định giá
-        </Button>
+          <Button
+            variant="outlined"
+            sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3 }}
+            className="bg-primary border-primary font-bold text-white hover:border-primary hover:bg-white hover:text-primary"
+            type="submit"
+          >
+            Định giá
+          </Button>
         </Box>
       </Box>
     </form>

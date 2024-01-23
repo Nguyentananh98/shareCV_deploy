@@ -3,10 +3,13 @@ import { Avatar, Box, Button, Typography } from "@mui/material";
 import ExperienceItem from "../components/ExperienceItem";
 import { adwards, certificates, projects, skills, workExps } from "../mockData";
 import ProjectCarousel from "../components/ProjectCarousel";
+import { useState } from "react";
 
 function CvInfoPage() {
+  const [allown, setAllown] = useState<boolean>(false);
+  const [showButton, setShowButton] = useState<boolean>(false);
   return (
-    <Box display="flex" flexDirection="column" width="100%" maxWidth="1200px">
+    <Box display="flex" flexDirection="column" width="100%" p={"120px"}>
       <div className="flex w-full items-center mb-8">
         <div className="flex items-center">
           <div className="w-2 h-2 bg-green-600 rounded-full" />
@@ -20,7 +23,7 @@ function CvInfoPage() {
 
         <div className="flex-1" />
 
-        <Button
+        {/* <Button
           variant="contained"
           sx={{
             textTransform: "none",
@@ -44,7 +47,7 @@ function CvInfoPage() {
           }}
         >
           <Typography className="font-bold">Xem định giá</Typography>
-        </Button>
+        </Button> */}
 
         <Typography className="text-[22px] font-bold text-amber-400">
           50 điểm
@@ -52,7 +55,11 @@ function CvInfoPage() {
       </div>
 
       <div className="w-full grid grid-cols-3 gap-5">
-        <div className="w-full col-span-2 flex flex-col gap-6">
+        <div
+          className={`w-full ${
+            allown ? "col-span-2" : "col-span-3"
+          } flex flex-col gap-6`}
+        >
           <Box
             width="100%"
             display="flex"
@@ -203,58 +210,124 @@ function CvInfoPage() {
               ))}
             </div>
           </Box>
-        </div>
-
-        <div className="flex flex-col w-full">
-          <Box
-            width="100%"
-            display="flex"
-            flexDirection="column"
-            p={5}
-            bgcolor="#F8FBFD"
-            borderRadius="22px"
-          >
-            <Typography className="text-[22px] font-bold mb-3">
-              Thông tin cá nhân
-            </Typography>
-            <div className="flex flex-col gap-8">
-              <div>
-                <Typography className="text-zinc-500">Email</Typography>
-                <Typography className="text-primary font-medium">a@a.acom</Typography>
-              </div>
-
-              <div>
-                <Typography className="text-zinc-500">Số điện thoại</Typography>
-                <Typography className="text-primary font-medium">0123456789</Typography>
-              </div>
-
-              <div>
-                <Typography className="text-zinc-500">Số CMND/CCCD</Typography>
-                <Typography className="text-primary font-medium">1212121212</Typography>
-              </div>
-
-              <div>
-                <Typography className="text-zinc-500">Quốc gia</Typography>
-                <Typography className="text-primary font-medium">Việt Nam</Typography>
-              </div>
-
-              <div>
-                <Typography className="text-zinc-500">Tỉnh/Thành phố</Typography>
-                <Typography className="text-primary font-medium">TP.HCM</Typography>
-              </div>
-
-              <div>
-                <Typography className="text-zinc-500">Địa chỉ</Typography>
-                <Typography className="text-primary font-medium">202 Lê Lai, phường Bến Thành</Typography>
-              </div>
-
-              <div className="flex items-center">
-                <Language className="mr-3" />
-                
-              </div>
-            </div>
+          <Box width="100%" display="flex" justifyContent={"space-between"}>
+            <Button
+              variant="outlined"
+              sx={{ height: "50px", borderRadius: "20px" }}
+            >
+              Từ chối
+            </Button>
+            <Box display="flex" className="gap-5">
+              <Button
+                variant="outlined"
+                sx={{ height: "50px", borderRadius: "20px" }}
+              >
+                Thêm vào giỏ
+              </Button>
+              <Box display="flex" className="gap-5" flexDirection={"column"}>
+                <Button
+                  className="hover:text-primary"
+                  variant="contained"
+                  onClick={() => setShowButton(!showButton)}
+                  sx={{ height: "50px", borderRadius: "20px" }}
+                >
+                  Chọn ứng viên
+                </Button>
+                {showButton ? (
+                  <Box display="flex" flexDirection={"column"}>
+                    <Button
+                      disabled={allown}
+                      variant="outlined"
+                      onClick={() => setAllown(true)}
+                      sx={{ height: "50px", borderRadius: "20px" }}
+                    >
+                      Mua thông tin
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      sx={{ height: "50px", borderRadius: "20px" }}
+                    >
+                      Đặt lịch phỏng vấn
+                    </Button>
+                  </Box>
+                ) : (
+                  <></>
+                )}
+              </Box>
+            </Box>
           </Box>
         </div>
+        {allown ? (
+          <div className="flex flex-col w-full">
+            <Box
+              width="100%"
+              display="flex"
+              flexDirection="column"
+              p={5}
+              bgcolor="#F8FBFD"
+              borderRadius="22px"
+            >
+              <Typography className="text-[22px] font-bold mb-3">
+                Thông tin cá nhân
+              </Typography>
+              <div className="flex flex-col gap-8">
+                <div>
+                  <Typography className="text-zinc-500">Email</Typography>
+                  <Typography className="text-primary font-medium">
+                    a@a.acom
+                  </Typography>
+                </div>
+
+                <div>
+                  <Typography className="text-zinc-500">
+                    Số điện thoại
+                  </Typography>
+                  <Typography className="text-primary font-medium">
+                    0123456789
+                  </Typography>
+                </div>
+
+                <div>
+                  <Typography className="text-zinc-500">
+                    Số CMND/CCCD
+                  </Typography>
+                  <Typography className="text-primary font-medium">
+                    1212121212
+                  </Typography>
+                </div>
+
+                <div>
+                  <Typography className="text-zinc-500">Quốc gia</Typography>
+                  <Typography className="text-primary font-medium">
+                    Việt Nam
+                  </Typography>
+                </div>
+
+                <div>
+                  <Typography className="text-zinc-500">
+                    Tỉnh/Thành phố
+                  </Typography>
+                  <Typography className="text-primary font-medium">
+                    TP.HCM
+                  </Typography>
+                </div>
+
+                <div>
+                  <Typography className="text-zinc-500">Địa chỉ</Typography>
+                  <Typography className="text-primary font-medium">
+                    202 Lê Lai, phường Bến Thành
+                  </Typography>
+                </div>
+
+                <div className="flex items-center">
+                  <Language className="mr-3" />
+                </div>
+              </div>
+            </Box>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </Box>
   );

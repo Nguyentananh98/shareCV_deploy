@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState, useCallback } from "react";
-import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
+import { ICompanyInfo, ICompanyInfoResponse, ValuateCV } from "@/common/interfaces";
 import { getAccessCookies } from "@/common/helpers/setCookies";
 import PdfViewer from "./component/PdfViewer/PdfViewer";
 import { Controller, useForm } from "react-hook-form";
@@ -13,54 +13,13 @@ import RevaluateForm from "./component/RevaluateForm/RevaluateForm";
 import Valuation from "./component/Valuation/Valuation";
 import { IRevaluate } from "../../types";
 
-const initialForm: ICompanyInfoResponse = {
-  company_name: "",
-  industry: "",
-  description: "",
-  tax_code: "",
-  phone: "",
-  email: "",
-  founded_year: 0,
-  company_size: 0,
-  address: "",
-  city: "",
-  country: "",
-  logo: "/Logo.png",
-  cover_image: null,
-  company_images: null,
-  company_video: null,
-  linkedin: null,
-  website: null,
-  facebook: null,
-  instagram: null,
-};
-function CVPricing() {
+function CVPricing({data}:{data: ValuateCV}) {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
-  const [inputList, setInputList] = useState<string[]>([""]); // Danh sách các ô nhập thông tin
-  const [isEdit, setIsEdit] = useState<Boolean>(false);
-  const {
-    control,
-    handleSubmit,
-    setError,
-    setValue,
-    formState: { errors, isDirty = false, isValid = true },
-  } = useForm<IRevaluate>({
-    // resolver,
-  });
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+
   
-  // useEffect(() => {
-  //   try {
-  //     getCompanyInfo().then((res) => {
-  //       setData(res.data.data);
-  //       console.log(res);
-  //     });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }, []);
   return (
     <Box
       width="100%"
@@ -101,9 +60,10 @@ function CVPricing() {
       >
         
         <Button
+          disabled={isEdit}
           variant="outlined"
           sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3}}
-          className="bg-primary border-primary text-white hover:border-primary hover:bg-white hover:text-primary"
+          className="hover:border-primary hover:bg-white hover:text-primary"
           onClick={()=>setIsEdit(true)}
         >
           Định giá lại
@@ -119,7 +79,7 @@ function CVPricing() {
         justifyContent={"left"}
         sx={{ overflow: "auto" }}
       >
-        <PdfViewer url="/Resume-KieuKhanhQuan.pdf" />
+        <PdfViewer url={data.cv_pdf?data.cv_pdf:""} />
       </Box>
       <Box
         className="col-span-5"
@@ -131,7 +91,7 @@ function CVPricing() {
         justifyContent={"left"}
         sx={{ overflow: "auto" }}
       >
-          {isEdit?<RevaluateForm />:  <Valuation/>}
+          {isEdit?<RevaluateForm data={data}/>:  <Valuation data={data}/>}
           {/* <Valuation/>
           <RevaluateForm /> */}
         </Box>

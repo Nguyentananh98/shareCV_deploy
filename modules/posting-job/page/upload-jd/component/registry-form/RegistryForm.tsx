@@ -12,6 +12,8 @@ import { ICompanyInfo } from "../../../../types";
 import { addCompany } from "@/common/apis/posting-job";
 import FileUpload from "../../../company-info/component/FileUpload";
 import { ITitleImageItem } from "../../../../types";
+import { HorizontalRule } from "@mui/icons-material";
+import { IJobDetail } from "../../types";
 function RegistryForm() {
   if (!true) {
     redirect("/login", RedirectType.replace);
@@ -22,67 +24,27 @@ function RegistryForm() {
   const [listImage, setListImage] = useState<File[] | null>(null);
   const [video, setVideo] = useState<File[] | null>(null);
   const [formData, setFormData] = useState(new FormData());
-  const handleLogoChange = (value: File[] | null) => {
-    // setFile(imageList)
-    console.log(value);
-    if (value != null) {
-      setValue("logo", value[0]);
-      setLogo(value);
-      console.log("logo",value[0])
-    } else {
-      setLogo(null);
-    }
-  };
-  const handleCoverImageChange = (value: File[] | null) => {
-    // setFile(imageList)
-    console.log(value);
-    if (value != null) {
-      setValue("cover_image", value[0]);
-      setCoverImage(value);
-    } else {
-      setCoverImage(null);
-    }
-  };
-  const handleListImageChange = (value: File[] | null) => {
-    // setFile(imageList)
-    console.log(value);
-    if (value != null) {
-      setValue("company_images", value);
-      setListImage(value);
-    } else {
-      setListImage(null);
-    }
-  };
-  const handleVideoChange = (value: File[] | null) => {
-    // setFile(imageList)
-    console.log(value);
-    if (value != null) {
-      setValue("company_video", value[0]);
-      setVideo(value);
-    } else {
-      setVideo(null);
-    }
-  };
+  
   const {
     control,
     handleSubmit,
     setError,
     setValue,
     formState: { errors, isDirty = false, isValid = true },
-  } = useForm<ICompanyInfo>({
+  } = useForm<IJobDetail>({
     // resolver,
   });
   const onSubmit = handleSubmit(async (data) => {
-    console.log("data",data)
-    const res = await addCompany(data);
+    // console.log("data",data)
+    // const res = await addCompany(data);
 
-    if (res.status !== 200) {
-      console.log(res);
-      setError("root", { message: "Đăng nhập thất bại" });
-      return;
-    }
+    // if (res.status !== 200) {
+    //   console.log(res);
+    //   setError("root", { message: "Đăng nhập thất bại" });
+    //   return;
+    // }
 
-    console.log(res);
+    // console.log(res);
     window.location.reload();
   });
   return (
@@ -90,13 +52,14 @@ function RegistryForm() {
       <Box
         width="100%"
         px={5}
-        className="grid grid-cols-10 gap-10"
+        py={5}
+        className="grid grid-cols-12 gap-10"
         alignItems={"center"}
         justifyContent={"center"}
         sx={{borderRadius:"5px",backgroundColor: "rgba(217, 217, 217, 0.2)", }}
       >
         <Box
-          className="col-span-10"
+          className="col-span-12"
           height="100px"
           display="flex"
           flexDirection="row"
@@ -108,72 +71,35 @@ function RegistryForm() {
           </Typography>
         </Box>
         <Box
-          className="col-span-3"
-          height="400px"
-          display="flex"
-          flexDirection="row"
-          //   alignItems={"center"}
-          justifyContent={"left"}
-        >
-          <FileUpload
-            fileId="logo"
-            type={"image"}
-            file={logo}
-            isMultiple={false}
-            title="Logo công ty"
-            decription="tối đa"
-            onChange={handleLogoChange}
-          />
-        </Box>
-        <Box
-          className="col-span-7"
-          height="400px"
-          display="flex"
-          flexDirection="row"
-          //   alignItems={"center"}
-          justifyContent={"left"}
-        >
-          <FileUpload
-            fileId={"cover_image"}
-            title="Ảnh bìa"
-            file={coverImage}
-            decription="tối đa"
-            onChange={handleCoverImageChange}
-            isMultiple={false}
-            type={"image"}
-          />
-        </Box>
-        <Box
-          className="col-span-5"
+          className="col-span-6"
           display="flex"
           flexDirection="row"
           justifyContent={"left"}
         >
           <Controller
             control={control}
-            name="company_name"
+            name="job_title"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
-                  Tên công ty
+                  Tên công việc
                 </Typography>
                 <TextField
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="company_name"
+                  id="job_title"
                   {...field}
                   fullWidth
-                  error={errors.email ? true : false}
+                  error={errors.job_title ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {errors.job_title?.message}
                 </Typography>
               </Box>
             )}
           />
         </Box>
         <Box
-          className="col-span-5"
-          // height="100px"
+          className="col-span-6"
           display="flex"
           flexDirection="row"
           justifyContent={"right"}
@@ -182,7 +108,7 @@ function RegistryForm() {
             control={control}
             name="industry"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
                   Ngành nghề
                 </Typography>
@@ -191,35 +117,252 @@ function RegistryForm() {
                   id="industry"
                   {...field}
                   fullWidth
-                  error={errors.email ? true : false}
-                  //   startAdornment={
-                  //     <InputAdornment position="start">
-                  //       <EmailOutlined />
-                  //     </InputAdornment>
-                  //   }
+                  error={errors.industry ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {errors.industry?.message}
                 </Typography>
               </Box>
             )}
           />
         </Box>
         <Box
-          className="col-span-10"
-          // height="300px"
+          className="col-span-6"
           display="flex"
           flexDirection="row"
-          //   alignItems={"center"}
           justifyContent={"left"}
         >
           <Controller
             control={control}
-            name="description"
+            name="job_type"
             render={({ field }) => (
               <Box width="100%">
                 <Typography className="font-bold text-primary">
-                  Mô tả công ty
+                  Loại công việc
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="job_type"
+                  {...field}
+                  fullWidth
+                  error={errors.job_type ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.job_type?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-6"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"right"}
+        >
+          <Controller
+            control={control}
+            name="skills"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Kỹ Năng
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="skills"
+                  {...field}
+                  fullWidth
+                  error={errors.skills ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.skills?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-6"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Giới tính
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="gender"
+                  {...field}
+                  fullWidth
+                  error={errors.gender ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.gender?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-6"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"right"}
+        >
+          <Controller
+            control={control}
+            name="received_job_time"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Ngày bắt đầu nhận việc
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="received_job_time"
+                  {...field}
+                  fullWidth
+                  error={errors.received_job_time ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.received_job_time?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-3"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="working_time"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Thời gian làm việc
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="working_time"
+                  {...field}
+                  fullWidth
+                  error={errors.working_time ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.working_time?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-3"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="working_time"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Tên công ty
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="working_time"
+                  {...field}
+                  fullWidth
+                  error={errors.working_time ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.working_time?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-3"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="working_time"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Tên công ty
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="working_time"
+                  {...field}
+                  fullWidth
+                  error={errors.working_time ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.working_time?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-3"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="working_time"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Tên công ty
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="working_time"
+                  {...field}
+                  fullWidth
+                  error={errors.working_time ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.working_time?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-12"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="descriptions"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Mô tả công việc
                 </Typography>
                 <TextField
                   multiline
@@ -227,296 +370,232 @@ function RegistryForm() {
                   label="Outlined"
                   sx={{
                     backgroundColor: "white",
-                    // height: "90%",
                     width: "100%",
                     mt: 2,
                   }}
-                  id="description"
+                  id="descriptions"
                   {...field}
                   fullWidth
-                  error={errors.email ? true : false}
+                  error={errors.descriptions ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {errors.descriptions?.message}
                 </Typography>
               </Box>
             )}
           />
         </Box>
         <Box
-          className="col-span-5"
-          height="100px"
-          display="flex"
-          flexDirection="row"
-          //   alignItems={"center"}
-          justifyContent={"left"}
-        >
-          <Controller
-            control={control}
-            name="email"
-            render={({ field }) => (
-              <Box width="90%">
-                <Typography className="font-bold text-primary">
-                  Email
-                </Typography>
-                <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="email"
-                  {...field}
-                  fullWidth
-                  error={errors.email ? true : false}
-                  // startAdornment={
-                  //   <InputAdornment position="start">
-                  //     <EmailOutlined />
-                  //   </InputAdornment>
-                  // }
-                />
-                <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
-                </Typography>
-              </Box>
-            )}
-          />
-        </Box>
-        <Box
-          className="col-span-5"
-          height="100px"
-          display="flex"
-          flexDirection="row"
-          //   alignItems={"center"}
-          justifyContent={"right"}
-        >
-          <Controller
-            control={control}
-            name="phone"
-            render={({ field }) => (
-              <Box width="90%">
-                <Typography className="font-bold text-primary">
-                  Số điện thoại
-                </Typography>
-                <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="phone"
-                  {...field}
-                  fullWidth
-                  error={errors.email ? true : false}
-                />
-                <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
-                </Typography>
-              </Box>
-            )}
-          />
-        </Box>
-        <Box
-          className="col-span-5"
-          height="100px"
-          display="flex"
-          flexDirection="row"
-          //   alignItems={"center"}
-          justifyContent={"left"}
-        >
-          <Controller
-            control={control}
-            name="founded_year"
-            render={({ field }) => (
-              <Box width="90%">
-                <Typography className="font-bold text-primary">
-                  Năm thành lập
-                </Typography>
-                <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="founded_year"
-                  {...field}
-                  fullWidth
-                  error={errors.email ? true : false}
-                />
-                <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
-                </Typography>
-              </Box>
-            )}
-          />
-        </Box>
-        <Box
-          className="col-span-5"
-          height="100px"
-          display="flex"
-          flexDirection="row"
-          justifyContent={"right"}
-        >
-          <Controller
-            control={control}
-            name="company_size"
-            render={({ field }) => (
-              <Box width="90%">
-                <Typography className="font-bold text-primary">
-                  Quy mô
-                </Typography>
-                <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="company_size"
-                  {...field}
-                  fullWidth
-                  error={errors.email ? true : false}
-                />
-                <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
-                </Typography>
-              </Box>
-            )}
-          />
-        </Box>
-        <Box
-          className="col-span-5"
-          height="100px"
+          className="col-span-12"
           display="flex"
           flexDirection="row"
           justifyContent={"left"}
         >
           <Controller
             control={control}
-            name="tax_code"
-            render={({ field }) => (
-              <Box width="90%">
-                <Typography className="font-bold text-primary">
-                  Mã số thuế
-                </Typography>
-                <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="tax_code"
-                  {...field}
-                  fullWidth
-                  error={errors.email ? true : false}
-                />
-                <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
-                </Typography>
-              </Box>
-            )}
-          />
-        </Box>
-        <Box
-          className="col-span-10"
-          height="100px"
-          display="flex"
-          flexDirection="row"
-          justifyContent={"left"}
-        >
-          <Controller
-            control={control}
-            name="address"
+            name="requirements"
             render={({ field }) => (
               <Box width="100%">
                 <Typography className="font-bold text-primary">
-                  Địa chỉ
+                  Yêu cầu công việc
                 </Typography>
                 <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="address"
+                  multiline
+                  rows={6}
+                  label="Outlined"
+                  sx={{
+                    backgroundColor: "white",
+                    width: "100%",
+                    mt: 2,
+                  }}
+                  id="requirements"
                   {...field}
                   fullWidth
-                  error={errors.email ? true : false}
+                  error={errors.requirement ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {errors.requirements?.message}
                 </Typography>
               </Box>
             )}
           />
         </Box>
         <Box
-          className="col-span-5"
-          height="100px"
+          className="col-span-12"
           display="flex"
           flexDirection="row"
           justifyContent={"left"}
         >
           <Controller
             control={control}
-            name="city"
+            name="benefits"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
-                  Tỉnh/Thành phố
+                  Quyền lợi
                 </Typography>
                 <TextField
-                  sx={{ backgroundColor: "white", width: "100%" }}
-                  id="city"
+                  multiline
+                  rows={6}
+                  label="Outlined"
+                  sx={{
+                    backgroundColor: "white",
+                    width: "100%",
+                    mt: 2,
+                  }}
+                  id="benefits"
                   {...field}
                   fullWidth
-                  error={errors.email ? true : false}
+                  error={errors.benefits ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {errors.benefits?.message}
                 </Typography>
               </Box>
             )}
           />
         </Box>
         <Box
-          className="col-span-5"
-          height="100px"
+          className="col-span-6"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="levels"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Cấp bậc đảm nhiệm
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="levels"
+                  {...field}
+                  fullWidth
+                  error={errors.levels ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.levels?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        <Box
+          className="col-span-6"
           display="flex"
           flexDirection="row"
           justifyContent={"right"}
         >
           <Controller
             control={control}
-            name="country"
+            name="roles"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
-                  Quốc gia
+                  Vai trò đảm nhiệm
                 </Typography>
                 <TextField
                   sx={{ backgroundColor: "white", width: "100%" }}
-                  id="country"
+                  id="roles"
                   {...field}
                   fullWidth
-                  error={errors.email ? true : false}
+                  error={errors.roles ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {errors.roles?.message}
                 </Typography>
               </Box>
             )}
           />
         </Box>
         <Box
-          className="col-span-10"
-          height="400px"
+          className="col-span-3"
           display="flex"
           flexDirection="row"
-          //   alignItems={"center"}
           justifyContent={"left"}
         >
-          <FileUpload
-            fileId={"list_image"}
-            title="Hình ảnh giới thiệu công ty"
-            file={listImage}
-            decription="tối đa"
-            onChange={handleListImageChange}
-            isMultiple={true}
-            type={"image"}
+          <Controller
+            control={control}
+            name="yoe"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Số năm kinh nghiệm
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="yoe"
+                  {...field}
+                  fullWidth
+                  error={errors.yoe ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.yoe?.message}
+                </Typography>
+              </Box>
+            )}
+          />
+        </Box>
+        {/* <div className=" flex justify-center items-center">
+              <HorizontalRule />
+            </div> */}
+        <Box
+          className="col-span-3"
+          display="flex"
+          flexDirection="row"
+          justifyContent={"left"}
+        >
+          <Controller
+            control={control}
+            name="yoe"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Tên công ty
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="yoe"
+                  {...field}
+                  fullWidth
+                  error={errors.yoe ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.yoe?.message}
+                </Typography>
+              </Box>
+            )}
           />
         </Box>
         <Box
-          className="col-span-10"
-          height="400px"
+          className="col-span-6"
           display="flex"
           flexDirection="row"
-          //   alignItems={"center"}
-          justifyContent={"left"}
+          justifyContent={"right"}
         >
-          <FileUpload
-            fileId={"video"}
-            file={video}
-            title={"Video giới thiệu công ty"}
-            decription={""}
-            onChange={handleVideoChange}
-            type={"video"}
-            isMultiple={false}
+          <Controller
+            control={control}
+            name="num_recruit"
+            render={({ field }) => (
+              <Box width="100%">
+                <Typography className="font-bold text-primary">
+                  Số lượng tuyển dụng
+                </Typography>
+                <TextField
+                  sx={{ backgroundColor: "white", width: "100%" }}
+                  id="num_recruit"
+                  {...field}
+                  fullWidth
+                  error={errors.num_recruit ? true : false}
+                />
+                <Typography variant="inherit" color={"error"}>
+                  {errors.num_recruit?.message}
+                </Typography>
+              </Box>
+            )}
           />
         </Box>
       </Box>
@@ -552,7 +631,7 @@ function RegistryForm() {
             control={control}
             name="linkedin"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
                   Linkedin
                 </Typography>
@@ -564,7 +643,7 @@ function RegistryForm() {
                   error={errors.email ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {/* {errors.email?.message} */}
                 </Typography>
               </Box>
             )}
@@ -580,7 +659,7 @@ function RegistryForm() {
             control={control}
             name="website"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
                   Website
                 </Typography>
@@ -592,7 +671,7 @@ function RegistryForm() {
                   error={errors.email ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {/* {errors.email?.message} */}
                 </Typography>
               </Box>
             )}
@@ -608,7 +687,7 @@ function RegistryForm() {
             control={control}
             name="facebook"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
                   Facebook
                 </Typography>
@@ -620,7 +699,7 @@ function RegistryForm() {
                   error={errors.email ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {/* {errors.email?.message} */}
                 </Typography>
               </Box>
             )}
@@ -636,7 +715,7 @@ function RegistryForm() {
             control={control}
             name="instagram"
             render={({ field }) => (
-              <Box width="90%">
+              <Box width="100%">
                 <Typography className="font-bold text-primary">
                   Instagram
                 </Typography>
@@ -648,7 +727,7 @@ function RegistryForm() {
                   error={errors.email ? true : false}
                 />
                 <Typography variant="inherit" color={"error"}>
-                  {errors.email?.message}
+                  {/* {errors.email?.message} */}
                 </Typography>
               </Box>
             )}

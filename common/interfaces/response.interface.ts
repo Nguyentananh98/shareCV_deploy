@@ -1,4 +1,4 @@
-import { ILanguageCertificates } from "@/modules/posting-job/types";
+import { ILanguageCertificates } from "./revaluate.interface";
 import { ICart, ICartItems } from "./cart.interface";
 
 export interface IMetadata {
