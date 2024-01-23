@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: [ 'localhost','e9fc-2402-800-637d-71-f53e-72a2-a028-591e.ngrok-free.app'],
+        domains: [ 'localhost','103.130.212.245'],
     },
     webpack: (config) => {
         config.resolve.alias.canvas = false;

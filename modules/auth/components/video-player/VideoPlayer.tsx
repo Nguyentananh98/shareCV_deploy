@@ -61,7 +61,7 @@ export default function VideoPlayer() {
               style={{
                 padding: 0,
                 // stroke: "white",
-                color: "#FFD530",
+                color: "#063776",
                 height: 100,
                 width: "100%",
               }}
