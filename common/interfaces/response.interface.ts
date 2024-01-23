@@ -33,6 +33,7 @@ export interface IAuthResponse {
 
   detail?: string;
 }
+
 export interface ICompanyInfoResponse {
   company_name: string;
     industry: string;
