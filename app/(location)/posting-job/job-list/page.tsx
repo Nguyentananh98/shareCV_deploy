@@ -13,106 +13,65 @@ import { CreateJobTable } from './sections/CreatedJobTable';
 import { IJobListCreate, IJobListDraft } from '@/common/interfaces/job-list';
 import { CustomPagination } from './components/pagination';
 import { DraftJobTable } from './sections/DraftJobTable';
-import { getCreatedJobList } from '@/common/apis/job_list';
-
-export const jobListCreatedData: IJobListCreate[] = [
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        recruited_time: '10-10-2021',
-        job_service: 'Job Service',
-        num_cvs: 10,
-        status: 'Created',
-    },
-]
-
-export const IJobListDraftData: IJobListDraft[] = [
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        created_time: '10-10-2021',
-        job_service: 'Job Service',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        created_time: '10-10-2021',
-        job_service: 'Job Service',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        created_time: '10-10-2021',
-        job_service: 'Job Service',
-    },
-    {
-        job_id: 123,
-        job_title: 'Job Title',
-        industry: 'Job Major',
-        created_time: '10-10-2021',
-        job_service: 'Job Service',
-    }
-]
+import { getCreatedJobList, getDraftJobList } from '@/common/apis/job_list';
+import dayjs from 'dayjs';
 
 function JobListPage() {
     const [isDraftPage, setIsDraftPage] = useState<boolean>(false);
     const [pagination, setPagination] = useState({
         page_index: 1,
         limit: 10,
-        total_pages: 10,
-        total_items: 0
     });
+    const [metaData, setMetaData] = useState({
+        total_pages: 0,
+        total_items: 0,
+    })
 
-    useEffect(() => {
-        try{
+    const [jobListCreatedData, setJobListCreateData] = useState<IJobListCreate[]>([]);
+    const [jobListDraftData, setJobListDraftData] = useState<IJobListDraft[]>([]);
+
+    const handleReloadData = () => {
+        try {
             let payload: any = {
                 page_index: pagination.page_index,
                 limit: pagination.limit,
             }
-            getCreatedJobList(payload).then((res) => {
-                console.log(res);
-            })
+            if (!isDraftPage) {
+                getCreatedJobList(payload).then((res) => {
+                    setMetaData({
+                        ...metaData,
+                        total_pages: res.data.data.total_pages,
+                        total_items: res.data.data.total_items,
+                    })
+                    setJobListCreateData(res.data.data.item_lst);
+                    console.log(res.data.data.item_lst);
+                })
+            } else {
+                getDraftJobList(payload).then((res) => {
+                    setMetaData({
+                        ...metaData,
+                        total_pages: res.data.data.total_pages,
+                        total_items: res.data.data.total_items,
+                    })
+                    setJobListDraftData(res.data.data.item_lst);
+                    console.log(res.data.data.item_lst);
+                })
+            }
         } catch (err) {
             console.log(err);
         }
-    }, [pagination]);
+    }
+
+    useEffect(() => {
+        handleReloadData();
+    }, [isDraftPage, pagination]);
 
     const handleChangeNumPerPage = (value: any) => {
         setPagination({
             ...pagination,
             limit: value,
         })
+        handleReloadData();
     }
 
     const handleChangePageNumber = (page: number) => {
@@ -120,6 +79,7 @@ function JobListPage() {
             ...pagination,
             page_index: page,
         })
+        handleReloadData();
     }
 
     return (
@@ -170,6 +130,7 @@ function JobListPage() {
                             options={[10, 20, 30, 40, 50]}
                             renderInput={(params) => <TextField {...params} label="" />}
                             onChange={(event, value) => handleChangeNumPerPage(value)}
+                            getOptionLabel={(option) => option.toString()}
                             sx={{
                                 height: "40px",
                                 width: "100px",
@@ -196,7 +157,7 @@ function JobListPage() {
                 marginTop: '50px',
             }}>
                 {!isDraftPage ?
-                    <CreateJobTable data={jobListCreatedData} /> : <DraftJobTable data={IJobListDraftData} />
+                    <CreateJobTable data={jobListCreatedData} /> : <DraftJobTable data={jobListDraftData} />
                 }
                 <Box
                     sx={{

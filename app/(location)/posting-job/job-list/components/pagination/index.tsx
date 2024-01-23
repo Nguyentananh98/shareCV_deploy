@@ -20,7 +20,7 @@ export const CustomPagination = ({
         <Box display="flex" flexDirection="row" justifyContent="space-between">
             <Box>
                 <Typography sx={paginationTextStyles()}>
-                    Kết quả {numsPerPage * currentPage} - {numsPerPage * (currentPage + 1)} của {totalPage}
+                    Kết quả {numsPerPage * (currentPage - 1)} - {numsPerPage * (currentPage)} của {totalPage}
                 </Typography>
             </Box>
             <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" gap="10px">

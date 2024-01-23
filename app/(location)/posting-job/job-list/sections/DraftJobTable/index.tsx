@@ -6,12 +6,13 @@ import {
 } from 'material-react-table';
 
 import { IJobListDraft } from "@/common/interfaces/job-list"
-import { Box, Button, Menu, Typography } from "@mui/material";
+import { Box, Button, Chip, Menu, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CustomMenuItem } from '../../components/MenuItem';
 import { CustomMenu } from '../../components/CustomMenu';
+import dayjs from 'dayjs';
 
 export interface JobListTableProps {
     data: IJobListDraft[];
@@ -59,6 +60,13 @@ export const DraftJobTable = ({
                         <p>{column.columnDef.header}</p>
                         <KeyboardArrowDownIcon />
                     </Box>
+                ),
+                Cell: ({ cell }) => (
+                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center">
+                        {cell.getValue<any>().map((item: any, index: any) => (
+                            <Chip label={item} variant="outlined" key={index} />
+                        ))}
+                    </Box>
                 )
             },
             {
@@ -77,6 +85,11 @@ export const DraftJobTable = ({
                         }}>
                         <p>{column.columnDef.header}</p>
                         <KeyboardArrowDownIcon />
+                    </Box>
+                ),
+                Cell: ({ cell }) => (
+                    <Box>
+                        <Typography>{dayjs(cell.getValue<string>()).format('MM-DD-YYYY')}</Typography>
                     </Box>
                 )
             },
@@ -129,7 +142,7 @@ export const DraftJobTable = ({
                 fontFamily: "Poppins",
                 fontSize: "14.671px",
                 fontStyle: "normal",
-                fontWeight: "500",
+                fontWeight: "700",
                 lineHeight: "69.039px",
             }
         }

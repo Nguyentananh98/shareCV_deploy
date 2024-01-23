@@ -22,15 +22,21 @@ export interface ITablePagination {
 }
 
 export interface IJobListCreateResponse {
-    total_pages: number,
-    total_items: number,
-    item_lst: IJobListCreate[]
+    message: any,
+    data: {
+        total_pages: number,
+        total_items: number,
+        item_lst: IJobListCreate[]
+    }
 }
 
 export interface IJobListDraftResponse {
-    total_pages: number,
-    total_items: number,
-    item_lst: IJobListDraft[]
+    message: any,
+    data: {
+        total_pages: number,
+        total_items: number,
+        item_lst: IJobListDraft[]
+    }
 }
 
 
