@@ -4,6 +4,8 @@
 
 @tailwind utilities;
 
+@use "node_modules/slick-carousel/slick/slick.css" as *;
+@use "node_modules/slick-carousel/slick/slick-theme.css" as *;
 /* Chrome, Safari, Edge, Opera */
 input.custom-number-input::-webkit-outer-spin-button,
 input.custom-number-input::-webkit-inner-spin-button {

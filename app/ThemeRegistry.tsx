@@ -8,8 +8,12 @@ import { useState } from 'react';
 
 const theme = createTheme({
     typography: {
-        fontFamily: 'inherit',
+        // fontFamily: 'inherit',
         // fontSize: 'inherit',
+    },
+    palette:{
+      primary:{main:"#063776", contrastText:"#fff",light:"#000000",dark:"#FFFFFF"},
+      secondary:{main:"#063776", contrastText:"#FFFFFF"}
     }
 });
 

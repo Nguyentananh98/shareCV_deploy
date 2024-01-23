@@ -10,3 +10,5 @@ export * from "./root.interface";
 export * from "./stock.interface";
 export * from "./tag.interface";
 export * from "./order.interface";
+export * from "./company.interface";
+export * from "./revaluate.interface";

@@ -9,12 +9,12 @@ export interface IUserRegister {
 
   password: string;
 
-  confirmPassword: string;
+  password_again: string;
 }
 
 export interface IResetPasswordRequest {
   email: string;
   code: string;
   password: string;
-  confirmPassword: string;
+  password_again: string;
 }
