@@ -29,6 +29,7 @@ export const axiosClient = axios.create({
     rejectUnauthorized: false,
   }),
 });
+
 export const subaxiosClient = axios.create({
   baseURL: API_URL,
   headers: {
