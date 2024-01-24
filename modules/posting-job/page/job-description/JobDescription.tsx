@@ -3,48 +3,21 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import ReactPlayer from "react-player";
-import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState } from "react";
-import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
+import {
+  ICompanyInfo,
+  ICompanyInfoResponse,
+  IJobDetailResponse,
+} from "@/common/interfaces";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
-import { getAccessCookies } from "@/common/helpers/setCookies";
-const initialForm: ICompanyInfoResponse = {
-  company_name: "",
-  industry: "",
-  description: "",
-  tax_code: "",
-  phone: "",
-  email: "",
-  founded_year: 0,
-  company_size: 0,
-  address: "",
-  city: "",
-  country: "",
-  logo: "/Logo.png",
-  cover_image: null,
-  company_images: null,
-  company_video: null,
-  linkedin: null,
-  website: null,
-  facebook: null,
-  instagram: null,
-};
-function JobDescription() {
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+
+function JobDescription({ data }: { data: IJobDetailResponse }) {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-  const [data, setData] = useState<ICompanyInfoResponse>(initialForm);
-  useEffect(() => {
-    try {
-      getCompanyInfo().then((res) => {
-        setData(res.data.data);
-        console.log(res);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
   return (
     <Box width="100%">
       <Box
@@ -52,7 +25,7 @@ function JobDescription() {
         width="100%"
         minHeight="400px"
         maxHeight="500px"
-        sx={{ backgroundImage: `url(${"/background-posting-job.png"})` }}
+        sx={{ backgroundImage: `url(${data.company_cover_image})` }}
         justifyContent="center"
         alignItems="center"
         flex={1}
@@ -93,19 +66,28 @@ function JobDescription() {
               justifyContent={"space-between"}
             >
               <Box display="flex" className="gap-3">
-                <Typography
-                  className="font-medium text-green-400"
-                  sx={{ fontSize: "16px" }}
-                >
-                  {data.company_name?data.company_name:"Đang tuyển"}
-                </Typography>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-green-600 rounded-full" />
+                  <Typography
+                    className="font-medium text-green-600"
+                    sx={{ fontSize: "16px" }}
+                  >
+                    {data.status ? data.status : "Đang tuyển"}
+                  </Typography>
+                </div>
                 <Typography className="font-medium text-primary">
-                  {data.company_name?data.company_name:"Đăng tin tuyển dụng"}
+                  Đăng tin tuyển dụng
                 </Typography>
               </Box>
-              <Typography className="font-bold text-primary">
+              <Button variant="text">
+                <Typography
+                  display="inline"
+                  sx={{ textDecoration: "underline" }}
+                  className="font-bold text-primary"
+                >
                   Tạm dừng
                 </Typography>
+              </Button>
             </Box>
           </Grid>
           <Grid
@@ -124,7 +106,7 @@ function JobDescription() {
               justifyContent={"left"}
             >
               <Image
-                src={data.logo ? data.logo : "/Logo.png"}
+                src={data.company_logo ? data.company_logo : "/Logo.png"}
                 height={100}
                 width={100}
                 alt=""
@@ -132,29 +114,65 @@ function JobDescription() {
               <Box
                 display="flex"
                 py={1}
+                px={2}
                 height="100%"
                 flexDirection="column"
                 alignContent={"top"}
                 justifyContent={"space-between"}
               >
-                <Typography className="font-bold text-primary">
-                  {data.company_name}
+                <Typography
+                  className="font-bold text-primary"
+                  sx={{ fontSize: "36px" }}
+                >
+                  {data.job_title}
                 </Typography>
-                <Typography className="font-bold text-tertiary">
-                  {data.company_name}
-                </Typography>
+                <Box display="flex" className="gap-5">
+                  <Box
+                    display="flex"
+                    p="5px"
+                    className="bg-secondary"
+                    sx={{ borderRadius: "20px" }}
+                  >
+                    <HomeOutlinedIcon className="text-primary" />
+                    <Typography className="font-normal text-green-600">
+                      {data.company_name}
+                    </Typography>
+                  </Box>
+                  <Box
+                    display="flex"
+                    p="5px"
+                    className="bg-secondary"
+                    sx={{ borderRadius: "20px" }}
+                  >
+                    <DashboardOutlinedIcon className="text-primary" />
+                    <Typography className="font-normal text-green-600">
+                      {data.industry ? data.industry : "Công nghệ"}
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
             </Box>
-            <Box>
+            <Box display="flex" className="gap-5">
               <Box
                 display="flex"
                 flexDirection="row"
                 py={3}
                 alignContent={"top"}
               >
-                <FmdGoodOutlinedIcon />
-                <Typography className="font-bold text-green-400">
+                <FmdGoodOutlinedIcon className="text-primary" />
+                <Typography className="font-normal text-green-600">
                   {data.address}
+                </Typography>
+              </Box>
+              <Box
+                display="flex"
+                flexDirection="row"
+                py={3}
+                alignContent={"top"}
+              >
+                <AccessTimeIcon className="text-primary" />
+                <Typography className="font-normal text-green-600">
+                  {data.job_type}
                 </Typography>
               </Box>
             </Box>
@@ -249,7 +267,16 @@ function JobDescription() {
               >
                 Mô tả công việc
               </Typography>
-              <Typography sx={{ mt: 2 }}>{data.description}</Typography>
+              {data.descriptions ? (
+                data.descriptions.map((item, index) => (
+                  <Typography
+                    key={index}
+                    sx={{ mt: 2 }}
+                  >{`- ${item}`}</Typography>
+                ))
+              ) : (
+                <></>
+              )}
             </Box>
             <Box
               py={5}
@@ -272,7 +299,16 @@ function JobDescription() {
               >
                 Yêu cầu
               </Typography>
-              <Typography sx={{ mt: 2 }}>{data.description}</Typography>
+              {data.requirements ? (
+                data.requirements.map((item, index) => (
+                  <Typography
+                    key={index}
+                    sx={{ mt: 2 }}
+                  >{`- ${item}`}</Typography>
+                ))
+              ) : (
+                <></>
+              )}
             </Box>
             <Box
               py={5}
@@ -295,8 +331,70 @@ function JobDescription() {
               >
                 Quyền lợi
               </Typography>
-              <Typography sx={{ mt: 2 }}>{data.description}</Typography>
+              {data.benefits ? (
+                data.benefits.map((item, index) => (
+                  <Typography
+                    key={index}
+                    sx={{ mt: 2 }}
+                  >{`- ${item}`}</Typography>
+                ))
+              ) : (
+                <></>
+              )}
             </Box>
+            {data.skills !== null ? (
+              <Box
+                className="bg-background"
+                display="flex"
+                py={2}
+                px={1}
+                flexDirection="column"
+                alignItems={"left"}
+                justifyContent={"left"}
+                sx={{ borderRadius: "20px" }}
+              >
+                <Box
+                  className={"border-primary"}
+                  sx={
+                    {
+                      // borderTop: 1,
+                      // borderBottom: 1,
+                    }
+                  }
+                >
+                  <Typography
+                    className="text-primary"
+                    variant="h6"
+                    sx={{
+                      display: { xs: "none", md: "flex" },
+                      fontWeight: 700,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Kỹ năng
+                  </Typography>
+                  <Box display="flex">
+                    {data.skills.map((item, index) => (
+                      <Box
+                        key={index}
+                        className="bg-secondary"
+                        // width="200px"
+                        display="flex"
+                        my={2}
+                        p={2}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        sx={{ borderRadius: "20px" }}
+                      >
+                        <Typography>{item}</Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+            ) : (
+              <></>
+            )}
           </Grid>
           <Grid
             item
@@ -320,7 +418,7 @@ function JobDescription() {
                 display="flex"
                 flexDirection={"column"}
                 justifyContent={"right"}
-                className="border-primary bg-secondary"
+                className="border-primary bg-background"
                 sx={{
                   color: "black",
                   // border: 1,
@@ -339,7 +437,7 @@ function JobDescription() {
                     extDecoration: "none",
                   }}
                 >
-                  Thông tin công ty
+                  Yêu cầu
                 </Typography>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
                   <Typography
@@ -347,11 +445,11 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Ngành Nghề
+                    Giới tính
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -363,7 +461,7 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.industry}
+                    {data.gender}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
@@ -372,11 +470,11 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Số điện thoại
+                    Ngày bắt đầu công việc
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -388,7 +486,7 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.phone}
+                    {data.received_job_time}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
@@ -397,11 +495,11 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Email công ty
+                    Thời gian làm việc
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -413,7 +511,7 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.email}
+                    {data.working_time}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
@@ -422,24 +520,31 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Quy mô
+                    Ngoại ngữ
                   </Typography>
-                  <Typography
-                    className="text-primary"
-                    sx={{
-                      mr: 2,
-                      display: { xs: "none", md: "flex" },
-                      fontWeight: 400,
-                      fontSize: 15,
-                      textDecoration: "none",
-                    }}
-                  >
-                    {data.company_size}
-                  </Typography>
+                  {data.language_certificate ? (
+                    data.language_certificate.map((item, index) => (
+                      <Typography
+                        key={index}
+                        className="text-primary"
+                        sx={{
+                          mr: 2,
+                          display: { xs: "none", md: "flex" },
+                          fontWeight: 400,
+                          fontSize: 15,
+                          textDecoration: "none",
+                        }}
+                      >
+                        {`${item.certificate_language} - ${item.certificate_name} - ${item.certificate_point_level}`}
+                      </Typography>
+                    ))
+                  ) : (
+                    <></>
+                  )}
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
                   <Typography
@@ -447,11 +552,11 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Năm thành lập
+                    Chứng chỉ khác
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -472,11 +577,11 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Mã số thuế
+                    Lương tối thiểu
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -488,7 +593,7 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.tax_code}
+                    {data.min_salary}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
@@ -497,11 +602,11 @@ function JobDescription() {
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
-                      color: "black",
+                      color: "gray",
                       textDecoration: "none",
                     }}
                   >
-                    Quốc gia
+                    Lương tối đa
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -513,20 +618,21 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.country}
+                    {data.max_salary}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
                   <Typography
-                    className={"text-primary"}
+                    // className={"text-primary"}
                     sx={{
+                      color: "gray",
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
                       textDecoration: "none",
                     }}
                   >
-                    Tình/ Thành phố
+                    Cấp bậc đảm nhiệm
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -538,20 +644,21 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.city}
+                    {data.levels}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
                   <Typography
-                    className={"text-primary"}
+                    // className={"text-primary"}
                     sx={{
+                      color: "gray",
                       display: { xs: "none", md: "flex" },
                       fontWeight: 400,
                       fontSize: 15,
                       textDecoration: "none",
                     }}
                   >
-                    Địa chỉ
+                    Vai trò đảm nhiệm
                   </Typography>
                   <Typography
                     className="text-primary"
@@ -563,53 +670,61 @@ function JobDescription() {
                       textDecoration: "none",
                     }}
                   >
-                    {data.address}
+                    {data.roles}
                   </Typography>
                 </Box>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={8}
-            className="bg-secondary"
-            display="flex"
-            flexDirection="column"
-            alignItems={"left"}
-            justifyContent={"left"}
-            sx={{ borderRadius: "20px" }}
-          >
-            <Box
-              className={"border-primary"}
-              sx={
-                {
-                  // borderTop: 1,
-                  // borderBottom: 1,
-                }
-              }
-            >
-              <Typography
-                className="text-primary"
-                variant="h6"
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  fontWeight: 700,
-                  textDecoration: "none",
-                }}
-              >
-                Mô tả công việc
-              </Typography>
-              <Box
-                className="bg-tertiary"
-                width="200px"
-                display="flex"
-                my={2}
-                p={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-                sx={{ borderRadius: "20px" }}
-              >
-                <Typography>{data.description}</Typography>
+                <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                  <Typography
+                    // className={"text-primary"}
+                    sx={{
+                      color: "gray",
+                      display: { xs: "none", md: "flex" },
+                      fontWeight: 400,
+                      fontSize: 15,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Số năm kinh nghiệm
+                  </Typography>
+                  <Typography
+                    className="text-primary"
+                    sx={{
+                      mr: 2,
+                      display: { xs: "none", md: "flex" },
+                      fontWeight: 400,
+                      fontSize: 15,
+                      textDecoration: "none",
+                    }}
+                  >
+                    {data.yoe}
+                  </Typography>
+                </Box>
+                <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                  <Typography
+                    // className={"text-primary"}
+                    sx={{
+                      color: "gray",
+                      display: { xs: "none", md: "flex" },
+                      fontWeight: 400,
+                      fontSize: 15,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Số lượng tuyển dụng
+                  </Typography>
+                  <Typography
+                    className="text-primary"
+                    sx={{
+                      mr: 2,
+                      display: { xs: "none", md: "flex" },
+                      fontWeight: 400,
+                      fontSize: 15,
+                      textDecoration: "none",
+                    }}
+                  >
+                    {data.num_recruit}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           </Grid>
