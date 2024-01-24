@@ -1,8 +1,8 @@
 "use client";
 
 import CustomSelect from "@/common/components/control/select/Select";
-import { selectCount } from "@/lib/redux/slices";
-import { useSelector } from "react-redux";
+import { changeSkill, selectUploadCV } from "@/lib/redux/slices";
+import { useDispatch, useSelector } from "react-redux";
 const options = [
   { value: "figma", label: "Figma" },
   { value: "UI", label: "UI" },
@@ -10,11 +10,20 @@ const options = [
 ];
 
 const UploadCV3 = () => {
-  const count = useSelector(selectCount);
+  const dispatch = useDispatch()
+  const uploadCV = useSelector(selectUploadCV);
   return (
     <>
       <div className="container p-10 bg-background rounded-xl">
-        <CustomSelect isMulti required label="Kỹ năng" options={options} instanceId={"skill"}/>
+        <CustomSelect
+          isMulti
+          required
+          label="Kỹ năng"
+          options={options}
+          instanceId={"skill"}
+          value={uploadCV.skills.map((item) => ({ value: item, label: item }))}
+          onChange={(value) => dispatch(changeSkill(value.map(item => item.value)))}
+        />
       </div>
       <div className="container mt-10">
         <div className="flex flex-row justify-between">

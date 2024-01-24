@@ -4,21 +4,17 @@ import dayjs from "dayjs";
 import { IconButton } from "@mui/material";
 import SquareAdd from "../uploadcv4/search-cv/icons/SquareAdd";
 import SquareXmark from "../uploadcv4/search-cv/icons/SquareXmark";
-import CustomSelect from "@/common/components/control/select/Select";
 import { Input } from "@/common/components/control/Input";
+import { useDispatch } from "react-redux";
+import { addProject, addProjectAchive, changeProject, changeProjectAchive, removeProject, removeProjectAchive } from "@/lib/redux/slices";
 
 
 export default function ProjectItem({
     index,
   initialValues,
   newest,
-  onAdd,
-  onRemove,
-  onChange,
-  onAddAward,
-  onRemoveAward,
-  onChangeAward,
 }: ProjectItemProps) {
+    const dispatch = useDispatch()
     return (
       <div
         className={`flex flex-col gap-5  ${
@@ -29,11 +25,11 @@ export default function ProjectItem({
         <div className="flex flex-row gap-10 items-center">
           <span className="font-bold text-primary">{`Dự án ${index + 1}`}</span>
           {newest ? (
-            <IconButton onClick={onAdd}>
+            <IconButton onClick={() =>  dispatch(addProject())}>
               <SquareAdd className="fill-green-500" />
             </IconButton>
           ) : (
-            <IconButton onClick={() => onRemove(index)}>
+            <IconButton onClick={() => dispatch(removeProject(index))}>
               <SquareXmark className="fill-red-600" />
             </IconButton>
           )}
@@ -44,7 +40,7 @@ export default function ProjectItem({
             label="Tên dự án"
             placeholder="Please type here"
             value={initialValues.name_project}
-            onChange={(e) => onChange(index, "name_project", e.target.value)}
+            onChange={(e) => dispatch(changeProject({key: 'name_project', index: index, value: e.target.value}))}
           />
         </div>
         <div className="flex flex-row gap-10">
@@ -52,8 +48,8 @@ export default function ProjectItem({
             <p className="font-medium text-primary  text-sm">From</p>
             <DatePicker
               views={["month", "year"]}
-              value={dayjs(initialValues.start_date)}
-              onChange={(date) => onChange(index, "start_date", date?.toDate())}
+              value={dayjs(initialValues.start_time)}
+              onChange={(date) => dispatch(changeProject({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'start_time', index: index}))}
               slotProps={{
                 openPickerButton: {
                   color: "primary",
@@ -75,8 +71,8 @@ export default function ProjectItem({
             <p className="font-medium text-primary text-sm">To</p>
             <DatePicker
               views={["month", "year"]}
-              value={dayjs(initialValues.end_date)}
-              onChange={(date) => onChange(index, "end_date", date?.toDate())}
+              value={dayjs(initialValues.end_time)}
+              onChange={(date) => dispatch(changeProject({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'end_time', index: index}))}
               slotProps={{
                 openPickerButton: {
                   color: "primary",
@@ -100,21 +96,21 @@ export default function ProjectItem({
           <p className="block mb-2 text-sm font-medium text-primary">
             Thành tựu
           </p>
-          <IconButton onClick={() => onAddAward(index)}>
+          <IconButton onClick={() => dispatch(addProjectAchive(index))}>
             <SquareAdd className="fill-green-500" />
           </IconButton>
           </div>
           <div className="flex flex-col gap-5 my-0">
-            {initialValues.awards.map((item, awardIndex) => (
+            {initialValues.description?.map((item, awardIndex) => (
               <div key={awardIndex} className="flex flex-row gap-5">
                 <Input
                   value={item}
                   placeholder="Please type here"
                   onChange={(e) =>
-                    onChangeAward(index, awardIndex, e.target.value)
+                    dispatch(changeProjectAchive({index: index,achiveIndex: awardIndex,value: e.target.value}))
                   }
                 />
-                 <IconButton onClick={() => onRemoveAward(index,awardIndex)}>
+                 <IconButton onClick={() => dispatch(removeProjectAchive({index: index, achiveIndex: awardIndex}))}>
               <SquareXmark className="fill-red-600" />
             </IconButton>
               </div>

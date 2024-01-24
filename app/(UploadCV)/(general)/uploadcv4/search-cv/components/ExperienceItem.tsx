@@ -23,18 +23,19 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import SquareAdd from "../icons/SquareAdd";
 import SquareXmark from "../icons/SquareXmark";
+import { useDispatch } from "react-redux";
+import { addExperience, changeExperience, removeExperience } from "@/lib/redux/slices";
 
 function ExperienceItem({
   index,
   initialValues,
   newest,
-  onAdd,
-  onRemove,
-  onChange,
 }: ExperienceItemProps) {
   const [disabledPosition, setDisabledPosition] = useState(false);
   const [disabledResponsibilities, setDisabledResponsibilities] =
     useState(false);
+  const dispatch = useDispatch()
+
 
   return (
     <Box
@@ -49,11 +50,11 @@ function ExperienceItem({
           Kinh nghiệm {index + 1}
         </Typography>
         {newest ? (
-          <IconButton onClick={onAdd}>
+          <IconButton onClick={() => dispatch(addExperience())}>
             <SquareAdd className="fill-green-500" />
           </IconButton>
         ) : (
-          <IconButton onClick={() => onRemove(index)}>
+          <IconButton onClick={() => dispatch(removeExperience(index))}>
             <SquareXmark className="fill-red-600" />
           </IconButton>
         )}
@@ -74,7 +75,7 @@ function ExperienceItem({
             },
           }}
           value={initialValues.company_name}
-          onChange={(e) => onChange(index, "company_name", e.target.value)}
+          onChange={(e) => dispatch(changeExperience({value: e.target.value, key: 'company_name',index: index}))}
         />
       </div>
 
@@ -98,7 +99,7 @@ function ExperienceItem({
               : {},
           }}
           value={initialValues.job_title}
-          onChange={(e) => onChange(index, "job_title", e.target.value)}
+          onChange={(e) => dispatch(changeExperience({value: e.target.value, key: 'job_title',index: index}))}
         >
           {jobTitleOpt.map((item, index) => (
             <MenuItem key={index} value={item}>
@@ -127,8 +128,8 @@ function ExperienceItem({
                 }
               : {},
           }}
-          value={initialValues.department}
-          onChange={(e) => onChange(index, "department", e.target.value)}
+          value={initialValues.working_industry}
+          onChange={(e) => dispatch(changeExperience({value: e.target.value, key: 'working_industry',index: index}))}
         >
           {departmentOpt.map((item, index) => (
             <MenuItem key={index} value={item}>
@@ -143,16 +144,15 @@ function ExperienceItem({
           Cấp bậc đảm nhiệm<span className="text-red-500">*</span>
         </Typography>
         <Autocomplete
-          multiple
+          multiple={false}
           fullWidth
           filterSelectedOptions
           options={jobLevelOpt}
           getOptionLabel={(option) => option}
-          value={initialValues.position}
+          value={initialValues.levels}
           disabled={disabledPosition}
           onChange={(_, value) => {
-            setDisabledPosition(value.length >= 3);
-            onChange(index, "position", value);
+            dispatch(changeExperience({value: value as string, key: 'levels', index: index}));
           }}
           renderTags={(tagValue, getTagProps) =>
             tagValue.map((option, index) => (
@@ -186,16 +186,15 @@ function ExperienceItem({
           Vai trò đảm nhiêm<span className="text-red-500">*</span>
         </Typography>
         <Autocomplete
-          multiple
+          multiple = {false}
           fullWidth
           filterSelectedOptions
           options={responsibilityOpt}
           getOptionLabel={(option) => option}
-          value={initialValues.responsibilities}
+          value={initialValues.roles}
           disabled={disabledResponsibilities}
           onChange={(_, value) => {
-            setDisabledResponsibilities(value.length >= 3);
-            onChange(index, "responsibilities", value);
+            dispatch(changeExperience({value: value as string, key: 'roles', index: index}))
           }}
           renderTags={(tagValue, getTagProps) =>
             tagValue.map((option, index) => (
@@ -229,8 +228,8 @@ function ExperienceItem({
           Thời gian bắt đầu<span className="text-red-500">*</span>
         </Typography>
         <DatePicker
-          value={dayjs(initialValues.start_date)}
-          onChange={(date) => onChange(index, "start_date", date?.toDate())}
+          value={dayjs(initialValues.start_time)}
+          onChange={(date) => dispatch(changeExperience({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'start_time', index: index}))}
           slotProps={{
             openPickerButton: {
               color: "primary",
@@ -254,8 +253,8 @@ function ExperienceItem({
           Thời gian kết thúc<span className="text-red-500">*</span>
         </Typography>
         <DatePicker
-          value={dayjs(initialValues.end_date)}
-          onChange={(date) => onChange(index, "end_date", date?.toDate())}
+          value={dayjs(initialValues.end_time)}
+          onChange={(date) => dispatch(changeExperience({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'end_time', index: index}))}
           slotProps={{
             openPickerButton: {
               color: "primary",
