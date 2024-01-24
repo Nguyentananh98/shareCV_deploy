@@ -92,6 +92,7 @@ function AIResultPage({ params }: { params: { slug: string } }) {
                     cv_id: cv_id,
                 }
                 getAdminMatchingCVResult(payload).then((res) => {
+                    console.log(res.data.data);
                     setCVMatchingDetail(res.data.data);
                     let overall_percentage = res.data.data.match_data.overall.score;
                     setIsMatched(overall_percentage >= 50);
@@ -101,6 +102,7 @@ function AIResultPage({ params }: { params: { slug: string } }) {
                     cv_id: cv_id,
                 }
                 getCTVMatchingCVResult(payload).then((res) => {
+                    console.log(res.data.data);
                     setCVMatchingDetail(res.data.data);
                     let overall_percentage = res.data.data.match_data.overall.score;
                     setIsMatched(overall_percentage >= 50);
