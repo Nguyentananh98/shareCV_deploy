@@ -6,12 +6,36 @@ import { redirect, RedirectType } from "next/navigation";
 import Header from "@common/components/Header/Header";
 import CVPricing from "@/modules/posting-job/page/cv-pricing/CVPricing";
 import Sample from "@/modules/posting-job/page/cv-pricing/component/PdfViewer/PdfViewer";
-function CVPricingPage() {
+import { ValuateCV } from "@/common/interfaces";
+import { useEffect, useState } from "react";
+import { getValuateCV } from "@/common/apis/resume";
+const initialForm: ValuateCV ={
+  cv_id: 0,
+  cv_pdf: "",
+  hard_item: {level: null, salary: null},
+  hard_point: 0,
+  degrees: [],
+  degree_point: 0,
+  certificates: [],
+  certificates_point: 0,
+  total_point: 0
+}
+function CVPricingPage({params}:{params:any}) {
   // if (!getCookie("token")) {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
-
+  const [data,setData] = useState<ValuateCV>(initialForm);
+  useEffect(() => {
+    try {
+      getValuateCV(params.id).then(res => {
+        setData(res.data.data);
+        console.log(res);
+      })
+    } catch(e){
+      console.log(e)
+    }
+  }, [])
   return (
     <Box
       display="flex"
@@ -46,7 +70,7 @@ function CVPricingPage() {
         flex={1}
         // py={10}
       >
-        <CVPricing />
+        <CVPricing data={data} />
       </Box>
     </Box>
   );

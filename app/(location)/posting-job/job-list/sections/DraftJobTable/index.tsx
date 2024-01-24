@@ -62,7 +62,7 @@ export const DraftJobTable = ({
                     </Box>
                 ),
                 Cell: ({ cell }) => (
-                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center">
+                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
                         {cell.getValue<any>().map((item: any, index: any) => (
                             <Chip label={item} variant="outlined" key={index} />
                         ))}

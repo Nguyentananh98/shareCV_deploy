@@ -167,7 +167,8 @@ function JobListPage() {
                     <CustomPagination
                         onChangePage={(page: number) => handleChangePageNumber(page)}
                         numsPerPage={pagination.limit}
-                        totalPage={pagination.total_pages}
+                        totalPage={metaData.total_pages}
+                        total_items={metaData.total_items}
                         currentPage={pagination.page_index}
                     />
                 </Box>

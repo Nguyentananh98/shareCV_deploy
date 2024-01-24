@@ -35,7 +35,8 @@ function CompanyInfopage() {
         // position = "relative"
         mt={5}
         display="flex"
-        width="80%"
+        width="100%"
+        px={"120px"}
         // justifyContent="center"
         // alignItems="center"
         flex={1}

@@ -12,7 +12,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CustomMenuItem } from '../../components/MenuItem';
 import { CustomMenu } from '../../components/CustomMenu';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import dayjs from 'dayjs';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export interface JobListTableProps {
     data: IJobListCreate[];
@@ -62,9 +65,9 @@ export const CreateJobTable = ({
                     </Box>
                 ),
                 Cell: ({ cell }) => (
-                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center">
+                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
                         {cell.getValue<any>().map((item: any, index: any) => (
-                            <Chip label={item} variant="outlined" key={index}/>
+                            <Chip label={item} variant="outlined" key={index} />
                         ))}
                     </Box>
                 )
@@ -124,6 +127,30 @@ export const CreateJobTable = ({
                     </Box>
                 )
             },
+            {
+                accessorKey: 'num_cvs',
+                header: 'Thao tác',
+                Header: ({ column }) => (
+                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                        <p>{column.columnDef.header}</p>
+                        <KeyboardArrowDownIcon />
+                    </Box>
+                ),
+                Cell: ({ cell }) => (
+                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
+                        <Button variant="contained" color="primary">
+                            <DocumentScannerIcon />
+                            {cell.row.index}
+                        </Button>
+                        <Button variant="contained" color="primary">
+                            <EditIcon />
+                        </Button>
+                        <Button variant="contained" color="primary">
+                            <DeleteIcon />
+                        </Button>
+                    </Box>
+                )
+            },
         ], [],)
 
     const table = useMaterialReactTable({
@@ -166,6 +193,14 @@ export const CreateJobTable = ({
                 fontWeight: "500",
                 lineHeight: "69.039px",
             }
+        },
+        muiTableBodyRowProps: {
+            sx: {
+                "&:hover": {
+                    backgroundColor: "#E5E5E5",
+                }
+            },
+
         }
     })
 

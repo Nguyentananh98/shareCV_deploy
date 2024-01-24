@@ -14,7 +14,7 @@ export const axiosClient = axios.create({
   baseURL: API_URL,
   headers: {
     "ngrok-skip-browser-warning": "69420",
-    "Content-Type":"multipart/form-data"
+    "Content-Type":"application/json"
   },
   // timeout: 0,
   paramsSerializer: {
@@ -29,6 +29,7 @@ export const axiosClient = axios.create({
     rejectUnauthorized: false,
   }),
 });
+
 export const subaxiosClient = axios.create({
   baseURL: API_URL,
   headers: {

@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,8 @@ import { getCompanyInfo } from "@/common/apis/posting-job";
 import { useEffect, useState } from "react";
 import { ICompanyInfo, ICompanyInfoResponse } from "@/common/interfaces";
 import { getAccessCookies } from "@/common/helpers/setCookies";
+import { FaRegPlayCircle } from "react-icons/fa";
+import React from "react";
 const initialForm: ICompanyInfoResponse = {
   company_name: "",
   industry: "",
@@ -34,6 +36,11 @@ function CompanyInfo() {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const handlePlayClick = () => {
+    setIsPlaying(true);
+  };
   const [data,setData] = useState<ICompanyInfoResponse>(initialForm);
   useEffect(() => {
     try {
@@ -45,6 +52,7 @@ function CompanyInfo() {
       console.log(e)
     }
   }, [])
+
   return (
     <Box
       sx={{ mt: 10 }}
@@ -77,9 +85,9 @@ function CompanyInfo() {
           justifyContent={"left"}
         >
           <Image src={data.logo? data.logo:"/Logo.png"} height={100} width={100} alt="" />
-          <Box display="flex" flexDirection="column" py={3} alignContent={"top"}>
-            <Typography className="font-bold text-primary">{data.company_name}</Typography>
-            <Typography className="font-bold text-tertiary">{data.website}</Typography>
+          <Box display="flex" flexDirection="column" px={3}  alignContent={"top"}>
+            <Typography className="font-bold text-primary" sx={{fontSize:"36px"}}>{data.company_name}</Typography>
+            <Typography className="font-medium text-primary" sx={{fontSize:"14px"}}>{data.address+","+data.city+","+data.country}</Typography>
           </Box>
         </Grid>
         <Grid
@@ -186,7 +194,7 @@ function CompanyInfo() {
             >
               Video
             </Typography>
-            <Box
+            {/* <Box
               sx={{
                 "& .player-wrapper": {
                   width: "auto",
@@ -210,7 +218,81 @@ function CompanyInfo() {
                 file="mp4"
                 url="/video.mp4"
               />
-            </Box>
+            </Box> */}
+            <Box
+                display="flex"
+                width="100%"
+                className={"bg-background"}
+                sx={{
+                  p: 5,
+                }}
+              >
+                <div
+                  className={`video-player ${
+                    isPlaying ? "playing" : ""
+                  } w-full`}
+                >
+                  {!isPlaying && (
+                    <Box
+                      width="100%"
+                      height="300px"
+                      display="flex"
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      sx={{
+                        p: 5,
+                        // backdropFilter: "blur(2px)",
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <IconButton
+                        sx={{
+                          backgroundColor: "white",
+                          p: 0,
+                          height: 100,
+                          width: 100,
+                          borderRadius: "50%",
+                          "&:hover": {
+                            backgroundColor: "gba(217, 217, 217, 0.9)",
+                          },
+                        }}
+                        onClick={handlePlayClick}
+                      >
+                        <FaRegPlayCircle
+                          style={{
+                            padding: 0,
+                            // stroke: "white",
+                            color: "#063776",
+                            height: 100,
+                            width: "100%",
+                          }}
+                        />
+                      </IconButton>
+                    </Box>
+                  )}
+                  {isPlaying && (
+                    <Box
+                      sx={{
+                        "& .player-wrapper": {
+                          width: "auto",
+                          height: "auto",
+                        },
+                        "& .react-player": {
+                          width: "100%",
+                        },
+                      }}
+                    >
+                      <ReactPlayer
+                        width="100%"
+                        height={"500px"}
+                        controls
+                        file="mp4"
+                        url="./video.mp4"
+                      />
+                    </Box>
+                  )}
+                </div>
+              </Box>
           </Box>
         </Grid>
         <Grid
@@ -262,7 +344,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >
@@ -287,7 +369,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >
@@ -312,7 +394,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >
@@ -337,7 +419,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >
@@ -362,7 +444,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >
@@ -387,7 +469,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >
@@ -412,7 +494,7 @@ function CompanyInfo() {
                     display: { xs: "none", md: "flex" },
                     fontWeight: 400,
                     fontSize: 15,
-                    color: "black",
+                    color: "gray",
                     textDecoration: "none",
                   }}
                 >

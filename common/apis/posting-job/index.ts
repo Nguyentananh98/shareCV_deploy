@@ -1,7 +1,8 @@
-import { axiosClient, subaxiosClient } from "@/utils/axios";
+import { axiosClient } from "@/utils/axios";
 import {
   IAuthResponse,
   ICompanyInfo,
+  IRevaluate,
   IRegisterResponse,
   IResetPasswordRequest,
 } from "@/common/interfaces";
@@ -13,7 +14,6 @@ export const addCompany = (data: ICompanyInfo): Promise<IAuthResponse> => {
   const formData = new FormData();
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
-  
       if (key === "logo" && data.logo) {
         formData.append(key, data.logo);
       }
@@ -45,6 +45,10 @@ export const addCompany = (data: ICompanyInfo): Promise<IAuthResponse> => {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
+};
+
+export const revaluate = (data: IRevaluate): Promise<IAuthResponse> => {
+  return axiosClient.put("/postjob/collaborator/update-resume-valuate", data);
 };
 export const getCompanyInfo = (): Promise<ICompanyInfo> => {
   return axiosClient.get("/postjob/recruiter/get-company-info");

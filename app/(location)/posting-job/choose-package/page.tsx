@@ -4,6 +4,7 @@ import { removeAccessCookies } from "@/common/helpers/setCookies";
 import { Box, Button, Typography } from "@mui/material";
 import { redirect, RedirectType } from "next/navigation";
 import ChoosePackage from "@/modules/posting-job/page/choose-package/ChoosePackage";
+import CvInfoPage from "@/modules/cv-info-ntd/pages/CvInfoPage";
 function ChoosePackagePage() {
   // if (!getCookie("token")) {
   if (!true) {
@@ -19,7 +20,7 @@ function ChoosePackagePage() {
       justifyContent="center"
       sx={{overflow:"auto"}}
     >
-      <ChoosePackage/>
+      <CvInfoPage/>
     </Box>
   );
 }
