@@ -9,16 +9,17 @@ import { Input } from "@/common/components/control/Input";
 import { academicDegree } from "./mockData";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addEducation, changeEducation, removeEducation } from "@/lib/redux/slices";
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 export default function EducationItem({
   index,
   initialValues,
   newest,
-  onAdd,
-  onRemove,
-  onChange,
 }: EducationItemProps) {
+  const dispatch = useDispatch()
   return (
     <div className={`flex flex-col gap-5  ${!newest && "border-t-2 border-r-0 border-b-0 border-l-0 border-solid border-slate-200"}`}>
       <div className="flex flex-row gap-10 items-center">
@@ -26,45 +27,43 @@ export default function EducationItem({
           index + 1
         }`}</span>
         {newest ? (
-          <IconButton onClick={onAdd}>
+          <IconButton onClick={() => dispatch(addEducation())}>
             <SquareAdd className="fill-green-500" />
           </IconButton>
         ) : (
-          <IconButton onClick={() => onRemove(index)}>
+          <IconButton onClick={() => dispatch(removeEducation(index))}>
             <SquareXmark className="fill-red-600" />
           </IconButton>
         )}
       </div>
       <div className="flex flex-row gap-10">
           <CustomSelect
-          instanceId={"academic_degree"}
+            instanceId={"academic_degree"}
             isMulti={false}
             options={academicDegree}
-            value={{ label: initialValues.academic_degree, value: 0 }}
+            value={{value: initialValues.degree, label: initialValues.degree}}
             label="Học vị"
-            onChange={(value) =>
-              onChange(index, "academic_degree", value?.label)
-            }
+            onChange={(prop) => dispatch(changeEducation({value: prop?.value as string, key: 'degree', index: index}))}
           />
         <Input
           label="Tên trường, tổ chức"
           placeholder="Please type here"
-          value={initialValues.university}
-          onChange={(e) => onChange(index, "university", e.target.value)}
+          value={initialValues.institute_name}
+          onChange={(e) => dispatch(changeEducation({value: e.target.value, key: 'institute_name', index: index}))}
         />
       </div>
       <div className="flex flex-row gap-10">
         <Input
           label="Chuyên ngành"
           placeholder="Please type here"
-          onChange={(e) => onChange(index, "major", e.target.value)}
           value={initialValues.major}
+          onChange={(e) => dispatch(changeEducation({value: e.target.value, key: 'major', index: index}))}
         />
         <Input
           label="GPA"
           placeholder="Please type here"
-          onChange={(e) => onChange(index, "gpa", e.target.value)}
           value={initialValues.gpa}
+          onChange={(e) => dispatch(changeEducation({value: e.target.value, key: 'gpa', index: index}))}
         />
       </div>
       <div className="flex flex-row gap-10">
@@ -73,8 +72,8 @@ export default function EducationItem({
             Thời gian bắt đầu<span className="text-red-500">*</span>
           </p>
           <DatePicker
-            value={dayjs(initialValues.start_date)}
-            onChange={(date) => onChange(index, "start_date", date?.toDate())}
+            value={dayjs(initialValues.start_time)}
+            onChange={(date) => dispatch(changeEducation({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'start_time', index: index}))}
             slotProps={{
               openPickerButton: {
                 color: "primary",
@@ -97,8 +96,8 @@ export default function EducationItem({
             Thời gian kết thúc<span className="text-red-500">*</span>
           </p>
           <DatePicker
-            value={dayjs(initialValues.end_date)}
-            onChange={(date) => onChange(index, "end_date", date?.toDate())}
+            value={dayjs(initialValues.end_time)}
+            onChange={(date) => dispatch(changeEducation({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'end_time', index: index}))}
             slotProps={{
               openPickerButton: {
                 color: "primary",

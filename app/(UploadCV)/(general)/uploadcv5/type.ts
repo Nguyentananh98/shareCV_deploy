@@ -1,3 +1,5 @@
+import { Education } from "@/lib/redux/slices";
+
 export interface EducationFormProps {
     academic_degree: string;
     university: string;
@@ -10,18 +12,15 @@ export interface EducationFormProps {
   export interface EducationItemProps {
     index: number;
     newest: boolean;
-    initialValues: EducationFormProps;
-    onRemove: (index: number) => void;
-    onChange: (index: number, key: string, value: any) => void;
-    onAdd: () => void;
+    initialValues: Education;
   }
 
-  export const initialEducationForm = {
-    academic_degree: "",
-    university: "",
+  export const initialEducationForm: Education = {
+    degree: "",
+    institute_name: "",
     major: "",
     gpa: "",
-    start_date: new Date(),
-    end_date: new Date(),
+    start_time: '2024-01-01 00:00:00',
+    end_time: '2024-01-01 00:00:00',
   }
   

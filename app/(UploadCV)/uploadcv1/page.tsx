@@ -8,10 +8,34 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { useState } from "react";
 import { FilePondFile } from "filepond";
 import "../UploadCV1.css"
+import { uploadCV } from "@/common/apis/upload_cv";
+import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from "react-redux";
+import { addUploadCV, selectUploadCV } from "@/lib/redux/slices";
+import {  UnknownAction } from "@reduxjs/toolkit";
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const UploadCV1 = () => {
+  const dispatch = useDispatch()
+  const uploadCV = useSelector(selectUploadCV)
+  const navigate = useRouter()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const res =  dispatch(addUploadCV(files[0]) as unknown as UnknownAction);
+      
+      if (res){
+        navigate.push("/uploadcv2")
+      }
+    }
+    catch(err){
+      console.log(err)
+    }
+    
+  }
+  
+
   const [files, setFiles] = useState<File[]>([]);
 
   return (
@@ -37,7 +61,8 @@ const UploadCV1 = () => {
           </div>
         </div>
 
-        <div className="rounded-xl p-9" style={{ backgroundColor: "#f8fbfd" }}>
+        <form className="rounded-xl p-9" style={{ backgroundColor: "#f8fbfd" }} 
+            onSubmit={(e) => handleSubmit(e)}>
           <div >
             <FilePond
               required
@@ -62,14 +87,14 @@ const UploadCV1 = () => {
               Hủy
             </button>
             <button
-              type="button"
+              type="submit"
               className=" bg-white hover:bg-slate-50  rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-solid cursor-pointer"
               style={{ color: "#073776", borderColor: "#073776" }}
             >
               Tiếp tục
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

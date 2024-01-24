@@ -7,15 +7,15 @@ import SquareXmark from "../uploadcv4/search-cv/icons/SquareXmark";
 import CustomSelect from "@/common/components/control/select/Select";
 import { Input } from "@/common/components/control/Input";
 import { languageOptions, languageCertificationOptions } from "./mockData";
+import { useDispatch } from "react-redux";
+import { addCertificate, changeCertificate, removeCertificate } from "@/lib/redux/slices";
 
 export default function CertificateItem({
   index,
   initialValues,
   newest,
-  onAdd,
-  onRemove,
-  onChange,
 }: CertificateItemProps) {
+  const dispatch = useDispatch()
   return (
     <div
       className={`flex flex-col gap-5  ${
@@ -28,11 +28,11 @@ export default function CertificateItem({
           index + 1
         }`}</span>
         {newest ? (
-          <IconButton onClick={onAdd}>
+          <IconButton onClick={() => dispatch(addCertificate())}>
             <SquareAdd className="fill-green-500" />
           </IconButton>
         ) : (
-          <IconButton onClick={() => onRemove(index)}>
+          <IconButton onClick={() => dispatch(removeCertificate(index))}>
             <SquareXmark className="fill-red-600" />
           </IconButton>
         )}
@@ -43,8 +43,8 @@ export default function CertificateItem({
           isMulti={false}
           options={languageOptions}
           label="Tên ngoại ngữ"
-          value={{ label: initialValues.language, value: "" }}
-          onChange={(value) => onChange(index, "language", value?.label)}
+          value={{ label: initialValues.certificate_language, value: initialValues.certificate_language }}
+          onChange={(value) => dispatch(changeCertificate({value: value?.value as string, key: 'certificate_language', index: index}))}
         />
       </div>
       <div className="flex flex-row gap-10">
@@ -53,14 +53,14 @@ export default function CertificateItem({
           instanceId={"certificate_name"}
           isMulti={false}
           options={languageCertificationOptions}
-          value={{ label: initialValues.certificate, value: "" }}
-          onChange={(value) => onChange(index, "certificate", value?.label)}
+          value={{ label: initialValues.certificate_name, value: initialValues.certificate_name }}
+          onChange={(value) => dispatch(changeCertificate({value: value?.value as string, key: 'certificate_name', index: index}))}
         />
         <Input
           label="Level"
           placeholder="Please type here"
-          value={initialValues.level}
-          onChange={(e) => onChange(index, "level", e.target.value)}
+          value={initialValues.certificate_point_level}
+          onChange={(e) => dispatch(changeCertificate({value: e.target.value, key: 'certificate_point_level', index: index}))}
         />
       </div>
       <div className="flex flex-row gap-10">
@@ -68,8 +68,8 @@ export default function CertificateItem({
           <p className="font-medium text-primary  text-sm">From</p>
           <DatePicker
             views={["month", "year"]}
-            value={dayjs(initialValues.start_date)}
-            onChange={(date) => onChange(index, "start_date", date?.toDate())}
+            value={dayjs(initialValues.start_time)}
+            onChange={(date) => dispatch(changeCertificate({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'start_time', index: index}))}
             slotProps={{
               openPickerButton: {
                 color: "primary",
@@ -91,8 +91,8 @@ export default function CertificateItem({
           <p className="font-medium text-primary text-sm">To</p>
           <DatePicker
             views={["month", "year"]}
-            value={dayjs(initialValues.end_date)}
-            onChange={(date) => onChange(index, "end_date", date?.toDate())}
+            value={dayjs(initialValues.end_time)}
+            onChange={(date) => dispatch(changeCertificate({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'end_time', index: index}))}
             slotProps={{
               openPickerButton: {
                 color: "primary",

@@ -23,7 +23,14 @@ import { Textarea } from "@/common/components/control/textarea";
 import CustomSelect from "@/common/components/control/select/Select";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { useDispatch, useSelector } from "react-redux";
-import { counterSlice, selectCount } from "@/lib/redux/slices";
+import {
+  changeAvatar,
+  changePersonalInfor,
+  counterSlice,
+  selectCount,
+  selectUploadCV,
+} from "@/lib/redux/slices";
+import dayjs from "dayjs";
 
 const industries = [
   { value: "education", label: "Education" },
@@ -77,109 +84,109 @@ const jobTitlesOptions = [
 ];
 
 const provincesOptions = [
-  { value: 'ha_noi', label: 'Hà Nội' },
-  { value: 'ho_chi_minh', label: 'Hồ Chí Minh' },
-  { value: 'an_giang', label: 'An Giang' },
-  { value: 'ba_ria_vung_tau', label: 'Bà Rịa - Vũng Tàu' },
-  { value: 'bac_lieu', label: 'Bạc Liêu' },
-  { value: 'bac_giang', label: 'Bắc Giang' },
-  { value: 'bac_kan', label: 'Bắc Kạn' },
-  { value: 'bac_ninh', label: 'Bắc Ninh' },
-  { value: 'ben_tre', label: 'Bến Tre' },
-  { value: 'binh_dinh', label: 'Bình Định' },
-  { value: 'binh_duong', label: 'Bình Dương' },
-  { value: 'binh_phuoc', label: 'Bình Phước' },
-  { value: 'binh_thuan', label: 'Bình Thuận' },
-  { value: 'ca_mau', label: 'Cà Mau' },
-  { value: 'can_tho', label: 'Cần Thơ' },
-  { value: 'cao_bang', label: 'Cao Bằng' },
-  { value: 'da_nang', label: 'Đà Nẵng' },
-  { value: 'dak_lak', label: 'Đắk Lắk' },
-  { value: 'dak_nong', label: 'Đắk Nông' },
-  { value: 'dien_bien', label: 'Điện Biên' },
-  { value: 'dong_nai', label: 'Đồng Nai' },
-  { value: 'dong_thap', label: 'Đồng Tháp' },
-  { value: 'gia_lai', label: 'Gia Lai' },
-  { value: 'ha_giang', label: 'Hà Giang' },
-  { value: 'ha_nam', label: 'Hà Nam' },
-  { value: 'ha_tinh', label: 'Hà Tĩnh' },
-  { value: 'hai_duong', label: 'Hải Dương' },
-  { value: 'hai_phong', label: 'Hải Phòng' },
-  { value: 'hau_giang', label: 'Hậu Giang' },
-  { value: 'hoa_binh', label: 'Hòa Bình' },
-  { value: 'hung_yen', label: 'Hưng Yên' },
-  { value: 'khanh_hoa', label: 'Khánh Hòa' },
-  { value: 'kien_giang', label: 'Kiên Giang' },
-  { value: 'kon_tum', label: 'Kon Tum' },
-  { value: 'lai_chau', label: 'Lai Châu' },
-  { value: 'lam_dong', label: 'Lâm Đồng' },
-  { value: 'lang_son', label: 'Lạng Sơn' },
-  { value: 'lao_cai', label: 'Lào Cai' },
-  { value: 'long_an', label: 'Long An' },
-  { value: 'nam_dinh', label: 'Nam Định' },
-  { value: 'nghe_an', label: 'Nghệ An' },
-  { value: 'ninh_binh', label: 'Ninh Bình' },
-  { value: 'ninh_thuan', label: 'Ninh Thuận' },
-  { value: 'phu_tho', label: 'Phú Thọ' },
-  { value: 'phu_yen', label: 'Phú Yên' },
-  { value: 'quang_binh', label: 'Quảng Bình' },
-  { value: 'quang_nam', label: 'Quảng Nam' },
-  { value: 'quang_ngai', label: 'Quảng Ngãi' },
-  { value: 'quang_ninh', label: 'Quảng Ninh' },
-  { value: 'quang_tri', label: 'Quảng Trị' },
-  { value: 'soc_trang', label: 'Sóc Trăng' },
-  { value: 'son_la', label: 'Sơn La' },
-  { value: 'tay_ninh', label: 'Tây Ninh' },
-  { value: 'thai_binh', label: 'Thái Bình' },
-  { value: 'thai_nguyen', label: 'Thái Nguyên' },
-  { value: 'thanh_hoa', label: 'Thanh Hóa' },
-  { value: 'thua_thien_hue', label: 'Thừa Thiên Huế' },
-  { value: 'tien_giang', label: 'Tiền Giang' },
-  { value: 'tra_vinh', label: 'Trà Vinh' },
-  { value: 'tuyen_quang', label: 'Tuyên Quang' },
-  { value: 'vinh_long', label: 'Vĩnh Long' },
-  { value: 'vinh_phuc', label: 'Vĩnh Phúc' },
-  { value: 'yen_bai', label: 'Yên Bái' }
+  { value: "ha_noi", label: "Hà Nội" },
+  { value: "ho_chi_minh", label: "Hồ Chí Minh" },
+  { value: "an_giang", label: "An Giang" },
+  { value: "ba_ria_vung_tau", label: "Bà Rịa - Vũng Tàu" },
+  { value: "bac_lieu", label: "Bạc Liêu" },
+  { value: "bac_giang", label: "Bắc Giang" },
+  { value: "bac_kan", label: "Bắc Kạn" },
+  { value: "bac_ninh", label: "Bắc Ninh" },
+  { value: "ben_tre", label: "Bến Tre" },
+  { value: "binh_dinh", label: "Bình Định" },
+  { value: "binh_duong", label: "Bình Dương" },
+  { value: "binh_phuoc", label: "Bình Phước" },
+  { value: "binh_thuan", label: "Bình Thuận" },
+  { value: "ca_mau", label: "Cà Mau" },
+  { value: "can_tho", label: "Cần Thơ" },
+  { value: "cao_bang", label: "Cao Bằng" },
+  { value: "da_nang", label: "Đà Nẵng" },
+  { value: "dak_lak", label: "Đắk Lắk" },
+  { value: "dak_nong", label: "Đắk Nông" },
+  { value: "dien_bien", label: "Điện Biên" },
+  { value: "dong_nai", label: "Đồng Nai" },
+  { value: "dong_thap", label: "Đồng Tháp" },
+  { value: "gia_lai", label: "Gia Lai" },
+  { value: "ha_giang", label: "Hà Giang" },
+  { value: "ha_nam", label: "Hà Nam" },
+  { value: "ha_tinh", label: "Hà Tĩnh" },
+  { value: "hai_duong", label: "Hải Dương" },
+  { value: "hai_phong", label: "Hải Phòng" },
+  { value: "hau_giang", label: "Hậu Giang" },
+  { value: "hoa_binh", label: "Hòa Bình" },
+  { value: "hung_yen", label: "Hưng Yên" },
+  { value: "khanh_hoa", label: "Khánh Hòa" },
+  { value: "kien_giang", label: "Kiên Giang" },
+  { value: "kon_tum", label: "Kon Tum" },
+  { value: "lai_chau", label: "Lai Châu" },
+  { value: "lam_dong", label: "Lâm Đồng" },
+  { value: "lang_son", label: "Lạng Sơn" },
+  { value: "lao_cai", label: "Lào Cai" },
+  { value: "long_an", label: "Long An" },
+  { value: "nam_dinh", label: "Nam Định" },
+  { value: "nghe_an", label: "Nghệ An" },
+  { value: "ninh_binh", label: "Ninh Bình" },
+  { value: "ninh_thuan", label: "Ninh Thuận" },
+  { value: "phu_tho", label: "Phú Thọ" },
+  { value: "phu_yen", label: "Phú Yên" },
+  { value: "quang_binh", label: "Quảng Bình" },
+  { value: "quang_nam", label: "Quảng Nam" },
+  { value: "quang_ngai", label: "Quảng Ngãi" },
+  { value: "quang_ninh", label: "Quảng Ninh" },
+  { value: "quang_tri", label: "Quảng Trị" },
+  { value: "soc_trang", label: "Sóc Trăng" },
+  { value: "son_la", label: "Sơn La" },
+  { value: "tay_ninh", label: "Tây Ninh" },
+  { value: "thai_binh", label: "Thái Bình" },
+  { value: "thai_nguyen", label: "Thái Nguyên" },
+  { value: "thanh_hoa", label: "Thanh Hóa" },
+  { value: "thua_thien_hue", label: "Thừa Thiên Huế" },
+  { value: "tien_giang", label: "Tiền Giang" },
+  { value: "tra_vinh", label: "Trà Vinh" },
+  { value: "tuyen_quang", label: "Tuyên Quang" },
+  { value: "vinh_long", label: "Vĩnh Long" },
+  { value: "vinh_phuc", label: "Vĩnh Phúc" },
+  { value: "yen_bai", label: "Yên Bái" },
 ];
 
 const countriesOptions = [
-  { value: 'us', label: 'Mỹ (US)' },
-  { value: 'cn', label: 'Trung Quốc (CN)' },
-  { value: 'in', label: 'Ấn Độ (IN)' },
-  { value: 'br', label: 'Brazil (BR)' },
-  { value: 'ru', label: 'Nga (RU)' },
-  { value: 'jp', label: 'Nhật Bản (JP)' },
-  { value: 'de', label: 'Đức (DE)' },
-  { value: 'gb', label: 'Anh (GB)' },
-  { value: 'fr', label: 'Pháp (FR)' },
-  { value: 'au', label: 'Úc (AU)' },
-  { value: 'ca', label: 'Canada (CA)' },
-  { value: 'dk', label: 'Đan Mạch (DK)' },
-  { value: 'nl', label: 'Hà Lan (NL)' },
-  { value: 'be', label: 'Bỉ (BE)' },
-  { value: 'ch', label: 'Thụy Sĩ (CH)' },
-  { value: 'se', label: 'Thụy Điển (SE)' },
-  { value: 'it', label: 'Ý (IT)' },
-  { value: 'es', label: 'Tây Ban Nha (ES)' },
-  { value: 'kr', label: 'Hàn Quốc (KR)' },
-  { value: 'sg', label: 'Singapore (SG)' },
-  { value: 'my', label: 'Malaysia (MY)' },
-  { value: 'th', label: 'Thái Lan (TH)' },
-  { value: 'id', label: 'Indonesia (ID)' },
-  { value: 'nz', label: 'New Zealand (NZ)' },
-  { value: 'ng', label: 'Nigeria (NG)' },
-  { value: 'za', label: 'Nam Phi (ZA)' },
-  { value: 'ke', label: 'Kenya (KE)' },
-  { value: 'gh', label: 'Ghana (GH)' },
-  { value: 'et', label: 'Ethiopia (ET)' },
-  { value: 'mx', label: 'Mexico (MX)' },
-  { value: 'ar', label: 'Argentina (AR)' },
-  { value: 'co', label: 'Colombia (CO)' },
-  { value: 'cl', label: 'Chile (CL)' },
-  { value: 'sa', label: 'Saudi Arabia (SA)' },
-  { value: 'il', label: 'Israel (IL)' },
-  { value: 'tr', label: 'Thổ Nhĩ Kỳ (TR)' },
-  { value: 'ir', label: 'Iran (IR)' }
+  { value: "us", label: "Mỹ (US)" },
+  { value: "cn", label: "Trung Quốc (CN)" },
+  { value: "in", label: "Ấn Độ (IN)" },
+  { value: "br", label: "Brazil (BR)" },
+  { value: "ru", label: "Nga (RU)" },
+  { value: "jp", label: "Nhật Bản (JP)" },
+  { value: "de", label: "Đức (DE)" },
+  { value: "gb", label: "Anh (GB)" },
+  { value: "fr", label: "Pháp (FR)" },
+  { value: "au", label: "Úc (AU)" },
+  { value: "ca", label: "Canada (CA)" },
+  { value: "dk", label: "Đan Mạch (DK)" },
+  { value: "nl", label: "Hà Lan (NL)" },
+  { value: "be", label: "Bỉ (BE)" },
+  { value: "ch", label: "Thụy Sĩ (CH)" },
+  { value: "se", label: "Thụy Điển (SE)" },
+  { value: "it", label: "Ý (IT)" },
+  { value: "es", label: "Tây Ban Nha (ES)" },
+  { value: "kr", label: "Hàn Quốc (KR)" },
+  { value: "sg", label: "Singapore (SG)" },
+  { value: "my", label: "Malaysia (MY)" },
+  { value: "th", label: "Thái Lan (TH)" },
+  { value: "id", label: "Indonesia (ID)" },
+  { value: "nz", label: "New Zealand (NZ)" },
+  { value: "ng", label: "Nigeria (NG)" },
+  { value: "za", label: "Nam Phi (ZA)" },
+  { value: "ke", label: "Kenya (KE)" },
+  { value: "gh", label: "Ghana (GH)" },
+  { value: "et", label: "Ethiopia (ET)" },
+  { value: "mx", label: "Mexico (MX)" },
+  { value: "ar", label: "Argentina (AR)" },
+  { value: "co", label: "Colombia (CO)" },
+  { value: "cl", label: "Chile (CL)" },
+  { value: "sa", label: "Saudi Arabia (SA)" },
+  { value: "il", label: "Israel (IL)" },
+  { value: "tr", label: "Thổ Nhĩ Kỳ (TR)" },
+  { value: "ir", label: "Iran (IR)" },
 ];
 
 const gender = [
@@ -189,19 +196,13 @@ const gender = [
 ];
 
 const UploadCV2 = () => {
-  const dispatch = useDispatch();
-  
   const [files, setFiles] = useState<File[]>([]);
+  const uploadCV = useSelector(selectUploadCV);
+  const dispatch = useDispatch();
   return (
     <>
-    <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(counterSlice.actions.decrement())}
-        ></button>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        
         <div className="container">
-          
           <div className="p-10 bg-background rounded-3xl">
             <div>
               <p className="text-default text-primary font-medium">
@@ -211,9 +212,9 @@ const UploadCV2 = () => {
                 <FilePond
                   required
                   files={files}
-                  onupdatefiles={(files: FilePondFile[]) =>
-                    setFiles(files.map((file) => file.file as File))
-                  }
+                  onupdatefiles={(files: FilePondFile[]) => {
+                    setFiles(files.map((file) => file.file as File));
+                  }}
                   allowMultiple={false}
                   instantUpload={false}
                   credits={false}
@@ -228,26 +229,67 @@ const UploadCV2 = () => {
                 <Input
                   required
                   label="Họ và tên"
+                  defaultValue={uploadCV.personal_infor.name}
                   placeholder="Please type here"
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: e.target.value,
+                        key: "name",
+                      })
+                    )
+                  }
                 />
                 <CustomSelect
-                instanceId={'industry'}
+                  instanceId={"industry"}
+                  isMulti={false}
                   required
+                  defaultValue={{
+                    value: uploadCV.personal_infor.industry,
+                    label: uploadCV.personal_infor.industry,
+                  }}
                   label="Ngành nghề"
                   options={industries}
+                  onChange={(value) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: value?.label as string,
+                        key: "industry",
+                      })
+                    )
+                  }
                 />
               </div>
               <div className="flex flex-row gap-24">
                 <Input
                   required
                   label="Công việc hiện tại"
+                  defaultValue={uploadCV.personal_infor.job}
                   placeholder="Please type here"
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({ value: e.target.value, key: "job" })
+                    )
+                  }
                 />
                 <CustomSelect
-                instanceId={'level'}
+                  instanceId={"level"}
                   required
                   label="Cấp bậc hiện tại"
+                  defaultValue={{
+                    value: uploadCV.personal_infor.level,
+                    label: uploadCV.personal_infor.level,
+                  }}
+                  isMulti={false}
                   options={jobTitlesOptions}
+                  onChange={(value) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: value?.label as string,
+                        key: "level",
+                      })
+                    )
+                  }
                 />
               </div>
               <div className="flex flex-row gap-24">
@@ -255,11 +297,29 @@ const UploadCV2 = () => {
                   required
                   label="Email ứng viên"
                   placeholder="Please type here"
+                  defaultValue={uploadCV.personal_infor.email}
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: e.target.value,
+                        key: "email",
+                      })
+                    )
+                  }
                 />
                 <Input
                   required
                   label="Số điện thoại ứng viên"
                   placeholder="Please type here"
+                  defaultValue={uploadCV.personal_infor.phone}
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: e.target.value,
+                        key: "phone",
+                      })
+                    )
+                  }
                 />
               </div>
               <div className="flex flex-row gap-24">
@@ -267,39 +327,138 @@ const UploadCV2 = () => {
                   required
                   label="Địa chỉ"
                   placeholder="Please type here"
+                  defaultValue={uploadCV.personal_infor.address}
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: e.target.value,
+                        key: "address",
+                      })
+                    )
+                  }
                 />
               </div>
               <div className="flex flex-row gap-24">
-              <CustomSelect
-                instanceId={"city"}
-                required
-                options={provincesOptions}
-                label="Thành phố"
+                <CustomSelect
+                  instanceId={"city"}
+                  required
+                  isMulti={false}
+                  options={provincesOptions}
+                  label="Thành phố"
+                  defaultValue={{
+                    value: uploadCV.personal_infor.city,
+                    label: uploadCV.personal_infor.city,
+                  }}
+                  onChange={(value) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: value?.value as string,
+                        key: "city",
+                      })
+                    )
+                  }
                 />
                 <CustomSelect
-                instanceId={"country"}
-                required
-                options={countriesOptions}
-                label="Quốc gia"
+                  instanceId={"country"}
+                  required
+                  isMulti={false}
+                  options={countriesOptions}
+                  defaultValue={{
+                    value: uploadCV.personal_infor.country,
+                    label: uploadCV.personal_infor.country,
+                  }}
+                  label="Quốc gia"
+                  onChange={(value) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: value?.value as string,
+                        key: "country",
+                      })
+                    )
+                  }
                 />
               </div>
               <div className="flex flex-row gap-24">
-                <Textarea label="Mục tiêu nghề nghiệp" required rows={6} />
+                <Textarea
+                  label="Mục tiêu nghề nghiệp"
+                  required
+                  rows={6}
+                  defaultValue={uploadCV.personal_infor.objective}
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: e.target.value,
+                        key: "objective",
+                      })
+                    )
+                  }
+                />
               </div>
               <div className="flex flex-row gap-24">
                 <div className="w-full">
-                  <span className="block mb-1 font-medium text-sm text-primary ">
-                    Ngày sinh
-                  </span>
-                  <DesktopDatePicker className="w-full " />
+                  <p className="font-medium text-primary  text-sm">
+                    Ngày sinh<span className="text-red-500">*</span>
+                  </p>
+                  <DatePicker
+                    value={dayjs(uploadCV.personal_infor.birthday)}
+                    onChange={(date) =>
+                      dispatch(
+                        changePersonalInfor({
+                          value: date
+                            ?.format("YYYY-MM-DD HH:mm:ss")
+                            .toString() as string,
+                          key: "birthday",
+                        })
+                      )
+                    }
+                    slotProps={{
+                      openPickerButton: {
+                        color: "primary",
+                      },
+                      textField: {
+                        fullWidth: true,
+                        sx: {
+                          bgcolor: "white",
+                          fieldset: {
+                            borderColor: "primary.main",
+                            borderRadius: "10px",
+                          },
+                        },
+                      },
+                    }}
+                  />
                 </div>
-                <CustomSelect required label="Giới tính" options={gender} instanceId={'gender'} />
+                <CustomSelect
+                  required
+                  isMulti={false}
+                  label="Giới tính"
+                  options={gender}
+                  instanceId={"gender"}
+                  defaultValue={{
+                    value: uploadCV.personal_infor.gender,
+                    label: uploadCV.personal_infor.gender,
+                  }}
+                  onChange={(value) =>
+                    dispatch(
+                      changePersonalInfor({
+                        value: value?.value as string,
+                        key: "gender",
+                      })
+                    )
+                  }
+                />
               </div>
               <div className="flex flex-row gap-24">
                 <Input
                   required
                   label="Số CCCD/ CMND"
                   placeholder="Please type here"
+                  defaultValue={uploadCV.personal_infor.id}
+                  onChange={(e) =>
+                    dispatch(
+                      changePersonalInfor({ value: e.target.value, key: "id" })
+                    )
+                  }
                 />
               </div>
             </div>
@@ -313,14 +472,36 @@ const UploadCV2 = () => {
                     <LinkedInIcon className="text-primary" />
                     <p className="font-bold text-primary  my-0">Linkedln</p>
                   </div>
-                  <Input placeholder="Link Linkedln công ty" />
+                  <Input
+                    placeholder="Link Linkedln công ty"
+                    defaultValue={uploadCV.personal_infor.linkedln}
+                    onChange={(e) =>
+                      dispatch(
+                        changePersonalInfor({
+                          value: e.target.value,
+                          key: "linkedln",
+                        })
+                      )
+                    }
+                  />
                 </div>
                 <div className="w-full">
                   <div className="flex flex-row gap-3">
                     <LanguageIcon className="text-primary" />
                     <p className="font-bold text-primary my-0">Website</p>
                   </div>
-                  <Input placeholder="Link website công ty" />
+                  <Input
+                    placeholder="Link website công ty"
+                    defaultValue={uploadCV.personal_infor.website}
+                    onChange={(e) =>
+                      dispatch(
+                        changePersonalInfor({
+                          value: e.target.value,
+                          key: "website",
+                        })
+                      )
+                    }
+                  />
                 </div>
               </div>
               <div className="flex flex-row gap-24">
@@ -329,41 +510,63 @@ const UploadCV2 = () => {
                     <FacebookIcon className="text-primary" />
                     <p className="font-bold text-primary  my-0">Facebook</p>
                   </div>
-                  <Input placeholder="Link Facebook công ty" />
+                  <Input
+                    placeholder="Link Facebook công ty"
+                    defaultValue={uploadCV.personal_infor.facebook}
+                    onChange={(e) =>
+                      dispatch(
+                        changePersonalInfor({
+                          value: e.target.value,
+                          key: "facebook",
+                        })
+                      )
+                    }
+                  />
                 </div>
                 <div className="w-full">
                   <div className="flex flex-row gap-3">
                     <YouTubeIcon className="text-primary" />
                     <p className="font-bold text-primary  my-0">Youtube</p>
                   </div>
-                  <Input placeholder="Link Youtube công ty" />
+                  <Input
+                    placeholder="Link Youtube công ty"
+                    defaultValue={uploadCV.personal_infor.youtube}
+                    onChange={(e) =>
+                      dispatch(
+                        changePersonalInfor({
+                          value: e.target.value,
+                          key: "youtube",
+                        })
+                      )
+                    }
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="mt-10">
-          <div className="flex flex-row justify-between">
-          <button
-              type="button"
-              className=" bg-primary rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-none cursor-pointer text-white"
-            >
-              Hủy
-            </button>
-            <div className="flex flex-row gap-5">
-            <button
-              type="button"
-              className=" bg-primary rounded-3xl border-none text-sm px-16 py-2.5 me-2 mb-2 font-bold cursor-pointer text-white"
-            >
-              Lưu nháp
-            </button>
-            <button
-              type="button"
-              className=" bg-primary rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-none cursor-pointer text-white"
-            >
-              Tiếp tục
-            </button>
+            <div className="flex flex-row justify-between">
+              <button
+                type="button"
+                className=" bg-primary rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-none cursor-pointer text-white"
+              >
+                Hủy
+              </button>
+              <div className="flex flex-row gap-5">
+                <button
+                  type="button"
+                  className=" bg-primary rounded-3xl border-none text-sm px-16 py-2.5 me-2 mb-2 font-bold cursor-pointer text-white"
+                >
+                  Lưu nháp
+                </button>
+                <button
+                  type="button"
+                  className=" bg-primary rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-none cursor-pointer text-white"
+                >
+                  Tiếp tục
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </LocalizationProvider>
