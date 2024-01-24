@@ -1,43 +1,47 @@
 "use client";
 
-import { useState } from "react";
-import { EducationFormProps, initialEducationForm } from "./type";
 import EducationItem from "./EducationItem";
+import {  useSelector } from "react-redux";
+import { selectUploadCV } from "@/lib/redux/slices";
 
 const UploadCV5: React.FC = () => {
-  const [educations, setEducations] = useState<EducationFormProps[]>([
-    initialEducationForm,
-  ]);
-  const handleRemoveEducation = (index: number) => {
-    setEducations(educations.filter((_, i) => i !== index));
-  };
-
-  const handleAddEducation = () => {
-    setEducations([...educations, initialEducationForm]);
-  };
-
-  const handleEducationChange = (index: number, key: string, value: any) => {
-    setEducations(
-      educations.map((item, i) =>
-        i === index ? { ...item, [key]: value } : item
-      )
-    );
-  };
+  const uploadCV = useSelector(selectUploadCV)
   return (
     <div className="container">
       <div className="p-10 bg-background rounded-3xl">
         <div className="flex flex-col-reverse gap-10">
-        {educations.map((education, index) => (
+        {uploadCV.educations.map((education, index) => (
           <EducationItem
             key={index}
             index={index}
-            newest={index === educations.length - 1}
+            newest={index === uploadCV.educations.length - 1}
             initialValues={education}
-            onAdd={handleAddEducation}
-            onRemove={handleRemoveEducation}
-            onChange={handleEducationChange}
           />
         ))}
+        </div>
+      </div>
+      <div className="container mt-10">
+        <div className="flex flex-row justify-between">
+          <button
+            type="button"
+            className=" bg-primary rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-none cursor-pointer text-white"
+          >
+            Hủy
+          </button>
+          <div className="flex flex-row gap-5">
+            <button
+              type="button"
+              className=" bg-primary rounded-3xl border-none text-sm px-16 py-2.5 me-2 mb-2 font-bold cursor-pointer text-white"
+            >
+              Lưu nháp
+            </button>
+            <button
+              type="button"
+              className=" bg-primary rounded-3xl text-sm px-16 py-2.5 me-2 mb-2 font-bold border-none cursor-pointer text-white"
+            >
+              Tiếp tục
+            </button>
+          </div>
         </div>
       </div>
     </div>

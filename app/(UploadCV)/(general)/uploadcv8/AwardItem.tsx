@@ -6,16 +6,16 @@ import dayjs from "dayjs";
 import SquareAdd from "../uploadcv4/search-cv/icons/SquareAdd";
 import { AwardItemProps } from "./type";
 import { Textarea } from "@/common/components/control/textarea";
+import { useDispatch } from "react-redux";
+import { addAward, changeAward, removeAward } from "@/lib/redux/slices";
 
 
 export default function AwardItem({
     index,
   initialValues,
   newest,
-  onAdd,
-  onRemove,
-  onChange,
 }: AwardItemProps) {
+  const dispatch = useDispatch()
     return (
       <div
         className={`flex flex-col gap-5  ${
@@ -26,11 +26,11 @@ export default function AwardItem({
         <div className="flex flex-row gap-10 items-center">
           <span className="font-bold text-primary">{`Dự án ${index + 1}`}</span>
           {newest ? (
-            <IconButton onClick={onAdd}>
+            <IconButton onClick={() => dispatch(addAward())}>
               <SquareAdd className="fill-green-500" />
             </IconButton>
           ) : (
-            <IconButton onClick={() => onRemove(index)}>
+            <IconButton onClick={() => dispatch(removeAward(index))}>
               <SquareXmark className="fill-red-600" />
             </IconButton>
           )}
@@ -40,17 +40,17 @@ export default function AwardItem({
           <Input
             label="Tên giải thưởng"
             placeholder="Please type here"
-            value={initialValues.name_award}
-            onChange={(e) => onChange(index, "name_award", e.target.value)}
+            value={initialValues.name}
+            onChange={(e) => dispatch(changeAward({value: e.target.value, index: index, key: 'name'}))}
           />
         </div>
         <div className="flex flex-row gap-10">
           <div className="flex flex-col w-full">
-            <p className="font-medium text-primary  text-sm">From</p>
+            <p className="font-medium text-primary  text-sm">Thời điểm nhận giải</p>
             <DatePicker
               views={["month", "year"]}
-              value={dayjs(initialValues.start_date)}
-              onChange={(date) => onChange(index, "start_date", date?.toDate())}
+              value={dayjs(initialValues.time)}
+              onChange={(date) => dispatch(changeAward({value: date?.format('YYYY-MM-DD HH:mm:ss') as string , key: 'time', index: index}))}
               slotProps={{
                 openPickerButton: {
                   color: "primary",
@@ -76,7 +76,7 @@ export default function AwardItem({
             rows={6}
             placeholder="Please type here"
             value={initialValues.description}
-            onChange={(e) => onChange(index, "description", e.target.value)}
+            onChange={(e) => dispatch(changeAward({value: e.target.value, index: index, key:'description'}))}
             />
         </div>
         
