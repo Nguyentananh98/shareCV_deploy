@@ -45,7 +45,9 @@ const initialForm: IJobDetailResponse = {
   requirements: null
 };
 
-function JobDescriptionPage({params}:{params:any}) {
+function JobDescriptionPage({params}:{params:{slug: string}}) {
+  const user_role = params.slug[0];
+  const cv_id = params.slug[1];
   // if (!getCookie("token")) {
   if (!true) {
     redirect("/login", RedirectType.replace);
@@ -53,7 +55,7 @@ function JobDescriptionPage({params}:{params:any}) {
   const [data,setData] = useState<IJobDetailResponse>(initialForm);
   useEffect(() => {
     try {
-      getJobDetail(params.id).then((res) => {
+      getJobDetail(cv_id).then((res) => {
         setData(res.data.data);
         console.log(res);
       });
@@ -70,7 +72,7 @@ function JobDescriptionPage({params}:{params:any}) {
       justifyContent="center"
       sx={{overflow:"auto"}}
     >
-      <JobDescription data={data}/>
+      <JobDescription data={data} role={user_role}/>
     </Box>
   );
 }

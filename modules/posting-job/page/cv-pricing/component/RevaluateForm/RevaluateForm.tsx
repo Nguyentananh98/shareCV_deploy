@@ -64,7 +64,7 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
 
   const handleLevelChange = (event: any) => {
     setLevel(event.target.value);
-    setValue("level", level);
+    setValue("level", event.target.value);
     if (event.target.value === "" || event.target.value === null) {
       setDisableSala(false);
     } else {
@@ -78,11 +78,12 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
       event.target.value === ""
     ) {
       setCurrentSalary(0);
-      setValue("current_salary", currentSalary);
+      setValue("current_salary", 0);
       setDisableLevel(false);
     } else {
       setCurrentSalary(event.target.value);
-      setValue("current_salary", currentSalary);
+      console.log("salary", event.target.value)
+      setValue("current_salary", event.target.value);
       setDisableLevel(true);
     }
   };
@@ -103,34 +104,37 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
     const newList = [...degreeList];
     newList[index] = event.target.value;
     setDegreeList(newList);
-    setValue("degree", degreeList);
+    setValue("degrees", newList);
   };
   const handleCerLanChange = (index: number, event: any) => {
     const newList = [...certificatesList];
     newList[index].certificate_language = event.target.value;
     setCertificatesList(newList);
-    setValue("language_certificates", certificatesList);
+    setValue("language_certificates", newList);
   };
   const handleCerNameChange = (index: number, event: any) => {
     const newList = [...certificatesList];
     newList[index].certificate_name = event.target.value;
     setCertificatesList(newList);
-    setValue("language_certificates", certificatesList);
+    setValue("language_certificates", newList);
   };
   const handleCerPointChange = (index: number, event: any) => {
     const newList = [...certificatesList];
     newList[index].certificate_point_level = event.target.value;
     setCertificatesList(newList);
+    setValue("language_certificates", newList);
   };
   const handleRemoveCerti = (index: number) => {
     const newList = [...certificatesList];
     newList.splice(index, 1);
     setCertificatesList(newList);
+    setValue("language_certificates", newList);
   };
   const handleRemoveDegree = (index: number) => {
     const newList = [...degreeList];
     newList.splice(index, 1);
     setDegreeList(newList);
+    setValue("degrees", newList);
   };
   const {
     control,
@@ -144,12 +148,12 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
       cv_id: data.cv_id,
       level: data.hard_item.level?data.hard_item.level:undefined,
       current_salary: data.hard_item.salary?Number(data.hard_item.salary):undefined,
-      degree: data.degrees,
+      degrees: data.degrees,
       language_certificates: data.certificates
     }
   });
   const onSubmit = handleSubmit(async (data) => {
-    console.log("data", data);
+    console.log("DATAAAAAA", data);
     const res = await revaluate(data);
 
     if (res.status !== 200) {

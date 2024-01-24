@@ -1,11 +1,45 @@
-import { Language, Monitor, Work } from "@mui/icons-material";
+import { IResume } from "@/modules/cv-info/resume.interface";
+import { Language, Monitor } from "@mui/icons-material";
 import { Avatar, Box, Button, Typography } from "@mui/material";
+import dayjs from "dayjs";
+import { GENDER, RESUME_STATUS } from "../_constant";
 import ExperienceItem from "../components/ExperienceItem";
-import { adwards, certificates, projects, skills, workExps } from "../mockData";
 import ProjectCarousel from "../components/ProjectCarousel";
+import { SocialIcon } from "react-social-icons/component";
 import { useState } from "react";
 
-function CvInfoPage() {
+function CvInfoPage({
+  cv_id,
+  status,
+  job_service,
+  avatar,
+  candidate_name,
+  current_job,
+  industry,
+  birthday,
+  gender,
+  objectives,
+  email,
+  phone,
+  identification_code,
+  address,
+  city,
+  country,
+  linkedin,
+  website,
+  facebook,
+  instagram,
+  skills,
+  total_point,
+  experience,
+  educations,
+  projects,
+  awards,
+  certificates,
+}: IResume) {
+  const today = dayjs();
+  const birthdayDate = dayjs(new Date(birthday));
+
   const [allown, setAllown] = useState<boolean>(false);
   const [showButton, setShowButton] = useState<boolean>(false);
   return (
@@ -13,7 +47,7 @@ function CvInfoPage() {
       <div className="flex w-full items-center mb-8">
         <div className="flex items-center">
           <div className="w-2 h-2 bg-green-600 rounded-full" />
-          <Typography className="text-green-600">ShareCVApproved</Typography>
+          <Typography className="text-green-600">{RESUME_STATUS[status]}</Typography>
         </div>
 
         <Box display="flex" alignItems="center" mx={3}>
@@ -50,7 +84,7 @@ function CvInfoPage() {
         </Button> */}
 
         <Typography className="text-[22px] font-bold text-amber-400">
-          50 điểm
+          {total_point} điểm
         </Typography>
       </div>
 
@@ -69,30 +103,34 @@ function CvInfoPage() {
             borderRadius="22px"
           >
             <Box display="flex" alignItems="center">
-              <Avatar src="https://i.pravatar.cc/300" className="mr-3" />
+              <Avatar src={avatar ?? candidate_name} alt="" className="mr-3" />
               <Box display="flex" flexDirection="column">
                 <Typography className="text-[22px] text-primary font-bold">
-                  Lương Mẫn Nhi
+                  {allown ? candidate_name:"Họ và tên"}
                 </Typography>
-                <Typography className="text-green-600">
-                  Quản lý dự án <span className="text-black">ngành</span> Công
-                  nghệ thông tin
+                <Typography className="text-green-600 capitalize">
+                  {current_job}{" "}
+                  <span className="text-black lowercase">ngành</span> {industry}
                 </Typography>
               </Box>
             </Box>
 
             <div className="flex flex-col my-5">
-              <Typography>Ngày sinh: 01/01/1991</Typography>
-              <Typography>Tuổi: 33</Typography>
-              <Typography>Giới tính: Nữ</Typography>
+              <Typography>
+                Ngày sinh: {birthdayDate.format("DD/MM/YYYY")}
+              </Typography>
+              <Typography>Tuổi: {today.diff(birthdayDate, "year")}</Typography>
+              <Typography>Giới tính: {GENDER[gender]}</Typography>
             </div>
 
             <Typography className="mb-3 font-bold text-[22px]">
               Mục tiêu nghề nghiệp
             </Typography>
-            <Typography>
-              Tìm kiếm vị trí Quản lý dự án ngành Công nghệ thông tin
-            </Typography>
+            <ul className="list-disc list-inside">
+              {objectives.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </Box>
 
           <Box
@@ -133,15 +171,14 @@ function CvInfoPage() {
               Kinh nghiệm làm việc
             </Typography>
             <div className="flex flex-col gap-8">
-              {workExps.map((workExp) => (
+              {experience.map((workExp) => (
                 <ExperienceItem
-                  key={workExp.id}
-                  title={workExp.title}
-                  subTitle1={workExp.department}
-                  subTitle2={workExp.company}
-                  startDate={workExp.startDate}
-                  endDate={workExp.endDate}
-                  keywords={workExp.keywords}
+                  key={workExp.job_title}
+                  title={workExp.job_title}
+                  subTitle1={workExp.levels}
+                  subTitle2={workExp.company_name}
+                  startDate={workExp.start_time}
+                  endDate={workExp.end_time}
                 />
               ))}
             </div>
@@ -159,14 +196,23 @@ function CvInfoPage() {
               Chứng chỉ
             </Typography>
             <div className="flex flex-col gap-8">
-              {certificates.map((item) => (
+              {certificates.language_certificates.map((item) => (
                 <ExperienceItem
-                  key={item.id}
-                  title={item.title}
-                  subTitle1={item.type}
-                  subTitle2={item.score.toString()}
-                  startDate={item.startDate}
-                  endDate={item.endDate}
+                  key={item.certificate_name}
+                  title={item.certificate_language}
+                  subTitle1={item.certificate_name}
+                  subTitle2={item.certificate_level}
+                  // startDate={item.startDate}
+                  // endDate={item.endDate}
+                />
+              ))}
+              {certificates.other_certificate.map((item) => (
+                <ExperienceItem
+                  key={item.certificate_name}
+                  title={item.certificate_name}
+                  subTitle2={item.certificate_level ?? ""}
+                  // startDate={item.startDate}
+                  // endDate={item.endDate}
                 />
               ))}
             </div>
@@ -200,12 +246,12 @@ function CvInfoPage() {
               Giải thưởng
             </Typography>
             <div className="flex flex-col gap-8">
-              {adwards.map((item) => (
+              {awards.map((item) => (
                 <ExperienceItem
-                  key={item.id}
-                  title={item.title}
-                  startDate={item.received_date}
-                  description={item.description}
+                  key={item.name}
+                  title={item.name}
+                  startDate={item.time}
+                  description={[item.description]}
                 />
               ))}
             </div>
@@ -259,72 +305,78 @@ function CvInfoPage() {
         </div>
         {allown ? (
           <div className="flex flex-col w-full">
-            <Box
-              width="100%"
-              display="flex"
-              flexDirection="column"
-              p={5}
-              bgcolor="#F8FBFD"
-              borderRadius="22px"
-            >
-              <Typography className="text-[22px] font-bold mb-3">
-                Thông tin cá nhân
-              </Typography>
-              <div className="flex flex-col gap-8">
-                <div>
-                  <Typography className="text-zinc-500">Email</Typography>
-                  <Typography className="text-primary font-medium">
-                    a@a.acom
-                  </Typography>
-                </div>
-
-                <div>
-                  <Typography className="text-zinc-500">
-                    Số điện thoại
-                  </Typography>
-                  <Typography className="text-primary font-medium">
-                    0123456789
-                  </Typography>
-                </div>
-
-                <div>
-                  <Typography className="text-zinc-500">
-                    Số CMND/CCCD
-                  </Typography>
-                  <Typography className="text-primary font-medium">
-                    1212121212
-                  </Typography>
-                </div>
-
-                <div>
-                  <Typography className="text-zinc-500">Quốc gia</Typography>
-                  <Typography className="text-primary font-medium">
-                    Việt Nam
-                  </Typography>
-                </div>
-
-                <div>
-                  <Typography className="text-zinc-500">
-                    Tỉnh/Thành phố
-                  </Typography>
-                  <Typography className="text-primary font-medium">
-                    TP.HCM
-                  </Typography>
-                </div>
-
-                <div>
-                  <Typography className="text-zinc-500">Địa chỉ</Typography>
-                  <Typography className="text-primary font-medium">
-                    202 Lê Lai, phường Bến Thành
-                  </Typography>
-                </div>
-
-                <div className="flex items-center">
-                  <Language className="mr-3" />
-                </div>
+          <Box
+            width="100%"
+            display="flex"
+            flexDirection="column"
+            p={5}
+            bgcolor="#F8FBFD"
+            borderRadius="22px"
+          >
+            <Typography className="text-[22px] font-bold mb-3">
+              Thông tin cá nhân
+            </Typography>
+            <div className="flex flex-col gap-8">
+              <div>
+                <Typography className="text-zinc-500">Email</Typography>
+                <Typography className="text-primary font-medium">
+                  {email}
+                </Typography>
               </div>
-            </Box>
-          </div>
+
+              <div>
+                <Typography className="text-zinc-500">Số điện thoại</Typography>
+                <Typography className="text-primary font-medium">
+                  {phone}
+                </Typography>
+              </div>
+
+              <div>
+                <Typography className="text-zinc-500">Số CMND/CCCD</Typography>
+                <Typography className="text-primary font-medium">
+                  {identification_code}
+                </Typography>
+              </div>
+
+              <div>
+                <Typography className="text-zinc-500">Quốc gia</Typography>
+                <Typography className="text-primary font-medium">
+                  {country}
+                </Typography>
+              </div>
+
+              <div>
+                <Typography className="text-zinc-500">
+                  Tỉnh/Thành phố
+                </Typography>
+                <Typography className="text-primary font-medium">
+                  {city}
+                </Typography>
+              </div>
+
+              <div>
+                <Typography className="text-zinc-500">Địa chỉ</Typography>
+                <Typography className="text-primary font-medium">
+                  {address}
+                </Typography>
+              </div>
+
+              <div className="flex items-center">
+                {website && (
+                  <Language
+                    onClick={() =>
+                      window.open(website, "_blank", "noopener,noreferrer")
+                    }
+                    className="mr-3"
+                  />
+                )}
+                {/* {linkedin && <SocialIcon url={linkedin} className="mr-3" />}
+                {facebook && <SocialIcon url={facebook} className="mr-3" />}
+                {instagram && <SocialIcon url={instagram} className="mr-3" />} */}
+              </div>
+            </div>
+          </Box>
+        </div>
         ) : (
           <></>
         )}

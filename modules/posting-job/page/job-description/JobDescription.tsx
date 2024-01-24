@@ -14,7 +14,14 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 
-function JobDescription({ data }: { data: IJobDetailResponse }) {
+function JobDescription({
+  data,
+  role,
+}: {
+  data: IJobDetailResponse;
+  role: string;
+}) {
+  const [showButton, setShowButton] = useState<boolean>(false);
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
@@ -186,57 +193,122 @@ function JobDescription({ data }: { data: IJobDetailResponse }) {
             justifyContent={"right"}
           >
             <Box
+              height="100px"
+              className="gap-5"
               display="flex"
-              flexDirection={"column"}
+              flexDirection={"row"}
               justifyContent={"right"}
-              sx={
-                {
-                  // p: 3,
-                }
-              }
             >
-              <Button
-                component={Link}
-                className="hover:text-primary"
-                href=""
-                sx={{ boxShadow: 5 }}
-                style={{
-                  color: "white",
-                  // backgroundColor: "primary",
-                  borderRadius: 10,
-                  // marginRight: "5%",
-                }}
-                variant="contained"
-              >
-                Chỉnh sửa
-              </Button>
-            </Box>
-            <Box
-              display="flex"
-              flexDirection={"column"}
-              justifyContent={"right"}
-              sx={
-                {
-                  // p: 3,
-                }
-              }
-            >
-              <Button
-                component={Link}
-                className="hover:text-primary"
-                href=""
-                sx={{ boxShadow: 5 }}
-                style={{
-                  color: "white",
-                  // backgroundColor: "primary",
-                  borderRadius: 10,
-                  // marginRight: "5%",
-                }}
-                variant="contained"
-              >
-                Tạo bản sao
-              </Button>
-            </Box>
+                {role === "collaborator" ? (
+                  <Box
+                    className="gap-5"
+                    display="flex"
+                    flexDirection={"row"}
+                    justifyContent={"right"}
+                  >
+                    <Box
+                      className="gap-5"
+                      display="flex"
+                      flexDirection={"column"}
+                      justifyContent={"right"}
+                    >
+                      <Button
+                        className="hover:text-primary"
+                        variant="contained"
+                        onClick={() => setShowButton(!showButton)}
+                        sx={{
+                          minHeight: "50px",
+                          width: "150px",
+                          borderRadius: "20px",
+                        }}
+                      >
+                        Giới thiệu
+                      </Button>
+                      {showButton ? (
+                        <Box
+                          className="gap-1"
+                          display="flex"
+                          flexDirection={"column"}
+                        >
+                          <Button
+                            className="hover:text-primary"
+                            variant="contained"
+                            component={Link}
+                            href="http://localhost:3000/uploadcv1"
+                            sx={{
+                              height: "50px",
+                              width: "200px",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            Thêm ứng viên
+                          </Button>
+                          <Button
+                            className="hover:text-primary"
+                            variant="contained"
+                            component={Link}
+                            href=""
+                            sx={{
+                              height: "50px",
+                              width: "200px",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            Chọn từ danh sách
+                          </Button>
+                        </Box>
+                      ) : (
+                        <></>
+                      )}{" "}
+                    </Box>
+                    <Button
+                      component={Link}
+                      className="hover:text-primary"
+                      href=""
+                      sx={{
+                        height: "50px",
+                        width: "150px",
+                        borderRadius: "20px",
+                      }}
+                      variant="contained"
+                    >
+                      Quan tâm
+                    </Button>
+                  </Box>
+                ) : (
+                  <Box
+                    className="gap-5"
+                    display="flex"
+                    flexDirection={"row"}
+                    justifyContent={"right"}
+                  >
+                  <Button
+                    className="hover:text-primary"
+                    variant="contained"
+                    // onClick={() => setShowButton(!showButton)}
+                    sx={{
+                      height: "50px",
+                      width: "150px",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    Chỉnh sửa
+                  </Button>
+                  <Button
+                    className="hover:text-primary"
+                    variant="contained"
+                    // onClick={() => setShowButton(!showButton)}
+                    sx={{
+                      height: "50px",
+                      width: "150px",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    Tạo bản sao
+                  </Button>
+                  </Box>
+                )}
+              </Box>
           </Grid>
           <Grid
             item
