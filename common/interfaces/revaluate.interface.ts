@@ -13,6 +13,16 @@ export interface IRevaluate {
   [key: string]: any;
 }
 
+export interface IConfirm {
+  hard_item: string,
+  hard_point: 0,
+  degrees: string[];
+  degree_point: number;
+  certificates: ILanguageCertificates[];
+  certificates_point: number;
+  total_point: number;
+}
+
 export interface ValuateCV {
   cv_id: number;
   cv_pdf: string;

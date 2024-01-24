@@ -47,7 +47,7 @@ function CVPricing({data}:{data: ValuateCV}) {
           sx={{ fontSize: "20px" }}
           className="text-primary font-bold"
         >
-          50
+          {data && data.total_point}
         </Typography>
       </Box>
       <Box
@@ -72,7 +72,7 @@ function CVPricing({data}:{data: ValuateCV}) {
       <Box
         className="col-span-7"
         display="flex"
-        height="100%"
+        height="1200px"
         // height="900px"
         flexDirection="row"
         alignItems={"top"}

@@ -153,6 +153,7 @@ export const LoginForm = ({
 
         <Button
           type="submit"
+          className="hover:text-primary"
           disabled={isDirty && !isValid}
           variant="contained"
           sx={{ textTransform: "none", py: 1 }}

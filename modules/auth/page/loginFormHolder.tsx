@@ -42,7 +42,7 @@ export const LoginFormHolderer = () => {
           width={500}
           height={400}
           alt="Picture of the author"/>
-        <Typography display="flex" justifyContent="center" className="font-bold text-orange text-2xl">
+        <Typography display="flex" justifyContent="center" className="font-bold text-primary text-2xl">
           Dành cho nhà tuyển dụng
         </Typography>
         <Box width="100%" className="py-2">

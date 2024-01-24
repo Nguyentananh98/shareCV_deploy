@@ -17,3 +17,6 @@ export const getValuateCV = (id:string): Promise<ValuateCV> => {
 export const revaluate = (data: IRevaluate): Promise<IAuthResponse> => {
   return axiosClient.put("/postjob/collaborator/update-resume-valuate", data);
 };
+export const confrimRevaluate = (data: IRevaluate): Promise<IAuthResponse> => {
+  return axiosClient.post("/postjob/collaborator/confirm-resume-valuate", data);
+};
