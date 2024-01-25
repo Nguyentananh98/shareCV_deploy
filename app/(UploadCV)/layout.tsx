@@ -11,24 +11,26 @@ import { redirect, RedirectType } from "next/navigation";
 import Cookies from 'js-cookie';
 
 export default function UploadCVLayout({
-    children,
-  }: {
-    children: React.ReactNode
-  }) {
-    const storeRef = useRef<ReduxStore>()
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const storeRef = useRef<ReduxStore>()
   if (!storeRef.current) {
     // Create the store instance the first time this renders
     storeRef.current = reduxStore()
   }
-  if(getRole()!=="collaborator"){
+
+  if (getRole() !== "collaborator") {
     redirect("/home", RedirectType.replace);
   }
-    return (
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-       <Provider store={storeRef.current}>
-       <Header/>
+
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Provider store={storeRef.current}>
+        <Header />
         {children}
-       </Provider>
-      </LocalizationProvider>
-    )
-  }
+      </Provider>
+    </LocalizationProvider>
+  )
+}

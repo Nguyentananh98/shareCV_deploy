@@ -4,6 +4,10 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { IUserLogin } from "../../types";
 import { resolver } from "./resolver";
+
+// cookies
+import { getRole } from "@/common/helpers/setCookies";
+
 import {
   Box,
   Button,
@@ -39,7 +43,7 @@ export const LoginForm = ({
     control,
     handleSubmit,
     setError,
-    formState: { errors, isDirty=false , isValid=true  },
+    formState: { errors, isDirty = false, isValid = true },
   } = useForm<IUserLogin>({
     resolver,
   });
@@ -65,17 +69,28 @@ export const LoginForm = ({
 
     console.log(res)
 
-    if (redirect) {
-      return navigate.replace(redirect);
-    }
+    // if (redirect) {
+    //   return navigate.replace(redirect);
+    // }
 
     if (onSuccess) {
       return onSuccess();
     }
 
-    window.location.reload();
+    // window.location.reload();
+
+    console.log(getRole());
+
+    if (getRole() === "collaborator") {
+      navigate.replace("/posting-job/job-list-ctv");
+    } else if (getRole() === "recruiter") {
+      navigate.replace("/posting-job/uv-list-ntd");
+    } else if (getRole() === "admin") {
+      navigate.replace("/posting-job/uv-list-admin");
+    }
+
   });
-  
+
   return (
     <form onSubmit={onSubmit}>
       <Box

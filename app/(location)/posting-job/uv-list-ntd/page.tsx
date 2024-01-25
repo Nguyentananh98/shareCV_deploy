@@ -85,7 +85,7 @@ function UVListPage() {
                     fontWeight: 700,
                     lineHeight: '80px',
                     padding: '5px'
-                }}>Danh sách công việc</Typography>
+                }}>Danh sách ứng viên</Typography>
             </Box>
             <Box mt="25px">
                 <Box display="flex" flexDirection="row" gap="30px">
