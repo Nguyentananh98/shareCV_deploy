@@ -64,7 +64,7 @@ function JobListPage() {
 
     useEffect(() => {
         handleReloadData();
-    }, [isDraftPage, pagination]);
+    }, [isDraftPage, pagination, handleReloadData]);
 
     const handleChangeNumPerPage = (value: any) => {
         setPagination({

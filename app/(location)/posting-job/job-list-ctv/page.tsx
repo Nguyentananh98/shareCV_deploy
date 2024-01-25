@@ -60,7 +60,7 @@ function UVListPage() {
         } catch (err) {
             console.log(err);
         }
-    }, [pagination, currentTab]);
+    }, [pagination, currentTab, dispatch, metaData]);
 
 
     const handleChangeNumPerPage = (value: any) => {

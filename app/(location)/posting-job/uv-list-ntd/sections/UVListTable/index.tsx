@@ -29,8 +29,7 @@ export const UVListTable = ({
         router.push(`uv-info/1`)
     }
 
-    const columns = useMemo<MRT_ColumnDef<IUVListNtd>[]>(
-        () => [
+    const columns: MRT_ColumnDef<IUVListNtd>[] = [
             {
                 accessorKey: 'id',
                 header: 'ID',
@@ -141,7 +140,7 @@ export const UVListTable = ({
                     </Box>
                 )
             },
-        ], [],)
+        ]
 
     const table = useMaterialReactTable({
         columns,

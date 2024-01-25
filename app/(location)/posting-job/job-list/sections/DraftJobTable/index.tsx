@@ -27,8 +27,7 @@ export const DraftJobTable = ({
 }: JobListTableProps) => {
     const router = useRouter();
 
-    const columns = useMemo<MRT_ColumnDef<IJobListDraft>[]>(
-        () => [
+    const columns: MRT_ColumnDef<IJobListDraft>[] = [
             {
                 accessorKey: 'job_id',
                 header: 'ID',
@@ -122,7 +121,7 @@ export const DraftJobTable = ({
                 )
             },
             
-        ], [],)
+        ]
 
     const table = useMaterialReactTable({
         columns,
