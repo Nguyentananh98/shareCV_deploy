@@ -79,7 +79,7 @@ function CVPricing({ data }: { data: ValuateCV }) {
         justifyContent={"left"}
         sx={{ overflow: "auto" }}
       >
-        <PdfViewer url={data.cv_pdf ? data.cv_pdf : ""} />
+        <PdfViewer link={data.cv_pdf ? data.cv_pdf : ""} />
       </Box>
       <Box
         className="col-span-5"
