@@ -16,6 +16,7 @@ import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import dayjs from 'dayjs';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useRouter } from 'next/navigation';
 
 export interface JobListTableProps {
     data: IJobListCreate[];
@@ -24,6 +25,7 @@ export interface JobListTableProps {
 export const CreateJobTable = ({
     data,
 }: JobListTableProps) => {
+    const router = useRouter();
 
     const columns = useMemo<MRT_ColumnDef<IJobListCreate>[]>(
         () => [
@@ -138,9 +140,8 @@ export const CreateJobTable = ({
                 ),
                 Cell: ({ cell }) => (
                     <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" onClick={() => router.push(`job-description/collaborator/2`)}>
                             <DocumentScannerIcon />
-                            {cell.row.index}
                         </Button>
                         <Button variant="contained" color="primary">
                             <EditIcon />

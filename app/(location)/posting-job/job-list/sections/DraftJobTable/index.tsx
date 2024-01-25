@@ -13,6 +13,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CustomMenuItem } from '../../components/MenuItem';
 import { CustomMenu } from '../../components/CustomMenu';
 import dayjs from 'dayjs';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useRouter } from 'next/navigation';
 
 export interface JobListTableProps {
     data: IJobListDraft[];
@@ -21,6 +25,7 @@ export interface JobListTableProps {
 export const DraftJobTable = ({
     data,
 }: JobListTableProps) => {
+    const router = useRouter();
 
     const columns = useMemo<MRT_ColumnDef<IJobListDraft>[]>(
         () => [
@@ -101,8 +106,22 @@ export const DraftJobTable = ({
                         <p>{column.columnDef.header}</p>
                         <KeyboardArrowDownIcon />
                     </Box>
+                ),
+                Cell: ({ cell }) => (
+                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
+                        <Button variant="contained" color="primary" onClick={() => router.push(`job-description/collaborator/2`)}>
+                            <DocumentScannerIcon />
+                        </Button>
+                        <Button variant="contained" color="primary">
+                            <EditIcon />
+                        </Button>
+                        <Button variant="contained" color="primary">
+                            <DeleteIcon />
+                        </Button>
+                    </Box>
                 )
             },
+            
         ], [],)
 
     const table = useMaterialReactTable({

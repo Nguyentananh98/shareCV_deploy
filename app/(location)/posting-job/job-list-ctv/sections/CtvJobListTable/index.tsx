@@ -29,8 +29,8 @@ export const CtvJobListTable = ({
     const router = useRouter();
 
     const handleGetJobDetail = (index: number) => {
-        console.log(data[index])
-        // router.push(`/posting-job/job-description/${data[index].job_id}`)
+        console.log(data[index].job_id)
+        router.push(`job-description/collaborator/1`)
     }
 
     const columns = useMemo<MRT_ColumnDef<ICtvJobList>[]>(
@@ -72,12 +72,11 @@ export const CtvJobListTable = ({
                         }}
                     >
                         <Image
-                            src={`${API_URL}${cell.getValue<string>()}`}
+                            src={`${cell.getValue<string>()}`}
                             alt="Picture of the author"
                             width={60}
                             height={60}
                         />
-                        {cell.getValue<string>()}
                     </Box>
                 )
             },
