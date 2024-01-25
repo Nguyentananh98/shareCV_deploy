@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   IconButton,
@@ -57,10 +58,11 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
   >(data.certificates);
   // const [certificatesList, setCertificatesList] =  useState<string[]>([""]);
   const [degreeList, setDegreeList] = useState<string[]>(data.degrees);
-  const [level, setLevel] = useState<string>(data.hard_item.level? data.hard_item.level:"");
-  const [currentSalary, setCurrentSalary] = useState<number>(data.hard_item.salary? Number(data.hard_item.salary):0);
+  const [level, setLevel] = useState<string>(data.hard_item.level ? data.hard_item.level : "");
+  const [currentSalary, setCurrentSalary] = useState<number>(data.hard_item.salary ? Number(data.hard_item.salary) : 0);
   const [disableSala, setDisableSala] = useState<boolean>(false);
   const [disableLevel, setDisableLevel] = useState<boolean>(false);
+  const [isAnalyse, setIsAnalyse] = useState<boolean>(false);
 
   const handleLevelChange = (event: any) => {
     setLevel(event.target.value);
@@ -144,26 +146,36 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
     formState: { errors, isDirty = false, isValid = true },
   } = useForm<IRevaluate>({
     // resolver,
-    defaultValues:{
+    defaultValues: {
       cv_id: data.cv_id,
-      level: data.hard_item.level?data.hard_item.level:undefined,
-      current_salary: data.hard_item.salary?Number(data.hard_item.salary):undefined,
+      level: data.hard_item.level ? data.hard_item.level : undefined,
+      current_salary: data.hard_item.salary ? Number(data.hard_item.salary) : undefined,
       degrees: data.degrees,
       language_certificates: data.certificates
     }
   });
+
   const onSubmit = handleSubmit(async (data) => {
-    console.log("DATAAAAAA", data);
-    const res = await revaluate(data);
+    try {
+      console.log("DATAAAAAA", data);
+      setIsAnalyse(true);
 
-    if (res.status !== 200) {
+      const res = await revaluate(data);
+
+      if (res.status !== 200) {
+        console.log(res);
+        setError("root", { message: "Đăng nhập thất bại" });
+        return;
+      }
+
       console.log(res);
-      setError("root", { message: "Đăng nhập thất bại" });
-      return;
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      setError("root", { message: "Đã xảy ra lỗi" });
+    } finally {
+      setIsAnalyse(false);
     }
-
-    console.log(res);
-    window.location.reload();
   });
   // useEffect(() => {
   //   try {
@@ -222,8 +234,8 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
             flexDirection={"column"}
             className="gap-3 col-span-10"
             justifyContent={"space-between"}
-            // sx={{ border: 1, borderRadius: "20px" }}
-            // p={2}
+          // sx={{ border: 1, borderRadius: "20px" }}
+          // p={2}
           >
             <Box pr={3} display="flex" flexDirection="row" width="100%">
               <OutlinedInput
@@ -425,7 +437,7 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
                         Choose Cert
                       </InputLabel>
                       {certificatesList[index].certificate_language ===
-                      "English" ? (
+                        "English" ? (
                         <Select
                           defaultValue={""}
                           label="Choose Cert"
@@ -464,7 +476,7 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
                           onChange={(event) =>
                             handleCerNameChange(index, event)
                           }
-                          sx={{ width: "100%",color:"white" }}
+                          sx={{ width: "100%", color: "white" }}
                         >
                           <MenuItem value={""}>Choose Language First</MenuItem>
                         </Select>
@@ -507,8 +519,9 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
             ))}
           </Box>
         </Box>
-        <Box width="100%" display="flex" my={2} justifyContent={"end"}>
+        <Box width="100%" display="flex" my={2} justifyContent={"end"} flexDirection="row" gap="20px">
           <Button
+            disabled={isAnalyse}
             variant="outlined"
             sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3 }}
             className="bg-primary border-primary font-bold text-white hover:border-primary hover:bg-white hover:text-primary"
@@ -516,6 +529,9 @@ function RevaluateForm({ data }: { data: ValuateCV }) {
           >
             Định giá
           </Button>
+          <Box sx={{ display: 'flex' }}>
+            {isAnalyse ? <CircularProgress /> : <></>}
+          </Box>
         </Box>
       </Box>
     </form>
