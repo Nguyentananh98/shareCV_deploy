@@ -41,15 +41,15 @@ function CandidateInfoPage({ params }: { params: { id: string } }) {
   };
 
   const [candidateData, setCandidateData] = useState<IResume>(initialData);
-  const [role,setRole]=useState(getRole());
-  if(role===undefined){
+  const [role, setRole] = useState(getRole());
+  if (role === undefined) {
     setRole("admin");
   }
   useEffect(() => {
     if (!params.id) return;
     (async () => {
       try {
-        const res = await candidateInfoApi.getById(parseInt(params.id),role);
+        const res = await candidateInfoApi.getById(parseInt(params.id), role);
         setCandidateData(res.data.data);
       } catch (error) {
         console.log(error);

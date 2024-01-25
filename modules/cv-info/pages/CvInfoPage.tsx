@@ -67,6 +67,7 @@ function CvInfoPage({
             py: 1,
             mx: 1,
           }}
+          onClick={() => navigate.replace(`/posting-job/ai-result/admin/${cv_id}`) }
         >
           <Typography className="font-bold hover:text-primary">Xem kết quả AI</Typography>
         </Button>
@@ -200,8 +201,8 @@ function CvInfoPage({
                   title={item.certificate_language}
                   subTitle1={item.certificate_name}
                   subTitle2={item.certificate_level}
-                  // startDate={item.startDate}
-                  // endDate={item.endDate}
+                // startDate={item.startDate}
+                // endDate={item.endDate}
                 />
               ))}
               {certificates.other_certificate.map((item) => (
@@ -209,8 +210,8 @@ function CvInfoPage({
                   key={item.certificate_name}
                   title={item.certificate_name}
                   subTitle2={item.certificate_level ?? ""}
-                  // startDate={item.startDate}
-                  // endDate={item.endDate}
+                // startDate={item.startDate}
+                // endDate={item.endDate}
                 />
               ))}
             </div>
