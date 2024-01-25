@@ -9,6 +9,7 @@ import { use, useEffect, useLayoutEffect, useState } from 'react';
 import { getAdminMatchingCVResult, getCTVMatchingCVResult } from '@/common/apis/ai_result';
 import { ICvMatchingResult } from '@/common/interfaces/ai-results';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme: any }) => ({
     height: 33,
@@ -83,6 +84,7 @@ function AIResultPage({ params }: { params: { slug: string } }) {
     const cv_id = params.slug[1];
     const [cvMatchingDetail, setCVMatchingDetail] = useState<ICvMatchingResult>(initialCVMatchingDetail);
     const [isMatched, setIsMatched] = useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
         if (cv_id && user_role) {
@@ -134,9 +136,17 @@ function AIResultPage({ params }: { params: { slug: string } }) {
                 width: "1200px",
                 background: "rgba(183, 218, 237, 0.10)",
             }}>
-                <Box sx={{}}>
-                    <Button sx={returnButtonStyles()}>Quay lại</Button>
-                </Box>
+                <Button sx={{
+                    padding: "10px",
+                    textTransform: "none"
+                }}
+                    startIcon={<ArrowBackIosIcon />}
+                    onClick={() => router.back()}
+                >
+                    <Typography sx={{
+                        fontSize: "20px",
+                    }}>Quay lại</Typography>
+                </Button>
                 <Box sx={{}}>
                     <Grid container spacing={3}>
                         {/* First Column */}
