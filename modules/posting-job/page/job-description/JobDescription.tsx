@@ -32,7 +32,7 @@ function JobDescription({
         width="100%"
         minHeight="400px"
         maxHeight="500px"
-        sx={{ backgroundImage: `url(${data.company_cover_image})` }}
+        sx={{backgroundImage:`url(${"/background-posting-job.png"})`}}
         justifyContent="center"
         alignItems="center"
         flex={1}
