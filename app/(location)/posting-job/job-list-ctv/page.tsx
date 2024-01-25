@@ -16,6 +16,10 @@ import { getCtvJobList } from '@/common/apis/job-list-ctv';
 import { CtvJobListTable } from './sections/CtvJobListTable';
 import { ICtvJobList } from '@/common/interfaces/ctv-job-list';
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { selectJobListCtv, setData } from '@/lib/redux/slices/jobListCtvSlice';
+
 const pageTabs = {
     1: "referred",
     2: "favorite",
@@ -33,7 +37,8 @@ function UVListPage() {
         total_items: 20,
     })
 
-    const [uvListData, setUVListData] = useState<ICtvJobList[]>([]);
+    const dispatch = useDispatch();
+    let uvListData: ICtvJobList[] = useSelector(selectJobListCtv);
 
     useEffect(() => {
         try {
@@ -50,12 +55,13 @@ function UVListPage() {
                     total_pages: res.data.data.total_pages,
                     total_items: res.data.data.total_items,
                 })
-                setUVListData(res.data.data.item_lst);
+                dispatch(setData(res.data.data.item_lst));
             })
         } catch (err) {
             console.log(err);
         }
     }, [pagination, currentTab]);
+
 
     const handleChangeNumPerPage = (value: any) => {
         setPagination({
@@ -70,6 +76,12 @@ function UVListPage() {
             page_index: page,
         })
     }
+
+    const handleGetJobDetail = (index: number) => {
+        console.log(uvListData);
+        // router.push(`job-description/collaborator/1`)
+    }
+
 
     return (
         <Box sx={{

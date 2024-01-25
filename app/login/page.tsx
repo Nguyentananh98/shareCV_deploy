@@ -11,7 +11,7 @@ function LoginPage() {
   if (getCookie("token")) {
     redirect("/home", RedirectType.replace);
   }
-  
+
   return (
     <Box className="flex w-full" height='100vh'>
       <Box
@@ -20,16 +20,16 @@ function LoginPage() {
         flex={1}
         minWidth='60%'
         height='100%'
-        sx={{backgroundColor:"#F8F8FA", overflow:"auto"}}
+        sx={{ backgroundColor: "#F8F8FA", overflow: "auto" }}
       >
         <LoginFormHolderer />
       </Box>
-      <Box display="flex" flexDirection="column" sx={{backgroundImage:`url(${"/login-background.png"})`,backgroundSize: 'cover'}} justifyContent="center"
-      alignItems="center" flex={1} border={0} height='100%'>
+      <Box display="flex" flexDirection="column" sx={{ backgroundImage: `url(${"/login-background.png"})`, backgroundSize: 'cover' }} justifyContent="center"
+        alignItems="center" flex={1} border={0} height='100%'>
         {/* <img src="/login-background.png"/> */}
         {/* Banner */}
-        <VideoPlayer/>
-        <Image src='/sign-in-title.png' height={300} width={600} alt=""/>
+        <VideoPlayer />
+        <Image src='/sign-in-title.png' height={300} width={600} alt="" />
         {/* <ReturnButton/> */}
       </Box>
     </Box>
