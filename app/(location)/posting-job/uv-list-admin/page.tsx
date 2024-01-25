@@ -18,17 +18,17 @@ import { IUvListAdmin } from '@/common/interfaces/uv-list-admin';
 import { getUvListAdmin } from '@/common/apis/uv-list-admin';
 
 const pageTabs = {
-    1: "pending",
-    2: "browsing",
-    3: "recruiting",
-    4: "paused"
+    1: "all",
+    2: "pending",
+    3: "approved",
+    4: "declined"
 }
 
 function UVListAdminPage() {
     const [currentTab, setCurrentTab] = useState<1 | 2 | 3 | 4>(1);
     const [pagination, setPagination] = useState({
         page_index: 1,
-        limit: 10,
+        limit: 5,
     });
     const [metaData, setMetaData] = useState({
         total_pages: 5,
@@ -87,7 +87,7 @@ function UVListAdminPage() {
                     fontWeight: 700,
                     lineHeight: '80px',
                     padding: '5px'
-                }}>Danh sách công việc</Typography>
+                }}>Danh sách ứng viên</Typography>
             </Box>
             <Box mt="25px">
                 <Box display="flex" flexDirection="row" gap="30px">
@@ -104,8 +104,8 @@ function UVListAdminPage() {
                         <Typography sx={TabTextStyle(currentTab === 3)}>ĐANG TUYỂN</Typography>
                     </Button>
                     <Divider orientation="vertical" flexItem />
-                    <Button sx={TabButtonStyle()} onClick={() => setCurrentTab(3)}>
-                        <Typography sx={TabTextStyle(currentTab === 3)}>TẠM DỪNG</Typography>
+                    <Button sx={TabButtonStyle()} onClick={() => setCurrentTab(4)}>
+                        <Typography sx={TabTextStyle(currentTab === 4)}>TẠM DỪNG</Typography>
                     </Button>
                 </Box>
             </Box>
@@ -126,7 +126,7 @@ function UVListAdminPage() {
                             disablePortal
                             id="combo-box-demo"
                             value={pagination.limit}
-                            options={[10, 20, 30, 40, 50]}
+                            options={[5, 10, 15, 20, 25, 30]}
                             renderInput={(params) => <TextField {...params} label="" />}
                             onChange={(event, value) => handleChangeNumPerPage(value)}
                             getOptionLabel={(option) => option.toString()}

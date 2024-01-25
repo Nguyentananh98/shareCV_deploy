@@ -5,7 +5,7 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { Box, Button, Chip, Menu, Typography } from "@mui/material";
+import { Box, Button, Chip, Menu, Tooltip, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -30,138 +30,132 @@ export const AdminUvListTable = ({
     const router = useRouter();
 
     const handleClickDetail = (index: number) => {
-        router.push(`/posting-job/job-description/${data[index]}`)
+        router.push(`/posting-job/uv-info/${data[index].id}`)
     }
 
     const handleDeleteItem = (index: number) => {
         console.log(index)
     }
 
-    const columns = useMemo<MRT_ColumnDef<IUvListAdmin>[]>(
-        () => [
-            {
-                accessorKey: 'id',
-                header: 'ID',
-                Header: ({ column }) => (
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "10px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textTransform: "none",
-                            color: "inherit",
-                        }}>
-                        <p>{column.columnDef.header}</p>
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'company_logo',
-                header: 'Logo',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                ),
-                Cell: ({ cell }) => (
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "flex-start",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={`${API_URL}${cell.getValue<string>()}`}
-                            alt="Picture of the author"
-                            width={60}
-                            height={60}
-                        />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'company_name',
-                header: 'Tên công ty',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'job_title',
-                header: 'Tên công việc',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'industry',
-                header: 'Ngành nghề',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                ),
-                Cell: ({ cell }) => (
-                    <Box display="flex" flexDirection="column" justifyContent="flex-start" alignItems="center" gap="5px">
-                        {cell.getValue<any>().map((item: any, index: any) => (
-                            <Chip label={item} variant="outlined" key={index} />
-                        ))}
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'job_service',
-                header: 'Tên dịch vụ',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'status',
-                header: 'Trạng thái',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'num_cvs',
-                header: 'Thao tác',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                ),
-                Cell: ({ cell }) => (
-                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
-                        <Button variant="contained" color="primary" onClick={() => handleDeleteItem(cell.row.index)}>
-                            <DeleteIcon />
+    const columns: MRT_ColumnDef<IUvListAdmin>[] = [
+        {
+            accessorKey: 'id',
+            header: 'ID',
+            Header: ({ column }) => (
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textTransform: "none",
+                        color: "inherit",
+                    }}>
+                    <p>{column.columnDef.header}</p>
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'fullname',
+            header: 'Tên công ty',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'job_title',
+            header: 'Tên công việc',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'industry',
+            header: 'Ngành nghề',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            ),
+            Cell: ({ cell }) => (
+                <Box display="flex" flexDirection="column" justifyContent="flex-start" alignItems="center" gap="5px">
+                    <Chip label={cell.getValue<any>()} variant="outlined" key={cell.getValue<any>()} />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'job_service',
+            header: 'Tên dịch vụ',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'status',
+            header: 'Trạng thái',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'referred_time',
+            header: 'Ngày giới thiệu',
+            Header: ({ column }) => (
+                <Box
+                    // onClick={(event: any) => handleOpenMenu(event, "CreateDay")}
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textTransform: "none",
+                        color: "inherit",
+                    }}>
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            ),
+            Cell: ({ cell }) => (
+                <Box>
+                    <Typography>{dayjs(cell.getValue<string>()).format('MM-DD-YYYY')}</Typography>
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'num_cvs',
+            header: 'Thao tác',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            ),
+            Cell: ({ cell }) => (
+                <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
+                    <Tooltip title="Xem chi tiết ứng viên">
+                        <Button variant="outlined" color="primary" onClick={() => handleClickDetail(cell.row.index)}>
+                            <DocumentScannerIcon />
                         </Button>
-                        <Button variant="contained" color="primary" onClick={() => handleClickDetail(cell.row.index)}>
-                            <EditIcon />
-                        </Button>
-                    </Box>
-                )
-            },
-        ], [],)
+                    </Tooltip>
+                </Box>
+            )
+        },
+    ]
 
     const table = useMaterialReactTable({
         columns,

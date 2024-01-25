@@ -13,13 +13,13 @@ import RevaluateForm from "./component/RevaluateForm/RevaluateForm";
 import Valuation from "./component/Valuation/Valuation";
 import { IRevaluate } from "../../types";
 
-function CVPricing({data}:{data: ValuateCV}) {
+function CVPricing({ data }: { data: ValuateCV }) {
   if (!true) {
     redirect("/login", RedirectType.replace);
   }
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
-  
+
   return (
     <Box
       width="100%"
@@ -58,13 +58,13 @@ function CVPricing({data}:{data: ValuateCV}) {
         alignItems={"top"}
         justifyContent={"right"}
       >
-        
+
         <Button
           disabled={isEdit}
           variant="outlined"
-          sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3}}
+          sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3 }}
           className="hover:border-primary hover:bg-white hover:text-primary"
-          onClick={()=>setIsEdit(true)}
+          onClick={() => setIsEdit(true)}
         >
           Định giá lại
         </Button>
@@ -79,7 +79,7 @@ function CVPricing({data}:{data: ValuateCV}) {
         justifyContent={"left"}
         sx={{ overflow: "auto" }}
       >
-        <PdfViewer url={data.cv_pdf?data.cv_pdf:""} />
+        <PdfViewer url={data.cv_pdf ? data.cv_pdf : ""} />
       </Box>
       <Box
         className="col-span-5"
@@ -91,10 +91,10 @@ function CVPricing({data}:{data: ValuateCV}) {
         justifyContent={"left"}
         sx={{ overflow: "auto" }}
       >
-          {isEdit?<RevaluateForm data={data}/>:  <Valuation data={data}/>}
-          {/* <Valuation/>
+        {isEdit ? <RevaluateForm data={data} /> : <Valuation data={data} />}
+        {/* <Valuation/>
           <RevaluateForm /> */}
-        </Box>
+      </Box>
     </Box>
   );
 }
