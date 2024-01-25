@@ -47,6 +47,12 @@ export const addCompany = (data: ICompanyInfo): Promise<IAuthResponse> => {
 export const revaluate = (data: IRevaluate): Promise<IAuthResponse> => {
   return axiosClient.put("/postjob/collaborator/update-resume-valuate", data);
 };
-export const getJobDetail = (id: string): Promise<IJobDetailResponse> => {
+export const getRecruiterJobDetail = (id: string): Promise<IJobDetailResponse> => {
   return axiosClient.get(`/postjob/recruiter/get-detailed-job/${id}`);
+};
+export const getCollaboratorJobDetail = (id: string): Promise<IJobDetailResponse> => {
+  return axiosClient.get(`/postjob/collaborator/get-detail-job/${id}`);
+};
+export const getAdminJobDetail = (id: string): Promise<IJobDetailResponse> => {
+  return axiosClient.get(`/postjob/admin/get-detailed-job/${id}`);
 };

@@ -1,5 +1,6 @@
 "use client";
 import { candidateInfoApi } from "@/common/apis/candidate-info";
+import { getRole } from "@/common/helpers/setCookies";
 import { IResume } from "@/modules/cv-info-ntd/resume.interface";
 import CvInfoPage from "@/modules/cv-info/pages/CvInfoPage";
 import { set } from "lodash";
@@ -40,12 +41,15 @@ function CandidateInfoPage({ params }: { params: { id: string } }) {
   };
 
   const [candidateData, setCandidateData] = useState<IResume>(initialData);
-
+  const [role,setRole]=useState(getRole());
+  if(role===undefined){
+    setRole("admin");
+  }
   useEffect(() => {
     if (!params.id) return;
     (async () => {
       try {
-        const res = await candidateInfoApi.getById(parseInt(params.id));
+        const res = await candidateInfoApi.getById(parseInt(params.id),role);
         setCandidateData(res.data.data);
       } catch (error) {
         console.log(error);

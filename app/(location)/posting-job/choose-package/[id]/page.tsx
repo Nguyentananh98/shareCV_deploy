@@ -4,6 +4,7 @@ import { IResume } from "@/modules/cv-info-ntd/resume.interface";
 import CvInfoPage from "@/modules/cv-info-ntd/pages/CvInfoPage";
 import { set } from "lodash";
 import { useEffect, useState } from "react";
+import { getRole } from "@/common/helpers/setCookies";
 
 function CandidateInfoPage({ params }: { params: { id: string } }) {
   const initialData: IResume = {
@@ -45,7 +46,7 @@ function CandidateInfoPage({ params }: { params: { id: string } }) {
     if (!params.id) return;
     (async () => {
       try {
-        const res = await candidateInfoApi.getById(parseInt(params.id));
+        const res = await candidateInfoApi.getById(parseInt(params.id),getRole());
         setCandidateData(res.data.data);
       } catch (error) {
         console.log(error);
