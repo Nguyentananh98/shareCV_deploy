@@ -26,7 +26,7 @@ export const UVListTable = ({
     const router = useRouter();
 
     const handleClickDetail = (index: number) => {
-        router.push(`/posting-job/choose-package/${index}`)
+        router.push(`/posting-job/choose-package/${data[index].id}`);
     }
 
     const columns: MRT_ColumnDef<IUVListNtd>[] = [
