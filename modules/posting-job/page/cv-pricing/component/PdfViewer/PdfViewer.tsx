@@ -78,9 +78,11 @@ export default function PdfViewer({url}:PdfViewerProps) {
       rejectUnauthorized: false,
     }),
   });
+  
   useEffect(() => {
     axiosClient.get(url)
 }, []);
+
   return (
     <div className="Example" style={{width:"100%"}}>
       <div className="Example__container">

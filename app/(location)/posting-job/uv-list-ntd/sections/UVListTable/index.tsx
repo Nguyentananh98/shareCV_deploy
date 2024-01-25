@@ -5,7 +5,7 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { Box, Button, Menu, Typography } from "@mui/material";
+import { Box, Button, Menu, Tooltip, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -26,121 +26,123 @@ export const UVListTable = ({
     const router = useRouter();
 
     const handleClickDetail = (index: number) => {
-        router.push(`uv-info/1`)
+        router.push(`/posting-job/choose-package/${index}`)
     }
 
     const columns: MRT_ColumnDef<IUVListNtd>[] = [
-            {
-                accessorKey: 'id',
-                header: 'ID',
-                Header: ({ column }) => (
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "10px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textTransform: "none",
-                            color: "inherit",
-                        }}>
-                        <p>{column.columnDef.header}</p>
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'fullname',
-                header: 'Họ và Tên',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'job_title',
-                header: 'Tên công việc',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'industry',
-                header: 'Ngành nghề',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'job_service',
-                header: 'Tên dịch vụ',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'status',
-                header: 'Trạng thái',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'referred_time',
-                header: 'Ngày giới thiệu',
-                Header: ({ column }) => (
-                    <Box
-                        // onClick={(event: any) => handleOpenMenu(event, "CreateDay")}
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "10px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            textTransform: "none",
-                            color: "inherit",
-                        }}>
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                ),
-                Cell: ({ cell }) => (
-                    <Box>
-                        <Typography>{dayjs(cell.getValue<string>()).format('MM-DD-YYYY')}</Typography>
-                    </Box>
-                )
-            },
-            {
-                accessorKey: 'num_cvs',
-                header: 'Thao tác',
-                Header: ({ column }) => (
-                    <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
-                        <p>{column.columnDef.header}</p>
-                        <KeyboardArrowDownIcon />
-                    </Box>
-                ),
-                Cell: ({ cell }) => (
-                    <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
+        {
+            accessorKey: 'id',
+            header: 'ID',
+            Header: ({ column }) => (
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textTransform: "none",
+                        color: "inherit",
+                    }}>
+                    <p>{column.columnDef.header}</p>
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'fullname',
+            header: 'Họ và Tên',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'job_title',
+            header: 'Tên công việc',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'industry',
+            header: 'Ngành nghề',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'job_service',
+            header: 'Tên dịch vụ',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'status',
+            header: 'Trạng thái',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'referred_time',
+            header: 'Ngày giới thiệu',
+            Header: ({ column }) => (
+                <Box
+                    // onClick={(event: any) => handleOpenMenu(event, "CreateDay")}
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textTransform: "none",
+                        color: "inherit",
+                    }}>
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            ),
+            Cell: ({ cell }) => (
+                <Box>
+                    <Typography>{dayjs(cell.getValue<string>()).format('MM-DD-YYYY')}</Typography>
+                </Box>
+            )
+        },
+        {
+            accessorKey: 'num_cvs',
+            header: 'Thao tác',
+            Header: ({ column }) => (
+                <Box display="flex" flexDirection="row" gap="1px" justifyContent="center" alignItems="center">
+                    <p>{column.columnDef.header}</p>
+                    <KeyboardArrowDownIcon />
+                </Box>
+            ),
+            Cell: ({ cell }) => (
+                <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
+                    <Tooltip title="Xem chi tiết ứng viên">
                         <Button variant="contained" color="primary" onClick={() => handleClickDetail(cell.row.index)}>
                             <DocumentScannerIcon />
                         </Button>
-                    </Box>
-                )
-            },
-        ]
+                    </Tooltip>
+                </Box>
+            )
+        },
+    ]
 
     const table = useMaterialReactTable({
         columns,

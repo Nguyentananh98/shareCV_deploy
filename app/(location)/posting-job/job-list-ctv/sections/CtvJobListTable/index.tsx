@@ -7,7 +7,7 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { Box, Button, Chip, Menu, Typography } from "@mui/material";
+import { Box, Button, Chip, Menu, Tooltip, Typography } from "@mui/material";
 import Image from 'next/image';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -194,11 +194,13 @@ export const CtvJobListTable = ({
             ),
             Cell: ({ cell }) => (
                 <Box display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center" gap="5px">
-                    <Button variant="contained" color="primary" onClick={() => {
-                        handleClickJobDetail(cell.row.index);
-                    }}>
-                        <DocumentScannerIcon />
-                    </Button>
+                    <Tooltip title="Xem chi tiết công việc">
+                        <Button variant="contained" color="primary" onClick={() => {
+                            handleClickJobDetail(cell.row.index);
+                        }}>
+                            <DocumentScannerIcon />
+                        </Button>
+                    </Tooltip>
                 </Box>
             )
         },
