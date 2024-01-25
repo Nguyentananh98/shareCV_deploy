@@ -57,7 +57,7 @@ function UVListAdminPage() {
         } catch (err) {
             console.log(err);
         }
-    }, [pagination, currentTab, metaData]);
+    }, [pagination, currentTab]);
 
     const handleChangeNumPerPage = (value: any) => {
         setPagination({
