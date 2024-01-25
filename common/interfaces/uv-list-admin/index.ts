@@ -1,12 +1,11 @@
 export interface IUvListAdmin {
     id: number;
+    fullname: string;
     job_title: string;
-    company_name: string;
-    company_logo: string;
-    industry: string[];
+    industry: string;
     job_service: string;
-    status: boolean;
-    created_date: string; // mm-dd-yyyy
+    status: string;
+    referred_time: string; // mm-dd-yyyy
 }
 
 export interface IUvListAdminResponse {

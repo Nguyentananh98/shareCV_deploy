@@ -6,6 +6,7 @@ import { GENDER, RESUME_STATUS } from "../_constant";
 import ExperienceItem from "../components/ExperienceItem";
 import ProjectCarousel from "../components/ProjectCarousel";
 import { SocialIcon } from "react-social-icons/component";
+import { useRouter } from "next/navigation";
 
 function CvInfoPage({
   cv_id,
@@ -38,6 +39,7 @@ function CvInfoPage({
 }: IResume) {
   const today = dayjs();
   const birthdayDate = dayjs(new Date(birthday));
+  const navigate = useRouter();
 
   return (
     <Box display="flex" flexDirection="column" width="100%" px="120px">
@@ -78,6 +80,7 @@ function CvInfoPage({
             py: 1,
             mx: 1,
           }}
+          onClick={() => navigate.replace(`/posting-job/cv-pricing/${cv_id}`)}
         >
           <Typography className="font-bold hover:text-primary">Xem định giá</Typography>
         </Button>

@@ -6,8 +6,8 @@ export const getUvListAdmin = (data: { page_index: number, limit: number, state:
     let payload: any = {
         page_index: data.page_index,
         limit: data.limit,
-        job_status: data.state,
+        candidate_status: data.state,
     }
     console.log(payload);
-    return axiosClient.post(`/postjob/admin/list-job`, payload, { headers: { "Content-Type": "application/json", } });
+    return axiosClient.post(`/postjob/admin/list-candidate`, payload, { headers: { "Content-Type": "application/json", } });
 };
