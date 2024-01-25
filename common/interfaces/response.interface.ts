@@ -31,6 +31,8 @@ export interface IAuthResponse {
 
   token_type: "bearer" | "grant";
 
+  role: "admin" | "recruiter" | "collaborator";
+
   detail?: string;
 }
 
