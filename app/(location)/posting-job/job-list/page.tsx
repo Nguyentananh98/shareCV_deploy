@@ -84,7 +84,7 @@ function JobListPage() {
 
     return (
         <Box sx={{
-            width: '1440px',
+            width: 'auto',
             marginTop: '100px',
         }}>
             <Box>

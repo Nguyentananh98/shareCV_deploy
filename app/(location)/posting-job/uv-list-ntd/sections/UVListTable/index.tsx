@@ -26,7 +26,7 @@ export const UVListTable = ({
     const router = useRouter();
 
     const handleClickDetail = (index: number) => {
-        router.push(`/posting-job/job-description/${data[index].id}`)
+        router.push(`uv-info/1`)
     }
 
     const columns = useMemo<MRT_ColumnDef<IUVListNtd>[]>(

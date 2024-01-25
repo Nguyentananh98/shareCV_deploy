@@ -300,12 +300,12 @@ function Valuation({ data }: { data: ValuateCV }) {
       <Box width="100%" display="flex" my={2} justifyContent={"end"}>
         <Button
           variant="outlined"
-          sx={{ width: "200px", height: "50px", borderRadius: "20px", ml: 3 }}
+          sx={{ width: "auto", height: "50px", borderRadius: "20px", ml: 3,}}
           className="bg-primary border-primary font-bold text-white hover:border-primary hover:bg-white hover:text-primary"
           component={Link}
           href={`http://localhost:3000/posting-job/ai-result/collaborator/${data.cv_id}`}
         >
-          Định giá
+          Xem kết quả đánh giá AI
         </Button>
       </Box>
     </Box>
