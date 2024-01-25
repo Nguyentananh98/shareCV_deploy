@@ -36,7 +36,7 @@ export const CustomMenu = ({
         >
             {options.map((option) => {
                 return (
-                    <MenuItem onClick={() => handleChooseItem(option)}>
+                    <MenuItem key={option} onClick={() => handleChooseItem(option)}>
                         <Typography>{option}</Typography>
                     </MenuItem>
                 )

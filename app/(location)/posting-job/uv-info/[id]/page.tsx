@@ -55,7 +55,7 @@ function CandidateInfoPage({ params }: { params: { id: string } }) {
         console.log(error);
       }
     })();
-  }, [params]);
+  }, [params, role]);
 
   return (
     <div className="w-full flex justify-center">

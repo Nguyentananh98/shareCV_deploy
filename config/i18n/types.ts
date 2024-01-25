@@ -1,11 +1,13 @@
-import { ReactNode } from "react";
-import { Locale } from ".";
-import { FlattenLocale } from "international-types";
+// import { ReactNode } from "react";
+// import { Locale } from ".";
+// import { FlattenLocale } from "international-types";
 
-export interface TI18NProviderProps {
-  children: ReactNode;
+// export interface TI18NProviderProps {
+//   children: ReactNode;
 
-  locale: Locale;
+//   locale: Locale;
 
-  content: FlattenLocale<Record<string, any>>;
-}
+//   content: FlattenLocale<Record<string, any>>;
+// }
+
+export {};
